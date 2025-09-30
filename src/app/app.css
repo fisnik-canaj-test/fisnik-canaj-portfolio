@@ -1,0 +1,104 @@
+.theme-toggle {
+  @apply inline-flex h-11 w-11 items-center justify-center rounded-full border border-black/10 bg-white text-gray-900 shadow-sm transition;
+  @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-400;
+  transition-property: background-color, border-color, box-shadow, transform;
+  transition-duration: 220ms;
+  transition-timing-function: ease;
+}
+
+.theme-toggle:hover {
+  @apply shadow-md;
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle--dark {
+  @apply border-white/20 bg-slate-900 text-amber-200;
+}
+
+.theme-toggle__classic {
+  width: 1.75rem;
+  height: 1.75rem;
+  transition: transform 360ms cubic-bezier(.33, 1, .68, 1), color 220ms ease;
+}
+
+.theme-toggle__sun,
+.theme-toggle__moon {
+  transition: opacity 240ms ease, transform 360ms cubic-bezier(.33, 1, .68, 1);
+  transform-origin: center;
+}
+
+.theme-toggle__sun {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.theme-toggle__sun circle {
+  transition: fill 220ms ease, opacity 220ms ease, transform 360ms cubic-bezier(.33, 1, .68, 1);
+  opacity: 0.92;
+  transform-origin: center;
+  transform-box: fill-box;
+  fill: currentColor;
+}
+
+.theme-toggle__sun g[stroke] {
+  opacity: 1;
+  transition: opacity 200ms ease;
+}
+
+.theme-toggle__moon {
+  opacity: 0;
+  transform: scale(0.6) rotate(-20deg);
+  fill: currentColor;
+}
+
+.theme-toggle--dark .theme-toggle__classic {
+  transform: rotate(30deg);
+}
+
+.theme-toggle--dark .theme-toggle__sun {
+  opacity: 0;
+  transform: scale(0.75) rotate(-25deg);
+}
+
+.theme-toggle--dark .theme-toggle__sun circle {
+  transform: translate(-8px, -4px);
+}
+
+.theme-toggle--dark .theme-toggle__sun g[stroke] {
+  opacity: 0;
+}
+
+.theme-toggle:not(.theme-toggle--dark) .theme-toggle__classic {
+  color: #ea580c;
+}
+
+.theme-toggle--dark .theme-toggle__classic {
+  color: #facc15;
+}
+
+.theme-toggle--dark .theme-toggle__moon {
+  opacity: 1;
+  transform: scale(0.95);
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle,
+  .theme-toggle__classic {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+}

@@ -5,16 +5,22 @@
   "phone": "+383 45 420 928",
   "email": "canajfisnik@gmail.com",
   "links": {
-    "github": "https://github.com/snikcanaj1",
+    "github": "https://github.com/fisnikcanaj1",
     "portfolio": "https://snikcanaj1.github.io",
-    "linkedin": "#"
+    "linkedin": "https://www.linkedin.com/in/fisnik-canaj-angular-4b75a8157"
   },
-  "summary": "Frontend Developer with 8+ years building high-performance apps (Angular, Vue, React, Node). Strong in NgRx/RxJS, GraphQL/Apollo, UX and performance.",
+  "summary": "Front‑end Developer with 8+ years of experience specialising in JavaScript and Angular frameworks. Proficient in designing efficient architectures and implementing performance optimisations. Skilled in creating visually appealing and user‑friendly applications. Collaborative, delivery‑focused, and committed to staying current with modern web technologies.",
+  "about": "Beyond my professional roles, I’ve built side projects like a WordPress news portal with custom automation scripts, a Stripe‑backed gadget rental app, and a 3D chess DApp concept. One of my favourite achievements was helping deliver a Volvo online car‑sales project under a tight deadline, then contributing to a major rewrite of CSGORoll using modern Angular and state management.",
+  "avatar": "assets/my-face.jpg",
+  "interests": ["Football", "Time with friends"],
+  "languages": ["English", "Albanian"],
   "skills": [
-    "Angular (2–20)", "React.js", "Vue.js", "Qwik", "TypeScript", "RxJS", "NgRx",
-    "Tailwind", "Sass", "HTML5", "CSS3", "GraphQL", "Apollo", "REST",
-    "Node.js", "Express", "NX Monorepo", "Webpack", "Cypress", "Builder.io",
-    "Performance", "Responsive", "Puppeteer"
+    "JavaScript", "TypeScript", "Angular (2–18)", "Qwik", "React.js", "Vue.js", "jQuery",
+    "HTML5", "CSS3", "Sass", "Tailwind CSS",
+    "RxJS", "NgRx", "Webpack", "NX Monorepo",
+    "GraphQL", "Apollo Client", "Node.js", "Express.js",
+    "Cypress", "Builder.io",
+    "Responsive Design", "Performance Optimisation", "Cross‑Browser Compatibility"
   ],
   "experience": [
     {
@@ -22,10 +28,10 @@
       "title": "Frontend Developer",
       "period": "Nov 2023 – Present",
       "bullets": [
-        "Contributed to CSGORoll rewrite (Angular 16/17, GraphQL, NgRx, Apollo).",
-        "Launched Favourites Box feature (higher engagement).",
-        "Optimized performance & improved betting flow UX.",
-        "Hypedrop: Qwik, GraphQL, Builder.io, Tailwind (auth & account pages)."
+        "Worked on Hypedrop and CSGORoll using Angular 16/17, GraphQL/Apollo, TypeScript, NgRx and RxJS.",
+        "Designed and shipped a Favourites box feature to increase engagement and retention.",
+        "Resolved defects and optimised performance and stability across betting flows.",
+        "Collaborated cross‑functionally to deliver high‑quality features with strong UI/UX."
       ]
     },
     {
@@ -33,17 +39,119 @@
       "title": "Frontend/Angular Developer",
       "period": "Jun 2022 – Oct 2023",
       "bullets": [
-        "Volvo online car purchase module (impact on sales).",
-        "Cisco Health Care features; Cypress tests (Avodaq).",
-        "Angular 13→15 migration in NX; optimized Service Plan.",
-        "Led mid-sized frontend team under tight deadlines."
+        "Volvo car purchase module enabling online sales for regional markets.",
+        "Cisco Health Care enhancements and Cypress test coverage with partner Avodaq.",
+        "Optimised Service Plan project across front‑ and back‑end; migrated Angular 13→15 in NX.",
+        "Maintained brand consistency and improved page performance at scale."
+      ]
+    },
+    {
+      "company": "UNE",
+      "title": "Frontend Developer",
+      "period": "Nov 2021 – May 2022",
+      "bullets": [
+        "Delivered features prioritising UX and responsiveness across devices.",
+        "Built reusable components and leveraged Vue.js, JavaScript, Sass, Webpack and PHP/Laravel."
+      ]
+    },
+    {
+      "company": "ATIS",
+      "title": "Frontend Developer",
+      "period": "Feb 2020 – Oct 2021",
+      "bullets": [
+        "Angular booking application with lazy loading and routing.",
+        "Complex forms integrated with APIs for E‑Dea; identified automation opportunities."
+      ]
+    },
+    {
+      "company": "Celonis",
+      "title": "Frontend UI Developer",
+      "period": "Aug 2018 – Oct 2020",
+      "bullets": [
+        "Built UI components, filtering and charting; improved app performance."
+      ]
+    },
+    {
+      "company": "Open Data Kosovo (ODK)",
+      "title": "Frontend Developer",
+      "period": "Jun 2018 – Sep 2018",
+      "bullets": [
+        "Completed coding workshop and shipped projects using HTML, CSS/Bootstrap and PHP."
+      ]
+    },
+    {
+      "company": "NEO DESIGN",
+      "title": "UI Developer",
+      "period": "Feb 2017 – Aug 2017",
+      "bullets": [
+        "UI development with JavaScript, jQuery, Bootstrap, HTML and CSS."
+      ]
+    },
+    {
+      "company": "Freelance",
+      "title": "Frontend Developer",
+      "period": "Jan 2014 – Jan 2017",
+      "bullets": [
+        "Built portfolios and projects while learning Angular, React, Vue and Python; deepened DSA skills."
       ]
     }
   ],
+  "education": [
+    {
+      "school": "University for Business and Technology (UBT)",
+      "location": "Pristina, Kosovo",
+      "degree": "BSc, Computer Science and Engineering",
+      "period": "2014"
+    }
+  ],
   "projects": [
-    { "name": "News Portal (WordPress)", "tags": ["WP", "Automation"], "desc": "Custom automation with Node/Puppeteer.", "link": "#" },
-    { "name": "Gadget Rental E‑commerce", "tags": ["Stripe", "Angular"], "desc": "Payments + admin flows.", "link": "#" },
-    { "name": "3D Chess DApp", "tags": ["Web3"], "desc": "Concept with tokenomics.", "link": "#" }
+    {
+      "name": "CSGORoll",
+      "tags": ["Angular", "Gaming"],
+      "desc": "Angular 18 migration, favourites & wishlist flows, probability tooling.",
+      "link": "https://csgoroll.com"
+    },
+    {
+      "name": "Hypedrop",
+      "tags": ["Qwik", "Admin"],
+      "desc": "Auth and account experiences for the admin portal.",
+      "link": "https://hypedrop.com"
+    },
+    {
+      "name": "Cartouche Club",
+      "tags": ["SEO", "E-commerce"],
+      "desc": "Resolved SEO deficits and added referral coupon journeys.",
+      "link": "https://cartoucheclub.com"
+    },
+    {
+      "name": "Gadgetlend",
+      "tags": ["Angular", "i18n"],
+      "desc": "Refreshed UI and shipped multilingual support across the app.",
+      "link": "https://gadgetlend.de"
+    },
+    {
+      "name": "Gazeta Demos",
+      "tags": ["WordPress", "News"],
+      "desc": "Launched news portal with custom WordPress deployment.",
+      "link": "https://gazetademos.com"
+    },
+    {
+      "name": "Celonis",
+      "tags": ["Angular", "Enterprise"],
+      "desc": "Process mining UI components for the core platform.",
+      "link": "https://www.celonis.com"
+    },
+    {
+      "name": "Volvo Cars",
+      "tags": ["Angular", "Commerce"],
+      "desc": "Sales journeys for Switzerland & Liechtenstein car purchase module.",
+      "link": "https://www.volvocars.com"
+    },
+    {
+      "name": "E-Dea",
+      "tags": ["Angular", "Transport"],
+      "desc": "Complex reservation forms and tables for route management UI.",
+      "link": "https://www.e-dea.com"
+    }
   ]
 }
-

@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { ThemeService } from './shared/theme.service';
+import { DataService } from './shared/data.service';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,9 @@ import { ThemeService } from './shared/theme.service';
 })
 export class App {
   protected readonly title = signal('tempname');
-  constructor(public theme: ThemeService) {}
+  constructor(public theme: ThemeService, private ds: DataService) {
+    // Preload profile data so deep-linked pages have content immediately.
+    void this.ds.load();
+  }
   year = new Date().getFullYear();
 }

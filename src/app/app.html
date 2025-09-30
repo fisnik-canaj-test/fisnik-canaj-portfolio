@@ -1,15 +1,58 @@
-<header class="sticky top-0 z-50 backdrop-blur bg-white/70 dark:bg-gray-900/60 border-b border-black/5">
+<header class="sticky top-0 z-50 backdrop-blur bg-white dark:bg-black border-b border-black/5 dark:border-white/10">
   <nav class="mx-auto max-w-6xl px-4 h-14 flex items-center justify-between">
     <a routerLink="/" routerLinkActive="underline" [routerLinkActiveOptions]="{ exact: true }" class="font-semibold">Fisnik Canaj</a>
     <div class="flex items-center gap-4 text-sm">
       <a routerLink="/experience" routerLinkActive="underline font-semibold" class="hover:underline">Experience</a>
       <a routerLink="/projects" routerLinkActive="underline font-semibold" class="hover:underline">Projects</a>
       <a routerLink="/resume" routerLinkActive="underline font-semibold" class="btn btn-outline">Resume</a>
-      <button class="btn" (click)="theme.toggle()">Toggle Theme</button>
+      <button
+        class="theme-toggle"
+        type="button"
+        (click)="theme.toggle()"
+        title="Toggle theme"
+        aria-label="Toggle theme"
+        [attr.aria-pressed]="theme.mode() === 'dark'"
+        [class.theme-toggle--dark]="theme.mode() === 'dark'"
+      >
+        <span class="sr-only">Toggle theme</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+          width="1em"
+          height="1em"
+          fill="currentColor"
+          stroke-linecap="round"
+          class="theme-toggle__classic"
+          viewBox="0 0 32 32"
+        >
+          <defs>
+            <clipPath id="theme-toggle__classic__cutout">
+              <path d="M0-5h30a1 1 0 0 0 9 13v24H0Z" />
+            </clipPath>
+          </defs>
+          <g class="theme-toggle__sun" clip-path="url(#theme-toggle__classic__cutout)">
+            <circle cx="16" cy="16" r="9.34" />
+            <g stroke="currentColor" stroke-width="1.5">
+              <path d="M16 5.5v-4" />
+              <path d="M16 30.5v-4" />
+              <path d="M1.5 16h4" />
+              <path d="M26.5 16h4" />
+              <path d="m23.4 8.6 2.8-2.8" />
+              <path d="m5.7 26.3 2.9-2.9" />
+              <path d="m5.8 5.8 2.8 2.8" />
+              <path d="m23.4 23.4 2.9 2.9" />
+            </g>
+          </g>
+          <path
+            class="theme-toggle__moon"
+            d="M23.4 18.2A9.34 9.34 0 0 1 13.8 8.6a7.26 7.26 0 1 0 9.6 9.6Z"
+          />
+        </svg>
+      </button>
     </div>
   </nav>
 </header>
-<main class="mx-auto max-w-6xl px-4 py-10">
+<main class="mx-auto max-w-6xl px-4 py-10 text-inherit">
   <router-outlet/>
 </main>
-<footer class="mx-auto max-w-6xl px-4 py-10 text-sm text-gray-500">© {{year}} Fisnik Canaj</footer>
+<footer class="mx-auto max-w-6xl px-4 py-10 text-sm text-gray-500 dark:text-gray-400">© {{year}} Fisnik Canaj</footer>

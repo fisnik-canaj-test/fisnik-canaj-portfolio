@@ -9,8 +9,16 @@ export class DataService {
 
   async load(){
     if (!isPlatformBrowser(this.platformId)) return; // avoid SSR fetch
-    const res = await fetch('/assets/data/profile.json');
-    this.profile.set(await res.json());
+    if (this.profile() !== null) return; // already loaded or in-flight
+    try {
+      const base = document?.baseURI ?? window.location.origin ?? '/';
+      const url = new URL('assets/data/profile.json', base).toString();
+      const res = await fetch(url, { cache: 'no-cache' });
+      if (!res.ok) throw new Error(String(res.status));
+      this.profile.set(await res.json());
+    } catch (e) {
+      console.error('Failed to load profile.json', e);
+      this.profile.set(null);
+    }
   }
 }
-

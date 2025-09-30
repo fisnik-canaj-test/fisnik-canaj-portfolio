@@ -1,0 +1,133 @@
+@let profileData = profile();
+@let skills = topSkills;
+@let projects = projectPreview();
+
+<section class="relative overflow-hidden rounded-3xl gradient-hero p-8 md:p-14">
+  <div class="grid gap-10 md:grid-cols-[1.2fr_1fr] items-start">
+    <div>
+      <p class="text-sm uppercase tracking-[0.3em] text-gray-500">Senior Angular Engineer</p>
+      <h1 class="mt-4 text-4xl md:text-6xl font-bold tracking-tight leading-tight">
+        Hi, I'm <span class="text-brand-600">{{ profileData.name }}</span>
+      </h1>
+      <h2 class="mt-4 text-xl md:text-2xl font-semibold text-gray-700 dark:text-gray-200">
+        {{ profileData.role }} partnering with product teams to ship dependable interfaces.
+      </h2>
+      <p class="mt-6 max-w-2xl text-lg md:text-xl leading-relaxed text-gray-600 dark:text-gray-300">
+        {{ profileData.summary }}
+        I specialise in converting complex requirements into fast, maintainable Angular front ends, pairing
+        UX polish with measurable impact.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a routerLink="/projects" class="btn px-5 py-3 text-base">View Projects</a>
+        <a routerLink="/resume" class="btn btn-outline px-5 py-3 text-base">Download Resume</a>
+      </div>
+      <div class="mt-8 grid gap-4 sm:flex sm:items-center sm:gap-8 text-sm text-gray-500">
+        <a class="link flex items-center gap-2" [href]="profileData.links.github" target="_blank" rel="noopener">GitHub</a>
+        <a class="link flex items-center gap-2" [href]="profileData.links.portfolio" target="_blank" rel="noopener">Portfolio</a>
+        <a class="link flex items-center gap-2" [href]="profileData.links.linkedin" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+      <dl class="mt-10 grid gap-6 sm:grid-cols-3 text-sm text-gray-600 dark:text-gray-300">
+        <div>
+          <dt class="text-xs uppercase tracking-wide text-gray-500">Experience</dt>
+          <dd class="mt-1 text-xl font-semibold text-gray-900 dark:text-gray-100">8+ years</dd>
+          <p class="mt-1 text-xs">Angular 2 → 18, large multi-team products.</p>
+        </div>
+        <div>
+          <dt class="text-xs uppercase tracking-wide text-gray-500">Currently</dt>
+          <dd class="mt-1 text-xl font-semibold text-gray-900 dark:text-gray-100">Ancient Gaming</dd>
+          <p class="mt-1 text-xs">CSGORoll & Hypedrop feature delivery.</p>
+        </div>
+        <div>
+          <dt class="text-xs uppercase tracking-wide text-gray-500">Based in</dt>
+          <dd class="mt-1 text-xl font-semibold text-gray-900 dark:text-gray-100">Pristina, Kosovo</dd>
+          <p class="mt-1 text-xs">Open to remote EU/US contracts.</p>
+        </div>
+      </dl>
+    </div>
+    <div class="grid gap-4">
+      @if (profileData.avatar; as avatar) {
+        <div class="card">
+          <div class="card-body flex items-center gap-4">
+            <img [src]="avatar" [alt]="profileData.name" class="h-24 w-24 md:h-28 md:w-28 rounded-full object-cover border border-black/10 dark:border-white/10 shadow"/>
+            <div>
+              <div class="text-sm uppercase tracking-wide text-gray-500">Current role</div>
+              <div class="mt-1 font-semibold">Frontend Developer at Ancient Gaming</div>
+            </div>
+          </div>
+        </div>
+      }
+      <div class="card">
+        <div class="card-body">
+          <div class="text-xs uppercase text-gray-500">Stack sweet spot</div>
+          <p class="mt-2 text-sm md:text-base text-gray-700 dark:text-gray-200">Angular · NgRx · Signals · GraphQL · Tailwind · Builder.io</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="text-xs uppercase text-gray-500">Industries shipped</div>
+          <p class="mt-2 text-sm md:text-base text-gray-700 dark:text-gray-200">Gaming & Gambling, E-commerce, Automotive, Process Mining</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="text-xs uppercase text-gray-500">Recent wins</div>
+          <p class="mt-2 text-sm md:text-base text-gray-700 dark:text-gray-200">CSGORoll Angular 18 upgrade, Hypedrop admin UX, Volvo regional sales module.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="text-xs uppercase text-gray-500">Tooling & Ways of Working</div>
+          <p class="mt-2 text-sm md:text-base text-gray-700 dark:text-gray-200">Design systems, performance budgeting, CI/CD automation, cross-team enablement.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="mt-12 grid md:grid-cols-4 gap-6">
+  @for (skill of skills; track skill.title) {
+    <div class="card">
+      <div class="card-body">
+        <div class="text-base font-semibold">{{ skill.title }}</div>
+        <div class="mt-3 text-sm md:text-base text-gray-600 dark:text-gray-300 leading-relaxed">{{ skill.body }}</div>
+      </div>
+    </div>
+  }
+</section>
+
+<section class="mt-14">
+  <h2 class="text-2xl font-bold">About me</h2>
+  <p class="mt-3 text-base md:text-lg text-gray-600 dark:text-gray-300 leading-relaxed max-w-3xl">
+    {{ profileData.about }}
+  </p>
+</section>
+
+<section class="mt-14">
+  <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between mb-6">
+    <div>
+      <h2 class="text-2xl font-bold">Recent Work</h2>
+      <p class="text-sm text-gray-500 dark:text-gray-400">A sample of engagements with live links where available.</p>
+    </div>
+    <a routerLink="/projects" class="link text-sm">Browse all projects →</a>
+  </div>
+  <div class="grid gap-6 md:grid-cols-2">
+    @for (project of projects; track project.name) {
+      <article class="card">
+        <div class="card-body">
+          <div class="flex items-start justify-between gap-4">
+            <h3 class="text-lg font-semibold">{{ project.name }}</h3>
+            @if (project.link && project.link !== '#') {
+              <a class="link text-xs" [href]="project.link" target="_blank" rel="noopener">Visit</a>
+            }
+          </div>
+          <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">{{ project.desc }}</p>
+          <div class="mt-3 flex flex-wrap gap-2">
+            @for (tag of project.tags; track tag) {
+              <span class="tag">{{ tag }}</span>
+            }
+          </div>
+        </div>
+      </article>
+    }
+  </div>
+</section>

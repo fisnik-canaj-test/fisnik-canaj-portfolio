@@ -1,63 +1,139 @@
-import { Component, OnInit, inject, computed } from '@angular/core';
+import { Component, OnInit, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { DataService } from '../../shared/data.service';
+
+interface ProfileLinks {
+  github: string;
+  portfolio: string;
+  linkedin: string;
+}
+
+interface ProjectSummary {
+  name: string;
+  desc: string;
+  tags: string[];
+  link?: string;
+}
+
+interface ProfileSummary {
+  name: string;
+  role: string;
+  summary: string;
+  about: string;
+  avatar?: string;
+  links: ProfileLinks;
+  projects: ProjectSummary[];
+}
+
+interface SkillHighlight {
+  title: string;
+  body: string;
+}
+
+const FALLBACK_PROFILE: ProfileSummary = {
+  name: 'Fisnik Canaj',
+  role: 'Frontend Developer',
+  summary:
+    'Front-end Developer with 8+ years of experience specialising in Angular and modern JS tooling. I design clean architectures, optimise performance, and deliver reliable UX for teams shipping at pace.',
+  about:
+    'Beyond contract roles I have built WordPress news portals, multilingual e-commerce apps, and R&D concepts like a 3D chess DApp. I enjoy taking ownership from architecture to polish and partnering closely with designers and product leaders.',
+  avatar: 'my-face.jpg',
+  links: {
+    github: 'https://github.com/fisnikcanaj1',
+    portfolio: 'https://snikcanaj1.github.io',
+    linkedin: 'https://www.linkedin.com/in/fisnik-canaj-angular-4b75a8157'
+  },
+  projects: [
+    {
+      name: 'Angular Admin UI',
+      desc: 'Design system-driven dashboard experience with reusable tables, forms, and charts.',
+      tags: ['Angular', 'Signals', 'Design System']
+    },
+    {
+      name: 'E-commerce Checkout',
+      desc: 'Optimised Stripe checkout flow with localisation, saved payments, and analytics hooks.',
+      tags: ['Stripe', 'UX', 'Analytics']
+    },
+    {
+      name: 'Automation Portal',
+      desc: 'Node & Puppeteer powered publishing automations for a content-heavy newsroom.',
+      tags: ['Automation', 'Node', 'WordPress']
+    },
+    {
+      name: 'Mobile Betting Widgets',
+      desc: 'Real-time betting components with RxJS and WebSockets for live odds experiences.',
+      tags: ['RxJS', 'Realtime', 'UI']
+    }
+  ]
+};
+
+const TOP_SKILLS: SkillHighlight[] = [
+  {
+    title: 'Frontend Architecture',
+    body: 'Standalone Angular, NX mono-repos, Signal & NgRx state patterns, design systems that scale.'
+  },
+  {
+    title: 'Performance Engineering',
+    body: 'Hydration control, deferrable views, bundle analytics, Core Web Vitals-driven regressions.'
+  },
+  {
+    title: 'Product Impact',
+    body: 'Conversion-minded UX: favourites, auth, checkout flows and A/B experimentation.'
+  },
+  {
+    title: 'Team Enablement',
+    body: 'Code reviews, pairing, documentation, and CI pipelines that unblock cross-functional squads.'
+  }
+];
+
+function normaliseProject(project: any): ProjectSummary {
+  const tags = Array.isArray(project?.tags) && project.tags.length ? project.tags : ['Angular'];
+  return {
+    name: project?.name ?? 'Untitled project',
+    desc: project?.desc ?? 'Details coming soon.',
+    tags,
+    link: project?.link || undefined
+  };
+}
 
 @Component({
   standalone: true,
   selector: 'app-home',
   imports: [CommonModule, RouterLink],
-  template: `
-  <section class="relative overflow-hidden rounded-3xl gradient-hero p-8 md:p-12">
-    <div class="grid md:grid-cols-2 gap-8 items-center">
-      <div>
-        <h1 class="text-3xl md:text-5xl font-bold tracking-tight">Hi, I'm <span class="text-brand-600">{{p()?.name}}</span> — {{p()?.role}}</h1>
-        <p class="mt-4 text-gray-600 dark:text-gray-300 max-w-prose">{{p()?.summary}}</p>
-        <div class="mt-6 flex gap-3">
-          <a routerLink="/projects" class="btn">View Projects</a>
-          <a routerLink="/resume" class="btn btn-outline">Download Resume</a>
-        </div>
-        <div class="mt-6 text-sm text-gray-500 flex gap-6">
-          <a class="link" [href]="p()?.links.github" target="_blank">GitHub</a>
-          <a class="link" [href]="p()?.links.portfolio" target="_blank">Portfolio</a>
-          <a class="link" [href]="p()?.links.linkedin" target="_blank">LinkedIn</a>
-        </div>
-      </div>
-      <div class="grid grid-cols-2 gap-4">
-        <div class="card"><div class="card-body">
-          <div class="text-xs uppercase text-gray-500">Stack</div>
-          <div class="mt-2 text-sm">Angular · NgRx · RxJS · GraphQL · Tailwind</div>
-        </div></div>
-        <div class="card"><div class="card-body">
-          <div class="text-xs uppercase text-gray-500">Industries</div>
-          <div class="mt-2 text-sm">Gaming/Gambling, E‑commerce, Healthcare</div>
-        </div></div>
-        <div class="card col-span-2"><div class="card-body">
-          <div class="text-xs uppercase text-gray-500">Recent</div>
-          <div class="mt-2 text-sm">CSGORoll rewrite · Hypedrop account flows · Volvo module</div>
-        </div></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="mt-10 grid md:grid-cols-3 gap-6">
-    <div class="card" *ngFor="let s of topSkills">
-      <div class="card-body">
-        <div class="font-semibold">{{s.title}}</div>
-        <div class="mt-2 text-sm text-gray-600 dark:text-gray-300">{{s.body}}</div>
-      </div>
-    </div>
-  </section>
-  `
+  templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
-  ds = inject(DataService);
-  p = computed(() => this.ds.profile());
-  topSkills = [
-    { title: 'Frontend Architecture', body: 'Standalone Angular, NX monorepo, state with signals/NgRx.' },
-    { title: 'Performance', body: 'Hydration, lazy routes, deferrable views, bundle discipline.' },
-    { title: 'Product Impact', body: 'UX that converts: favourites, auth, checkout flows.' },
-  ];
-  async ngOnInit(){ await this.ds.load(); }
-}
+  private readonly dataService = inject(DataService);
 
+  private readonly rawProfile = computed(() => this.dataService.profile());
+
+  readonly profile = computed<ProfileSummary>(() => {
+    const current = this.rawProfile();
+    if (!current) return FALLBACK_PROFILE;
+
+    const links: ProfileLinks = {
+      ...FALLBACK_PROFILE.links,
+      ...(current.links ?? {})
+    };
+
+    const projectsSource = Array.isArray(current.projects) && current.projects.length
+      ? current.projects
+      : FALLBACK_PROFILE.projects;
+
+    return {
+      ...FALLBACK_PROFILE,
+      ...current,
+      links,
+      projects: projectsSource.map(normaliseProject)
+    };
+  });
+
+  readonly topSkills = TOP_SKILLS;
+
+  readonly projectPreview = computed<ProjectSummary[]>(() => this.profile().projects.slice(0, 4));
+
+  ngOnInit(): void {
+    void this.dataService.load();
+  }
+}
