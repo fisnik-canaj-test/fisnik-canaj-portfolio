@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fisnik Canaj - Frontend Developer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* PDF-friendly styling */
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #f8f9fa;
+            --dark: #2c3e50;
+            --text: #34495e;
+            --gray: #95a5a6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.5;
+            color: var(--text);
+            background: white;
+            font-size: 14px;
+        }
+
+        .cv-container {
+            width: 290mm;
+            min-height: 297mm;
+            margin: 0 auto;
+            display: flex;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .sidebar {
+            width: 35%;
+            background: var(--primary);
+            color: white;
+            padding: 25px 20px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .main-content {
+            width: 65%;
+            padding: 30px 25px;
+        }
+
+        .photo-placeholder {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 4px solid var(--secondary);
+            background: #e0e0e0;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 12px;
+            text-align: center;
+            padding: 10px;
+            overflow: hidden;
+            background-image: url('https://fisnikcanaj1.github.io/Portfolio-Website/assets/img/my-face-more.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .photo-placeholder .photo {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            overflow: hidden;
+
+        }
+
+        .name {
+            font-size: 24px;
+            margin-bottom: 5px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .title {
+            font-size: 16px;
+            color: var(--secondary);
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .contact-info {
+            margin-bottom: 25px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .contact-item i {
+            width: 20px;
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+
+        .contact-item a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            color: var(--secondary);
+            font-size: 16px;
+            margin-bottom: 12px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .skills-grid {
+            display: grid;
+            gap: 8px;
+        }
+
+        .skill-category {
+            margin-bottom: 12px;
+        }
+
+        .skill-category h4 {
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: var(--light);
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .skill-tag {
+            background: var(--secondary);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .language-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .proficiency {
+            color: var(--secondary);
+        }
+
+        .main-section {
+            margin-bottom: 30px;
+        }
+
+        .main-section-title {
+            color: var(--primary);
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .experience-item {
+            margin-bottom: 20px;
+            page-break-inside: avoid;
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .company {
+            font-weight: bold;
+            color: var(--dark);
+            font-size: 15px;
+        }
+
+        .date {
+            color: var(--secondary);
+            font-style: italic;
+            font-size: 14px;
+        }
+
+        .position {
+            color: var(--gray);
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        .bullet-points {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .bullet-points li {
+            margin-bottom: 6px;
+            padding-left: 15px;
+            position: relative;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        .bullet-points li:before {
+            content: "▸";
+            color: var(--secondary);
+            position: absolute;
+            left: 0;
+        }
+
+        .education-item {
+            margin-bottom: 15px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 28px;
+        }
+
+        /* Print styles */
+            body {
+                margin: 0;
+                padding: 0;
+                background: white;
+            }
+
+            .cv-container {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                box-shadow: none;
+                display: flex;
+                page-break-inside: avoid;
+            }
+
+            .sidebar, .main-content {
+                page-break-inside: avoid;
+            }
+
+            .experience-item {
+                page-break-inside: avoid;
+            }
+
+            /* Ensure colors print correctly */
+            .sidebar {
+                background: #2c3e50 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .skill-tag {
+                background: #3498db !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+
+
+    </style>
+</head>
+<body>
+    <div class="cv-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="photo-placeholder">
+                <!-- <img class="photo" src="https://fisnikcanaj1.github.io/Portfolio-Website/assets/img/my-face-more.jpg" alt="Photo"> -->
+            </div>
+            <h1 class="name">FISNIK CANAJ</h1>
+            <h2 class="title">Senior Frontend Developer</h2>
+
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Pristina, Kosovo</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>+383 45 420 928</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <a href="mailto:canajfisnik@gmail.com">canajfisnik@gmail.com</a>
+                </div>
+            </div>
+
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/fisnik-canaj-angular-4b75a8157/" target="_blank">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://github.com/fisnikcanaj1" target="_blank">
+                    <i class="fab fa-github"></i>
+                </a>
+            </div>
+
+          <div class="section">
+            <h3 class="section-title">Skills</h3>
+            <div class="skills-grid">
+
+              <div class="skill-category">
+                <h4>Languages</h4>
+                <div class="skill-tags">
+                  <span class="skill-tag">JavaScript</span>
+                  <span class="skill-tag">TypeScript</span>
+                  <span class="skill-tag">HTML5</span>
+                  <span class="skill-tag">CSS3</span>
+                  <span class="skill-tag">Sass</span>
+                  <span class="skill-tag">NodeJs</span>
+                </div>
+              </div>
+
+              <div class="skill-category">
+                <h4>Frameworks & Libraries</h4>
+                <div class="skill-tags">
+                  <span class="skill-tag">Angular (2–17)</span>
+                  <span class="skill-tag">Vue.js</span>
+                  <span class="skill-tag">Qwik</span>
+                  <span class="skill-tag">React.js</span>
+                  <span class="skill-tag">RxJS</span>
+                  <span class="skill-tag">NgRx</span>
+                  <span class="skill-tag">Tailwind CSS</span>
+                  <span class="skill-tag">Angular Material</span>
+                  <span class="skill-tag">Bootstrap</span>
+                  <span class="skill-tag">jQuery</span>
+                </div>
+              </div>
+
+              <div class="skill-category">
+                <h4>Web Technologies</h4>
+                <div class="skill-tags">
+                  <span class="skill-tag">GraphQL</span>
+                </div>
+              </div>
+              <div class="skill-category">
+                <h4>Database</h4>
+                <div class="skill-tags">
+                  <span class="skill-tag">MongoDB</span>
+                  <span class="skill-tag">Mongoose</span>
+                </div>
+              </div>
+
+              <div class="skill-category">
+                <h4>Tools</h4>
+                <div class="skill-tags">
+                  <span class="skill-tag">Webpack</span>
+                  <span class="skill-tag">NX Monorepo</span>
+                  <span class="skill-tag">Cypress</span>
+                  <span class="skill-tag">Builder.io</span>
+                  <span class="skill-tag">Git</span>
+                </div>
+              </div>
+
+              <div class="skill-category">
+                <h4>Methods</h4>
+                <div class="skill-tags">
+                  <span class="skill-tag">Monorepo Architecture</span>
+                  <span class="skill-tag">State Management</span>
+                  <span class="skill-tag">Component-driven Development</span>
+                  <span class="skill-tag">Testing Practices</span>
+                  <span class="skill-tag">BEM</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+            <div class="section">
+                <h3 class="section-title">Languages</h3>
+                <div class="language-item">
+                    <span>English</span>
+                    <span class="proficiency">Fluent</span>
+                </div>
+                <div class="language-item">
+                    <span>Albanian</span>
+                    <span class="proficiency">Native</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Professional Summary -->
+            <section class="main-section">
+                <h3 class="main-section-title">Professional Summary</h3>
+                <p style="text-align: justify; font-size: 13px;">Senior Frontend Developer with 8+ years of expertise in JavaScript and Angular ecosystems. Proven track record in architecting scalable solutions, optimizing performance, and delivering exceptional user experiences. Strong collaborator experienced in agile environments, committed to writing clean, maintainable code and staying current with emerging technologies.</p>
+            </section>
+
+            <!-- Work Experience -->
+            <section class="main-section">
+                <h3 class="main-section-title">Professional Experience</h3>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <span class="company">Ancient Gaming</span>
+                        <span class="date">Nov 2023 – Present</span>
+                    </div>
+                    <div class="position">Front-end Developer</div>
+                    <ul class="bullet-points">
+                        <li><strong>CSGORoll Project:</strong> Engineered real-time betting features using Angular 12/20, GraphQL, and NgRx for state management, improving application stability and user engagement.</li>
+                        <li>Spearheaded the development of a user favorites system, enhancing personalization and customer retention.</li>
+                        <li><strong>Hypedrop Project:</strong> Developed core user interface flows (Login, Password Reset, Account Pages) utilizing the Qwik framework for optimal performance and Builder.io for dynamic content management.</li>
+                        <li>Championed UI/UX improvements and collaborated closely with backend and design teams in an agile workflow.</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <span class="company">Solution25</span>
+                        <span class="date">Jun 2022 – Oct 2023</span>
+                    </div>
+                    <div class="position">Front-end / Angular Developer</div>
+                    <ul class="bullet-points">
+                        <li>Contributed to a large-scale Volvo car configuration and purchase module, adding complex features within a structured codebase.</li>
+                        <li>Enhanced and maintained features for the Cisco Health Care project, ensuring reliability and user satisfaction.</li>
+                        <li>Wrote and maintained end-to-end tests using Cypress and implemented performance optimizations for a Service Plan application.</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <span class="company">UNE</span>
+                        <span class="date">Nov 2021 – May 2022</span>
+                    </div>
+                    <div class="position">Frontend Developer</div>
+                    <ul class="bullet-points">
+                        <li>Focused on user experience (UX), design refinement, and mobile-first responsive optimization for web applications.</li>
+                        <li>Developed front-end components using Vue.js and Sass, bundled with Webpack, and integrated with Laravel backends.</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <span class="company">ATIS</span>
+                        <span class="date">Feb 2020 – Oct 2021</span>
+                    </div>
+                    <div class="position">Frontend Developer</div>
+                    <ul class="bullet-points">
+                        <li>Architected and developed a booking application from the ground up using Angular, implementing features like form management and state handling.</li>
+                        <li>Built sophisticated forms for a client project (Edea) and created Single Page Applications (SPAs) with lazy loading and advanced routing for optimal performance.</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <span class="company">Celonis</span>
+                        <span class="date">Aug 2018 – Oct 2020</span>
+                    </div>
+                    <div class="position">Frontend UI Developer</div>
+                    <ul class="bullet-points">
+                        <li>Engineered reusable UI components and implemented complex data filtering and visualization features using Angular and Sass.</li>
+                        <li>Developed interactive charts and data tables to present complex process mining data clearly and effectively.</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <span class="company">Open Data Kosovo (ODK)</span>
+                        <span class="date">Jun 2018 – Sep 2018</span>
+                    </div>
+                    <div class="position">Frontend Developer</div>
+                    <ul class="bullet-points">
+                        <li>Completed an internship, contributing to a project using Bootstrap and PHP, focusing on front-end development and implementation.</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <span class="company">NEO DESIGN</span>
+                        <span class="date">Feb 2017 – Aug 2017</span>
+                    </div>
+                    <div class="position">User Interface Developer</div>
+                    <ul class="bullet-points">
+                        <li>Enhanced website designs and interactivity using JavaScript, jQuery, and Bootstrap frameworks.</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <span class="company">Freelance</span>
+                        <span class="date">Jan 2014 – Jan 2017</span>
+                    </div>
+                    <div class="position">Frontend Developer</div>
+                    <ul class="bullet-points">
+                        <li>Self-taught core web technologies through hands-on project development.</li>
+                        <li>Built portfolios and applications using React, Vue, Angular, and Python, while practicing algorithms and problem-solving.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Education -->
+            <section class="main-section">
+                <h3 class="main-section-title">Education</h3>
+                <div class="education-item">
+                    <div class="experience-header">
+                        <strong>Bachelor of Science in Computer Science and Engineering</strong>
+                    </div>
+                    <div>University for Business and Technology (UBT), Pristina, Kosovo</div>
+                    <div class="date">Graduated: January 2014</div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

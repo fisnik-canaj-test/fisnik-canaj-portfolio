@@ -28,10 +28,10 @@
       "title": "Frontend Developer",
       "period": "Nov 2023 – Present",
       "bullets": [
-        "Worked on Hypedrop and CSGORoll using Angular 16/17, GraphQL/Apollo, TypeScript, NgRx and RxJS.",
-        "Designed and shipped a Favourites box feature to increase engagement and retention.",
-        "Resolved defects and optimised performance and stability across betting flows.",
-        "Collaborated cross‑functionally to deliver high‑quality features with strong UI/UX."
+        "CSGORoll – Developed betting experiences with Angular 16/17, GraphQL/Apollo, NgRx, and RxJS.",
+        "Created a favourites module and uplifted stability and performance across high-traffic flows.",
+        "Partnered with design to refine UI/UX while coordinating with cross-functional squads.",
+        "Hypedrop – Delivered admin login, password reset, and account journeys using Qwik, GraphQL, Builder.io, and Tailwind CSS."
       ]
     },
     {
@@ -39,10 +39,9 @@
       "title": "Frontend/Angular Developer",
       "period": "Jun 2022 – Oct 2023",
       "bullets": [
-        "Volvo car purchase module enabling online sales for regional markets.",
-        "Cisco Health Care enhancements and Cypress test coverage with partner Avodaq.",
-        "Optimised Service Plan project across front‑ and back‑end; migrated Angular 13→15 in NX.",
-        "Maintained brand consistency and improved page performance at scale."
+        "Extended Volvo’s online car purchase module for regional sales journeys.",
+        "Added new experiences to the Cisco Health Care platform with partner teams.",
+        "Improved Service Plan reliability with Cypress coverage and NX-driven Angular upgrades."
       ]
     },
     {
@@ -50,8 +49,8 @@
       "title": "Frontend Developer",
       "period": "Nov 2021 – May 2022",
       "bullets": [
-        "Delivered features prioritising UX and responsiveness across devices.",
-        "Built reusable components and leveraged Vue.js, JavaScript, Sass, Webpack and PHP/Laravel."
+        "Shipped UX improvements and mobile optimisations across marketing pages.",
+        "Built reusable Vue.js components with Sass, Webpack, and Laravel integrations."
       ]
     },
     {
@@ -59,8 +58,9 @@
       "title": "Frontend Developer",
       "period": "Feb 2020 – Oct 2021",
       "bullets": [
-        "Angular booking application with lazy loading and routing.",
-        "Complex forms integrated with APIs for E‑Dea; identified automation opportunities."
+        "Delivered an Angular booking application with lazy loading and modular routing.",
+        "Built complex reservation forms for E-Dea and integrated with backend APIs.",
+        "Crafted SPA patterns that balanced performance and maintainability."
       ]
     },
     {
@@ -68,7 +68,8 @@
       "title": "Frontend UI Developer",
       "period": "Aug 2018 – Oct 2020",
       "bullets": [
-        "Built UI components, filtering and charting; improved app performance."
+        "Built UI components, filtering interfaces, and chart visualisations for the process mining platform.",
+        "Worked across Angular, Sass, and vanilla JavaScript to improve usability."
       ]
     },
     {
@@ -76,7 +77,7 @@
       "title": "Frontend Developer",
       "period": "Jun 2018 – Sep 2018",
       "bullets": [
-        "Completed coding workshop and shipped projects using HTML, CSS/Bootstrap and PHP."
+        "Completed an internship project using HTML, CSS/Bootstrap, and PHP to improve civic data access."
       ]
     },
     {
@@ -84,7 +85,7 @@
       "title": "UI Developer",
       "period": "Feb 2017 – Aug 2017",
       "bullets": [
-        "UI development with JavaScript, jQuery, Bootstrap, HTML and CSS."
+        "Enhanced UI design execution with JavaScript, jQuery, Bootstrap, HTML, and CSS."
       ]
     },
     {
@@ -92,7 +93,8 @@
       "title": "Frontend Developer",
       "period": "Jan 2014 – Jan 2017",
       "bullets": [
-        "Built portfolios and projects while learning Angular, React, Vue and Python; deepened DSA skills."
+        "Self-taught through React, Vue, Angular, and Python projects, focusing on clean front-end builds.",
+        "Delivered portfolios for clients while sharpening algorithm and data-structure fundamentals."
       ]
     }
   ],

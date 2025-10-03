@@ -16,14 +16,35 @@ interface ProjectSummary {
   link?: string;
 }
 
+interface ExperienceItem {
+  company: string;
+  title: string;
+  period: string;
+  bullets: string[];
+}
+
+interface EducationItem {
+  school: string;
+  degree: string;
+  period: string;
+  location?: string;
+}
+
 interface ProfileSummary {
   name: string;
   role: string;
   summary: string;
   about: string;
+  location: string;
+  email: string;
+  phone?: string;
   avatar?: string;
   links: ProfileLinks;
   projects: ProjectSummary[];
+  experience: ExperienceItem[];
+  education: EducationItem[];
+  skills: string[];
+  languages: string[];
 }
 
 interface SkillHighlight {
@@ -38,7 +59,9 @@ const FALLBACK_PROFILE: ProfileSummary = {
     'Front-end Developer with 8+ years of experience specialising in Angular and modern JS tooling. I design clean architectures, optimise performance, and deliver reliable UX for teams shipping at pace.',
   about:
     'Beyond contract roles I have built WordPress news portals, multilingual e-commerce apps, and R&D concepts like a 3D chess DApp. I enjoy taking ownership from architecture to polish and partnering closely with designers and product leaders.',
-  avatar: 'my-face.jpg',
+  location: 'Pristina, Kosovo',
+  email: 'canajfisnik@gmail.com',
+  avatar: 'assets/my-face.jpg',
   links: {
     github: 'https://github.com/fisnikcanaj1',
     portfolio: 'https://snikcanaj1.github.io',
@@ -65,7 +88,37 @@ const FALLBACK_PROFILE: ProfileSummary = {
       desc: 'Real-time betting components with RxJS and WebSockets for live odds experiences.',
       tags: ['RxJS', 'Realtime', 'UI']
     }
-  ]
+  ],
+  experience: [
+    {
+      company: 'Ancient Gaming',
+      title: 'Frontend Developer',
+      period: '2023 – Present',
+      bullets: [
+        'CSGORoll Angular 18 upgrade and wagering flows with GraphQL/Apollo.',
+        'Shipped wishlist and favourites journeys that improved engagement metrics.'
+      ]
+    },
+    {
+      company: 'Solution25',
+      title: 'Frontend/Angular Developer',
+      period: '2022 – 2023',
+      bullets: [
+        'Extended Volvo Cars checkout journeys for regional markets.',
+        'Brought NX-driven upgrades and Cypress coverage to shared libraries.'
+      ]
+    }
+  ],
+  education: [
+    {
+      school: 'University for Business and Technology (UBT)',
+      degree: 'BSc, Computer Science and Engineering',
+      period: '2014',
+      location: 'Pristina, Kosovo'
+    }
+  ],
+  skills: ['Angular', 'TypeScript', 'RxJS', 'NgRx', 'Tailwind CSS'],
+  languages: ['English', 'Albanian']
 };
 
 const TOP_SKILLS: SkillHighlight[] = [
@@ -97,6 +150,25 @@ function normaliseProject(project: any): ProjectSummary {
   };
 }
 
+function normaliseExperience(entry: any): ExperienceItem {
+  const bullets = Array.isArray(entry?.bullets) ? entry.bullets.filter(Boolean) : [];
+  return {
+    company: entry?.company ?? 'Company',
+    title: entry?.title ?? 'Frontend Developer',
+    period: entry?.period ?? '—',
+    bullets
+  };
+}
+
+function normaliseEducation(entry: any): EducationItem {
+  return {
+    school: entry?.school ?? 'University',
+    degree: entry?.degree ?? 'Degree',
+    period: entry?.period ?? '',
+    location: entry?.location || undefined
+  };
+}
+
 @Component({
   standalone: true,
   selector: 'app-home',
@@ -121,17 +193,37 @@ export class HomeComponent implements OnInit {
       ? current.projects
       : FALLBACK_PROFILE.projects;
 
+    const experienceSource = Array.isArray(current.experience) && current.experience.length
+      ? current.experience
+      : FALLBACK_PROFILE.experience;
+
+    const educationSource = Array.isArray(current.education) && current.education.length
+      ? current.education
+      : FALLBACK_PROFILE.education;
+
+    const skillsSource = Array.isArray(current.skills) && current.skills.length
+      ? current.skills
+      : FALLBACK_PROFILE.skills;
+
+    const languagesSource = Array.isArray(current.languages) && current.languages.length
+      ? current.languages
+      : FALLBACK_PROFILE.languages;
+
     return {
       ...FALLBACK_PROFILE,
       ...current,
       links,
-      projects: projectsSource.map(normaliseProject)
+      projects: projectsSource.map(normaliseProject),
+      experience: experienceSource.map(normaliseExperience),
+      education: educationSource.map(normaliseEducation),
+      skills: skillsSource,
+      languages: languagesSource
     };
   });
 
   readonly topSkills = TOP_SKILLS;
-
-  readonly projectPreview = computed<ProjectSummary[]>(() => this.profile().projects.slice(0, 4));
+  readonly featuredProjects = computed<ProjectSummary[]>(() => this.profile().projects.slice(0, 6));
+  readonly additionalProjects = computed<ProjectSummary[]>(() => this.profile().projects.slice(6));
 
   ngOnInit(): void {
     void this.dataService.load();
