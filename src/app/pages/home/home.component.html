@@ -4,7 +4,7 @@
 @let overflowProjects = additionalProjects();
 
 <div class="min-h-screen py-12 sm:py-16 lg:py-24">
-  <div class="mx-auto max-w-6xl px-4 lg:px-8 lg:grid lg:grid-cols-[minmax(240px,280px)_minmax(0,1fr)] lg:gap-16 xl:grid-cols-[minmax(260px,320px)_minmax(0,1fr)]">
+  <div class="mx-auto max-w-6xl  lg:grid lg:grid-cols-[minmax(240px,280px)_minmax(0,1fr)] lg:gap-16 xl:grid-cols-[minmax(260px,320px)_minmax(0,1fr)]">
     <aside class="flex flex-col gap-6 border-b border-black/10 pb-10 dark:border-white/10 lg:sticky lg:top-16 lg:h-fit lg:border-none lg:pb-0">
       <div>
         <p class="text-xs uppercase tracking-[0.35em] text-brand-600 dark:text-brand-300">{{ data.role }}</p>
@@ -18,20 +18,20 @@
 
       <nav class="flex flex-col gap-2 text-sm font-medium text-gray-500 dark:text-gray-400">
         <a routerLink="/" fragment="about" class="group inline-flex items-center gap-3 py-1 transition hover:text-black dark:hover:text-white">
-          <span>About</span>
           <span class="h-px w-8 bg-gray-300 transition-all duration-200 group-hover:w-16 group-hover:bg-brand-500"></span>
+          <span>About</span>
         </a>
         <a routerLink="/" fragment="experience" class="group inline-flex items-center gap-3 py-1 transition hover:text-black dark:hover:text-white">
-          <span>Experience</span>
           <span class="h-px w-8 bg-gray-300 transition-all duration-200 group-hover:w-16 group-hover:bg-brand-500"></span>
+          <span>Experience</span>
         </a>
         <a routerLink="/" fragment="projects" class="group inline-flex items-center gap-3 py-1 transition hover:text-black dark:hover:text-white">
-          <span>Projects</span>
           <span class="h-px w-8 bg-gray-300 transition-all duration-200 group-hover:w-16 group-hover:bg-brand-500"></span>
+          <span>Projects</span>
         </a>
         <a routerLink="/" fragment="contact" class="group inline-flex items-center gap-3 py-1 transition hover:text-black dark:hover:text-white">
-          <span>Contact</span>
           <span class="h-px w-8 bg-gray-300 transition-all duration-200 group-hover:w-16 group-hover:bg-brand-500"></span>
+          <span>Contact</span>
         </a>
       </nav>
 

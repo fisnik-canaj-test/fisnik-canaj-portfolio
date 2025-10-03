@@ -10,8 +10,63 @@ html { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", 
 html { font-size: 16px; }
 @media (min-width: 768px) { html { font-size: 17px; } }
 
+:root {
+  --page-spot-x: 50%;
+  --page-spot-y: 45%;
+  --page-spot-opacity: 0;
+}
+
 body { @apply min-h-screen bg-white text-black transition-colors duration-300 ease-out; }
 .dark body { @apply bg-black text-white; }
+
+.page-shell {
+  position: relative;
+  isolation: isolate;
+  background: transparent;
+}
+
+.page-shell > * {
+  position: relative;
+  z-index: 1;
+}
+
+.page-shell::before,
+.page-shell::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+.page-shell::before {
+  z-index: -2;
+  background:
+    radial-gradient(1200px circle at 10% 0%, rgba(14, 165, 233, 0.12), transparent 65%),
+    radial-gradient(1400px circle at 80% 20%, rgba(14, 165, 233, 0.09), transparent 75%),
+    linear-gradient(180deg, #f8fafc 0%, #e0f2fe 100%);
+  opacity: 1;
+  transition: opacity 300ms ease;
+}
+
+.dark .page-shell::before {
+  background:
+    radial-gradient(1200px circle at 5% 5%, rgba(37, 99, 235, 0.25), transparent 65%),
+    radial-gradient(1400px circle at 80% 20%, rgba(59, 130, 246, 0.18), transparent 80%),
+    linear-gradient(180deg, #020617 0%, #050b1a 100%);
+}
+
+.page-shell::after {
+  z-index: -1;
+  background: radial-gradient(30rem circle at var(--page-spot-x) var(--page-spot-y), rgba(14, 165, 233, 0.28), rgba(14, 165, 233, 0) 60%);
+  opacity: var(--page-spot-opacity);
+  transition: opacity 200ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-shell::after {
+    transition: none;
+  }
+}
 
 .card { @apply rounded-2xl border border-black/10 bg-white text-black shadow-soft backdrop-blur-sm dark:border-white/15 dark:bg-black dark:text-white; }
 .card-body { @apply p-5 md:p-6; }
