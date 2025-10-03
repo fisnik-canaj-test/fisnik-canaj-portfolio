@@ -3,7 +3,7 @@
 @let featured = featuredProjects();
 @let overflowProjects = additionalProjects();
 
-<div class="min-h-screen py-12 sm:py-16 lg:py-24">
+<div class="min-h-screen py-4 sm:py-6">
   <div class="mx-auto max-w-6xl  lg:grid lg:grid-cols-[minmax(240px,280px)_minmax(0,1fr)] lg:gap-16 xl:grid-cols-[minmax(260px,320px)_minmax(0,1fr)]">
     <aside class="flex flex-col gap-6 border-b border-black/10 pb-10 dark:border-white/10 lg:sticky lg:top-16 lg:h-fit lg:border-none lg:pb-0">
       <div>
@@ -16,24 +16,41 @@
         </p>
       </div>
 
-      <nav class="flex flex-col gap-2 text-sm font-medium text-gray-500 dark:text-gray-400">
-        <a routerLink="/" fragment="about" class="group inline-flex items-center gap-3 py-1 transition hover:text-black dark:hover:text-white">
-          <span class="h-px w-8 bg-gray-300 transition-all duration-200 group-hover:w-16 group-hover:bg-brand-500"></span>
-          <span>About</span>
-        </a>
-        <a routerLink="/" fragment="experience" class="group inline-flex items-center gap-3 py-1 transition hover:text-black dark:hover:text-white">
-          <span class="h-px w-8 bg-gray-300 transition-all duration-200 group-hover:w-16 group-hover:bg-brand-500"></span>
-          <span>Experience</span>
-        </a>
-        <a routerLink="/" fragment="projects" class="group inline-flex items-center gap-3 py-1 transition hover:text-black dark:hover:text-white">
-          <span class="h-px w-8 bg-gray-300 transition-all duration-200 group-hover:w-16 group-hover:bg-brand-500"></span>
-          <span>Projects</span>
-        </a>
-        <a routerLink="/" fragment="contact" class="group inline-flex items-center gap-3 py-1 transition hover:text-black dark:hover:text-white">
-          <span class="h-px w-8 bg-gray-300 transition-all duration-200 group-hover:w-16 group-hover:bg-brand-500"></span>
-          <span>Contact</span>
-        </a>
-      </nav>
+      <div class="flex flex-col gap-2">
+        @let currentSection = activeNavSection();
+        @let activeId = activeSection();
+
+        <div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+          <span class="uppercase tracking-[0.35em]">Active section</span>
+          @if (currentSection.pageRoute) {
+            <a
+              class="link text-[11px] normal-case tracking-normal"
+              [routerLink]="currentSection.pageRoute"
+            >
+              Open {{ currentSection.label }}
+            </a>
+          }
+        </div>
+
+        <nav class="flex flex-col gap-2 text-sm font-medium text-gray-500 dark:text-gray-400">
+          @for (section of navSections; track section.id) {
+            <a
+              routerLink="/"
+              [fragment]="section.fragment"
+              class="group inline-flex items-center gap-3 py-1 transition hover:text-black dark:hover:text-white"
+              [attr.aria-current]="activeId === section.id ? 'true' : null"
+              [ngClass]="activeId === section.id ? ['text-black', 'dark:text-white'] : []"
+            >
+              <span
+                class="h-px transition-all duration-200 group-hover:w-16 group-hover:bg-brand-500"
+                [ngClass]="activeId === section.id ? 'w-16 bg-brand-500' : 'w-8 bg-gray-300'"
+              ></span>
+
+              <span>{{ section.label }}</span>
+            </a>
+          }
+        </nav>
+      </div>
 
       <div class="flex flex-col gap-2 text-sm text-gray-500 dark:text-gray-400">
         <div>Based in <span class="font-medium text-gray-900 dark:text-gray-100">{{ data.location }}</span></div>

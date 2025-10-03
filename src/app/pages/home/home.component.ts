@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { DataService } from '../../shared/data.service';
@@ -50,6 +50,13 @@ interface ProfileSummary {
 interface SkillHighlight {
   title: string;
   body: string;
+}
+
+interface NavSection {
+  id: string;
+  label: string;
+  fragment: string;
+  pageRoute?: string;
 }
 
 const FALLBACK_PROFILE: ProfileSummary = {
@@ -140,6 +147,13 @@ const TOP_SKILLS: SkillHighlight[] = [
   }
 ];
 
+const NAV_SECTIONS: NavSection[] = [
+  { id: 'about', label: 'About', fragment: 'about' },
+  { id: 'experience', label: 'Experience', fragment: 'experience', pageRoute: '/experience' },
+  { id: 'projects', label: 'Projects', fragment: 'projects', pageRoute: '/projects' },
+  { id: 'contact', label: 'Contact', fragment: 'contact', pageRoute: '/contact' },
+];
+
 function normaliseProject(project: any): ProjectSummary {
   const tags = Array.isArray(project?.tags) && project.tags.length ? project.tags : ['Angular'];
   return {
@@ -175,8 +189,9 @@ function normaliseEducation(entry: any): EducationItem {
   imports: [CommonModule, RouterLink],
   templateUrl: './home.component.html'
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   private readonly dataService = inject(DataService);
+  private sectionObserver: IntersectionObserver | null = null;
 
   private readonly rawProfile = computed(() => this.dataService.profile());
 
@@ -222,10 +237,58 @@ export class HomeComponent implements OnInit {
   });
 
   readonly topSkills = TOP_SKILLS;
+
+  readonly navSections = NAV_SECTIONS;
+
   readonly featuredProjects = computed<ProjectSummary[]>(() => this.profile().projects.slice(0, 6));
   readonly additionalProjects = computed<ProjectSummary[]>(() => this.profile().projects.slice(6));
 
+  // Active section signal for nav highlighting
+  readonly activeSection = signal<string>('about');
+  readonly activeNavSection = computed<NavSection>(() => {
+    const current = this.activeSection();
+    return this.navSections.find((section) => section.id === current) ?? this.navSections[0]!;
+  });
+
   ngOnInit(): void {
     void this.dataService.load();
+
+    // Setup section observer for active nav highlighting (browser only)
+    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+      const ids = this.navSections.map((section) => section.id);
+      const targets = ids
+        .map((id) => document.getElementById(id))
+        .filter((el): el is HTMLElement => !!el);
+
+      if (targets.length) {
+        this.sectionObserver = new IntersectionObserver(
+          (entries) => {
+            // Choose the entry with largest intersection ratio that is intersecting
+            const visible = entries
+              .filter((e) => e.isIntersecting)
+              .sort((a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0));
+            const top = visible[0];
+            if (top?.target?.id) {
+              this.activeSection.set(top.target.id);
+            }
+          },
+          {
+            root: null,
+            // Trigger when section is roughly in middle of viewport
+            rootMargin: '-35% 0px -55% 0px',
+            threshold: [0, 0.25, 0.5, 0.75, 1],
+          },
+        );
+
+        targets.forEach((t) => this.sectionObserver!.observe(t));
+      }
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.sectionObserver) {
+      this.sectionObserver.disconnect();
+      this.sectionObserver = null;
+    }
   }
 }
