@@ -5,24 +5,40 @@ import { isPlatformBrowser } from '@angular/common';
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
   private platformId = inject(PLATFORM_ID);
-  mode = signal<'light'|'dark'>(
-    isPlatformBrowser(this.platformId) && globalThis.matchMedia?.('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light'
-  );
+  private readonly storageKey = 'theme-preference';
+  private readonly modeSignal = signal<'light' | 'dark'>(this.getInitialMode());
 
-  constructor(){ this.apply(); }
+  readonly mode = this.modeSignal.asReadonly();
 
-  toggle(){
-    this.mode.update(m => (m === 'dark' ? 'light' : 'dark'));
+  constructor() {
     this.apply();
   }
 
-  private apply(){
+  toggle(): void {
+    this.modeSignal.update((mode) => (mode === 'dark' ? 'light' : 'dark'));
+    this.apply();
+    this.persist();
+  }
+
+  private getInitialMode(): 'light' | 'dark' {
+    if (!isPlatformBrowser(this.platformId)) return 'dark';
+
+    const stored = localStorage.getItem(this.storageKey);
+    if (stored === 'light' || stored === 'dark') {
+      return stored;
+    }
+
+    return 'dark';
+  }
+
+  private apply(): void {
     if (!isPlatformBrowser(this.platformId)) return;
     const html = document.documentElement;
-    if (this.mode() === 'dark') html.classList.add('dark');
-    else html.classList.remove('dark');
+    html.classList.toggle('dark', this.modeSignal() === 'dark');
+  }
+
+  private persist(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+    localStorage.setItem(this.storageKey, this.modeSignal());
   }
 }
-

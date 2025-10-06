@@ -43,7 +43,7 @@ export class App implements OnInit, OnDestroy {
         const y = (event.clientY / innerHeight) * 100;
         root.style.setProperty('--page-spot-x', `${x}%`);
         root.style.setProperty('--page-spot-y', `${y}%`);
-        root.style.setProperty('--page-spot-opacity', '0.22');
+        root.style.setProperty('--page-spot-opacity', '0.45');
       };
 
       let animationFrame: number | null = null;

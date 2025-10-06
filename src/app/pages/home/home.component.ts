@@ -243,6 +243,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   readonly featuredProjects = computed<ProjectSummary[]>(() => this.profile().projects.slice(0, 6));
   readonly additionalProjects = computed<ProjectSummary[]>(() => this.profile().projects.slice(6));
 
+  readonly locationMapLink = computed<string | null>(() => {
+    const location = this.profile().location?.trim();
+    if (!location) return null;
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`;
+  });
+
   // Active section signal for nav highlighting
   readonly activeSection = signal<string>('about');
   readonly activeNavSection = computed<NavSection>(() => {
@@ -263,7 +269,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       if (targets.length) {
         this.sectionObserver = new IntersectionObserver(
           (entries) => {
-            // Choose the entry with largest intersection ratio that is intersecting
             const visible = entries
               .filter((e) => e.isIntersecting)
               .sort((a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0));

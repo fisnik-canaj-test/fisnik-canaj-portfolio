@@ -5,7 +5,7 @@
 
 <div class="min-h-screen py-4 sm:py-6">
   <div class="mx-auto max-w-6xl  lg:grid lg:grid-cols-[minmax(240px,280px)_minmax(0,1fr)] lg:gap-16 xl:grid-cols-[minmax(260px,320px)_minmax(0,1fr)]">
-    <aside class="flex flex-col gap-6 border-b border-black/10 pb-10 dark:border-white/10 lg:sticky lg:top-16 lg:h-fit lg:border-none lg:pb-0">
+    <aside class="flex flex-col gap-6 border-b border-black/10 pb-10 dark:border-white/10 lg:sticky lg:top-24 lg:h-fit lg:border-none lg:pb-0">
       <div>
         <p class="text-xs uppercase tracking-[0.35em] text-brand-600 dark:text-brand-300">{{ data.role }}</p>
         <h1 class="mt-4 text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl">
@@ -52,17 +52,96 @@
         </nav>
       </div>
 
-      <div class="flex flex-col gap-2 text-sm text-gray-500 dark:text-gray-400">
-        <div>Based in <span class="font-medium text-gray-900 dark:text-gray-100">{{ data.location }}</span></div>
-        <a class="link" [href]="'mailto:' + data.email">{{ data.email }}</a>
+      <div class="flex flex-wrap items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
+        @let locationLink = locationMapLink();
+        @if (locationLink) {
+          <a
+            class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-gray-500 transition hover:border-brand-500 hover:text-brand-600 dark:border-white/15 dark:text-gray-300 dark:hover:border-brand-300 dark:hover:text-brand-200"
+            [href]="locationLink"
+            target="_blank"
+            rel="noopener"
+          >
+            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4">
+              <path
+                fill="currentColor"
+                d="M12 2a7 7 0 0 0-7 7c0 5.25 6.12 12.16 6.38 12.44.35.36.89.36 1.24 0C12.88 21.16 19 14.25 19 9a7 7 0 0 0-7-7m0 3.5A3.5 3.5 0 1 1 8.5 9 3.5 3.5 0 0 1 12 5.5"
+              />
+            </svg>
+            <span class="sr-only">Based in {{ data.location }}</span>
+          </a>
+        } @else {
+          <div class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-gray-500 dark:border-white/15 dark:text-gray-300" aria-hidden="true">
+            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4">
+              <path
+                fill="currentColor"
+                d="M12 2a7 7 0 0 0-7 7c0 5.25 6.12 12.16 6.38 12.44.35.36.89.36 1.24 0C12.88 21.16 19 14.25 19 9a7 7 0 0 0-7-7m0 3.5A3.5 3.5 0 1 1 8.5 9 3.5 3.5 0 0 1 12 5.5"
+              />
+            </svg>
+          </div>
+        }
+
+        <a
+          class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-gray-500 transition hover:border-brand-500 hover:text-brand-600 dark:border-white/15 dark:text-gray-300 dark:hover:border-brand-300 dark:hover:text-brand-200"
+          [href]="'mailto:' + data.email"
+        >
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4">
+            <path
+              fill="currentColor"
+              d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2m0 2v.34l8 5.33 8-5.33V7Zm0 10h16V9.66l-7.48 4.99a1 1 0 0 1-1.04 0L4 9.66Z"
+            />
+          </svg>
+          <span class="sr-only">Email {{ data.email }}</span>
+        </a>
+
         @if (data.links.linkedin) {
-          <a class="link" [href]="data.links.linkedin" target="_blank" rel="noopener">LinkedIn</a>
+          <a
+            class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-gray-500 transition hover:border-brand-500 hover:text-brand-600 dark:border-white/15 dark:text-gray-300 dark:hover:border-brand-300 dark:hover:text-brand-200"
+            [href]="data.links.linkedin"
+            target="_blank"
+            rel="noopener"
+          >
+            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4">
+              <path
+                fill="currentColor"
+                d="M4.98 3.5a2.25 2.25 0 1 1 0 4.5 2.25 2.25 0 0 1 0-4.5M3 9h4v12H3zm6 0h3.82v1.71h.05c.53-1 1.82-2.06 3.75-2.06C20.11 8.65 21 11 21 14.37V21H17v-6c0-1.43-.03-3.27-2-3.27-2 0-2.31 1.56-2.31 3.16V21H9z"
+              />
+            </svg>
+            <span class="sr-only">LinkedIn profile</span>
+          </a>
         }
+
         @if (data.links.github) {
-          <a class="link" [href]="data.links.github" target="_blank" rel="noopener">GitHub</a>
+          <a
+            class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-gray-500 transition hover:border-brand-500 hover:text-brand-600 dark:border-white/15 dark:text-gray-300 dark:hover:border-brand-300 dark:hover:text-brand-200"
+            [href]="data.links.github"
+            target="_blank"
+            rel="noopener"
+          >
+            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4">
+              <path
+                fill="currentColor"
+                d="M12 2a10 10 0 0 0-3.16 19.48c.5.09.68-.22.68-.48v-1.69c-2.77.6-3.36-1.18-3.36-1.18a2.64 2.64 0 0 0-1.11-1.46c-.91-.62.07-.61.07-.61a2.09 2.09 0 0 1 1.52 1 2.12 2.12 0 0 0 2.89.83 2.12 2.12 0 0 1 .63-1.33c-2.22-.25-4.55-1.11-4.55-4.94A3.87 3.87 0 0 1 6.8 9.42 3.6 3.6 0 0 1 6.9 6.73s.84-.27 2.75 1a9.48 9.48 0 0 1 5 0c1.91-1.29 2.75-1 2.75-1a3.6 3.6 0 0 1 .1 2.69 3.87 3.87 0 0 1 1 2.68c0 3.84-2.33 4.68-4.56 4.93a2.37 2.37 0 0 1 .68 1.83v2.71c0 .26.18.58.69.48A10 10 0 0 0 12 2"
+              />
+            </svg>
+            <span class="sr-only">GitHub profile</span>
+          </a>
         }
+
         @if (data.links.portfolio) {
-          <a class="link" [href]="data.links.portfolio" target="_blank" rel="noopener">Portfolio</a>
+          <a
+            class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-gray-500 transition hover:border-brand-500 hover:text-brand-600 dark:border-white/15 dark:text-gray-300 dark:hover:border-brand-300 dark:hover:text-brand-200"
+            [href]="data.links.portfolio"
+            target="_blank"
+            rel="noopener"
+          >
+            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4">
+              <path
+                fill="currentColor"
+                d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2m6.92 6h-3.63a12.94 12.94 0 0 0-1.16-4.12A8 8 0 0 1 18.92 8M12 4.07a10.87 10.87 0 0 1 1.59 3.93h-3.18A10.87 10.87 0 0 1 12 4.07M4.26 14A7.93 7.93 0 0 1 4 12a7.93 7.93 0 0 1 .26-2h3.89a13.7 13.7 0 0 0-.15 2 13.7 13.7 0 0 0 .15 2Zm.82 2h3.63a12.94 12.94 0 0 0 1.16 4.12A8 8 0 0 1 5.08 16M8.71 10h6.58a11.83 11.83 0 0 1 .14 2 11.83 11.83 0 0 1-.14 2H8.71a11.83 11.83 0 0 1-.14-2 11.83 11.83 0 0 1 .14-2m4.7 10a10.87 10.87 0 0 1-1.59-3.93h3.18A10.87 10.87 0 0 1 13.41 20M16 20.05a12.94 12.94 0 0 0 1.16-4.12h3.63A8 8 0 0 1 16 20.05"
+              />
+            </svg>
+            <span class="sr-only">Portfolio</span>
+          </a>
         }
       </div>
 
