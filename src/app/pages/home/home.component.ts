@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { DataService } from '../../shared/data.service';
 
 interface ProfileLinks {
@@ -186,11 +187,12 @@ function normaliseEducation(entry: any): EducationItem {
 @Component({
   standalone: true,
   selector: 'app-home',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, ReactiveFormsModule],
   templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit, OnDestroy {
   private readonly dataService = inject(DataService);
+  private readonly fb = inject(FormBuilder);
   private sectionObserver: IntersectionObserver | null = null;
 
   private readonly rawProfile = computed(() => this.dataService.profile());
@@ -240,8 +242,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   readonly navSections = NAV_SECTIONS;
 
-  readonly featuredProjects = computed<ProjectSummary[]>(() => this.profile().projects.slice(0, 6));
-  readonly additionalProjects = computed<ProjectSummary[]>(() => this.profile().projects.slice(6));
+  readonly featuredProjects = computed<ProjectSummary[]>(() => this.profile().projects.slice(0, 4));
+  readonly additionalProjects = computed<ProjectSummary[]>(() => this.profile().projects.slice(4));
 
   readonly locationMapLink = computed<string | null>(() => {
     const location = this.profile().location?.trim();
@@ -249,12 +251,29 @@ export class HomeComponent implements OnInit, OnDestroy {
     return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`;
   });
 
+  // Contact form state
+  readonly contactForm = this.fb.nonNullable.group({
+    name: ['', [Validators.required, Validators.maxLength(80)]],
+    email: ['', [Validators.required, Validators.email, Validators.maxLength(120)]],
+    company: ['', Validators.maxLength(120)],
+    message: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(1200)]],
+  });
+  readonly contactControls = this.contactForm.controls;
+  readonly isSending = signal(false);
+  readonly sendSuccess = signal<boolean | null>(null);
+  readonly submitAttempted = signal(false);
+
   // Active section signal for nav highlighting
   readonly activeSection = signal<string>('about');
   readonly activeNavSection = computed<NavSection>(() => {
     const current = this.activeSection();
     return this.navSections.find((section) => section.id === current) ?? this.navSections[0]!;
   });
+
+  controlInvalid(control: keyof typeof this.contactControls): boolean {
+    const field = this.contactControls[control];
+    return field.invalid && (field.touched || this.submitAttempted());
+  }
 
   ngOnInit(): void {
     void this.dataService.load();
@@ -287,6 +306,41 @@ export class HomeComponent implements OnInit, OnDestroy {
 
         targets.forEach((t) => this.sectionObserver!.observe(t));
       }
+    }
+  }
+
+  async submitContact(): Promise<void> {
+    if (this.isSending()) {
+      return;
+    }
+
+    this.submitAttempted.set(true);
+
+    if (this.contactForm.invalid) {
+      this.contactForm.markAllAsTouched();
+      return;
+    }
+
+    this.isSending.set(true);
+    this.sendSuccess.set(null);
+
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1200));
+      this.sendSuccess.set(true);
+      this.contactForm.reset({
+        name: '',
+        email: '',
+        company: '',
+        message: '',
+      });
+      this.contactForm.markAsPristine();
+      this.contactForm.markAsUntouched();
+      this.submitAttempted.set(false);
+    } catch (error) {
+      console.error('Contact form submission failed', error);
+      this.sendSuccess.set(false);
+    } finally {
+      this.isSending.set(false);
     }
   }
 

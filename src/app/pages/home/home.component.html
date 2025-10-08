@@ -16,7 +16,7 @@
         </p>
       </div>
 
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-3">
         @let currentSection = activeNavSection();
         @let activeId = activeSection();
 
@@ -32,12 +32,12 @@
           }
         </div>
 
-        <nav class="flex flex-col gap-2 text-sm font-medium text-gray-500 dark:text-gray-400">
+        <nav class="flex flex-col gap-2 text-xs font-bold text-gray-500 dark:text-gray-400">
           @for (section of navSections; track section.id) {
             <a
               routerLink="/"
               [fragment]="section.fragment"
-              class="group inline-flex items-center gap-3 py-1 transition hover:text-black dark:hover:text-white"
+              class="group inline-flex items-center gap-3 py-1 transition hover:text-black dark:hover:text-white uppercase"
               [attr.aria-current]="activeId === section.id ? 'true' : null"
               [ngClass]="activeId === section.id ? ['text-black', 'dark:text-white'] : []"
             >
@@ -182,14 +182,16 @@
 
         <div class="mt-10">
           <h3 class="text-sm font-semibold uppercase tracking-[0.3em] text-gray-500 dark:text-gray-400">Toolbox</h3>
-          <ul class="mt-4 grid gap-3 text-sm text-gray-600 dark:text-gray-300 sm:grid-cols-2 lg:grid-cols-3">
-            @for (skill of data.skills; track skill) {
-              <li class="flex items-center gap-2">
-                <span class="h-1.5 w-1.5 rounded-full bg-brand-500"></span>
-                <span>{{ skill }}</span>
-              </li>
-            }
-          </ul>
+          <div class="toolbox-panel">
+            <ul class="toolbox-grid">
+              @for (skill of data.skills; track skill) {
+                <li class="toolbox-card">
+                  <span class="toolbox-card__accent" aria-hidden="true"></span>
+                  <span class="toolbox-card__label">{{ skill }}</span>
+                </li>
+              }
+            </ul>
+          </div>
         </div>
       </section>
 
@@ -198,25 +200,39 @@
         <h2 class="mt-4 text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl">
           Teams I’ve helped ship for
         </h2>
-        <ol class="mt-8 space-y-8 border-s border-black/10 ps-6 dark:border-white/10">
-          @for (item of data.experience; track item.company + item.period) {
-            <li class="relative ps-2">
-              <span class="absolute -left-6 top-2 h-3 w-3 rounded-full border-2 border-white bg-brand-500 dark:border-black"></span>
-              <div class="flex flex-col gap-1 text-sm sm:flex-row sm:items-baseline sm:justify-between">
-                <div class="font-semibold text-gray-900 dark:text-gray-100">{{ item.title }}</div>
-                <div class="text-gray-500 dark:text-gray-400">{{ item.company }}</div>
-                <time class="text-xs uppercase tracking-wide text-gray-400">{{ item.period }}</time>
+        <div class="mt-8 grid gap-4">
+          @for (item of data.experience.slice(0, 3); track item.company + item.period) {
+            <article class="experience-card">
+              <div class="experience-card__inner">
+                <header class="experience-card__header">
+                  <div>
+                    <h3 class="experience-card__title">{{ item.title }}</h3>
+                    <p class="experience-card__company">{{ item.company }}</p>
+                  </div>
+                  <time class="experience-card__period">{{ item.period }}</time>
+                </header>
+
+                @if (item.bullets.length) {
+                  <ul class="experience-card__bullets">
+                    @for (bullet of item.bullets; track bullet) {
+                      <li>{{ bullet }}</li>
+                    }
+                  </ul>
+                }
               </div>
-              @if (item.bullets.length) {
-                <ul class="mt-3 space-y-2 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
-                  @for (bullet of item.bullets; track bullet) {
-                    <li>{{ bullet }}</li>
-                  }
-                </ul>
-              }
-            </li>
+            </article>
           }
-        </ol>
+        </div>
+
+        <div class="mt-6 flex justify-end">
+          <a class="experience-card__link" routerLink="/experience">
+            View full experience timeline
+            <svg viewBox="0 0 20 20" aria-hidden="true" class="experience-card__icon">
+              <path d="M7.5 4.5h8v8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M4.5 15.5 15.5 4.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
 
         @if (data.education.length) {
           <div class="mt-12 rounded-2xl border border-black/10 bg-white/60 p-6 dark:border-white/10 dark:bg-white/5">
@@ -244,22 +260,33 @@
         <h2 class="mt-4 text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl">
           Selected collaborations & launches
         </h2>
-        <div class="mt-8 grid gap-6 md:grid-cols-2">
+        <div class="mt-8 grid gap-6">
           @for (project of featured; track project.name) {
-            <article class="rounded-3xl border border-black/10 bg-white/70 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:border-white/10 dark:bg-white/5">
-              <div class="flex items-start justify-between gap-4">
-                <div>
-                  <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ project.name }}</h3>
-                  <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">{{ project.desc }}</p>
+            <article class="project-card">
+              <div class="project-card__inner">
+                <div class="project-card__header">
+                  <h3 class="project-card__title">{{ project.name }}</h3>
+                  @if (project.link) {
+                    <a
+                      class="project-card__link project-card__link--labelled"
+                      [href]="project.link"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      <span class="project-card__link-text">Visit</span>
+                      <svg viewBox="0 0 20 20" aria-hidden="true" class="project-card__icon">
+                        <path d="M7.5 4.5h8v8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M4.5 15.5 15.5 4.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </a>
+                  }
                 </div>
-                @if (project.link) {
-                  <a class="link text-xs" [href]="project.link" target="_blank" rel="noopener">Visit</a>
-                }
-              </div>
-              <div class="mt-4 flex flex-wrap gap-2">
-                @for (tag of project.tags; track tag) {
-                  <span class="tag">{{ tag }}</span>
-                }
+                <p class="project-card__desc">{{ project.desc }}</p>
+                <div class="project-card__tags">
+                  @for (tag of project.tags; track tag) {
+                    <span class="project-card__tag">{{ tag }}</span>
+                  }
+                </div>
               </div>
             </article>
           }
@@ -268,28 +295,51 @@
         @if (overflowProjects.length) {
           <div class="mt-10">
             <h3 class="text-sm font-semibold uppercase tracking-[0.3em] text-gray-500 dark:text-gray-400">More deliveries</h3>
-            <ul class="mt-4 grid gap-4 sm:grid-cols-2">
+            <div class="mt-4 grid gap-4 sm:grid-cols-2">
               @for (project of overflowProjects; track project.name) {
-                <li class="rounded-2xl border border-black/10 bg-white/60 p-5 text-sm leading-relaxed text-gray-600 shadow-sm dark:border-white/10 dark:bg-white/5 dark:text-gray-300">
-                  <div class="flex items-start justify-between gap-3">
-                    <div class="font-semibold text-gray-900 dark:text-gray-100">{{ project.name }}</div>
-                    @if (project.link) {
-                      <a class="link text-xs" [href]="project.link" target="_blank" rel="noopener">Visit</a>
-                    }
-                  </div>
-                  <p class="mt-2">{{ project.desc }}</p>
-                  @if (project.tags.length) {
-                    <div class="mt-3 flex flex-wrap gap-2">
-                      @for (tag of project.tags; track tag) {
-                        <span class="tag text-[0.65rem]">{{ tag }}</span>
+                <article class="project-card project-card--compact">
+                  <div class="project-card__inner">
+                    <div class="project-card__header">
+                      <h4 class="project-card__title">{{ project.name }}</h4>
+                      @if (project.link) {
+                        <a
+                          class="project-card__link project-card__link--labelled"
+                          [href]="project.link"
+                          target="_blank"
+                          rel="noopener"
+                        >
+                          <span class="project-card__link-text">Visit</span>
+                          <svg viewBox="0 0 20 20" aria-hidden="true" class="project-card__icon">
+                            <path d="M7.5 4.5h8v8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M4.5 15.5 15.5 4.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                        </a>
                       }
                     </div>
-                  }
-                </li>
+                    <p class="project-card__desc">{{ project.desc }}</p>
+                    @if (project.tags.length) {
+                      <div class="project-card__tags">
+                        @for (tag of project.tags; track tag) {
+                          <span class="project-card__tag project-card__tag--compact">{{ tag }}</span>
+                        }
+                      </div>
+                    }
+                  </div>
+                </article>
               }
-            </ul>
+            </div>
           </div>
         }
+
+        <div class="mt-8 flex justify-end">
+          <a class="projects-link" routerLink="/projects">
+            View full project catalog
+            <svg viewBox="0 0 20 20" aria-hidden="true" class="projects-link__icon">
+              <path d="M7.5 4.5h8v8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M4.5 15.5 15.5 4.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
       </section>
 
       <section id="contact" class="scroll-mt-24">
@@ -300,19 +350,142 @@
         <p class="mt-4 max-w-2xl text-base leading-relaxed text-gray-600 dark:text-gray-300">
           I’m available for senior Angular engagements, audits, or embed work with product teams. Drop a line and I’ll respond within a day.
         </p>
-        <div class="mt-6 flex flex-wrap gap-3">
-          <a class="btn px-5 py-2.5 text-sm" [href]="'mailto:' + data.email">Email {{ data.name.split(' ')[0] }}</a>
-          @if (data.links.linkedin) {
-            <a class="btn btn-outline px-5 py-2.5 text-sm" [href]="data.links.linkedin" target="_blank" rel="noopener">Connect on LinkedIn</a>
-          }
-        </div>
 
-        @if (data.languages.length) {
-          <div class="mt-8 text-sm text-gray-500 dark:text-gray-400">
-            <span class="font-semibold text-gray-700 dark:text-gray-200">Languages:</span>
-            {{ data.languages.join(', ') }}
-          </div>
-        }
+        <div class="contact-grid">
+          <form
+            class="project-card contact-card"
+            [formGroup]="contactForm"
+            (ngSubmit)="submitContact()"
+            novalidate
+          >
+            <div class="project-card__inner contact-card__inner">
+              <div class="contact-card__header">
+                <h3>Send a quick brief</h3>
+                <p>Share a little about your project or audit need and I’ll get back within one business day.</p>
+              </div>
+
+              <div class="contact-card__grid">
+                <label class="contact-field" [class.contact-field--invalid]="controlInvalid('name')">
+                  <span class="contact-field__label">Name *</span>
+                  <input
+                    type="text"
+                    formControlName="name"
+                    class="contact-field__input"
+                    autocomplete="name"
+                    placeholder="Your name"
+                  >
+                  <span class="contact-field__error" *ngIf="controlInvalid('name')">
+                    @if (contactControls.name.hasError('required')) {
+                      Please share your name.
+                    } @else if (contactControls.name.hasError('maxlength')) {
+                      Name looks a bit long—mind shortening it?
+                    }
+                  </span>
+                </label>
+
+                <label class="contact-field" [class.contact-field--invalid]="controlInvalid('email')">
+                  <span class="contact-field__label">Email *</span>
+                  <input
+                    type="email"
+                    formControlName="email"
+                    class="contact-field__input"
+                    autocomplete="email"
+                    placeholder="you@company.com"
+                  >
+                  <span class="contact-field__error" *ngIf="controlInvalid('email')">
+                    @if (contactControls.email.hasError('required')) {
+                      An email helps me follow up.
+                    } @else if (contactControls.email.hasError('email')) {
+                      Please use a valid email address.
+                    } @else if (contactControls.email.hasError('maxlength')) {
+                      Email looks a bit long—could you shorten it?
+                    }
+                  </span>
+                </label>
+
+                <label class="contact-field" [class.contact-field--invalid]="controlInvalid('company')">
+                  <span class="contact-field__label">Company</span>
+                  <input
+                    type="text"
+                    formControlName="company"
+                    class="contact-field__input"
+                    autocomplete="organization"
+                    placeholder="Organisation (optional)"
+                  >
+                  <span class="contact-field__error" *ngIf="controlInvalid('company')">
+                    @if (contactControls.company.hasError('maxlength')) {
+                      Could you shorten the company name?
+                    }
+                  </span>
+                </label>
+
+                <label class="contact-field contact-field--wide" [class.contact-field--invalid]="controlInvalid('message')">
+                  <span class="contact-field__label">What can I help with? *</span>
+                  <textarea
+                    formControlName="message"
+                    class="contact-field__textarea"
+                    rows="6"
+                    placeholder="Share timelines, goals, or anything else that’s helpful."
+                  ></textarea>
+                  <span class="contact-field__error" *ngIf="controlInvalid('message')">
+                    @if (contactControls.message.hasError('required')) {
+                      A short summary helps me understand your needs.
+                    } @else if (contactControls.message.hasError('minlength')) {
+                      A few more details will help me respond accurately.
+                    } @else if (contactControls.message.hasError('maxlength')) {
+                      This message is quite long—could you trim it down a little?
+                    }
+                  </span>
+                </label>
+              </div>
+
+              <div class="contact-card__actions">
+                <button class="contact-submit" type="submit" [disabled]="isSending()">
+                  <span *ngIf="!isSending(); else sendingState">Send message</span>
+                  <ng-template #sendingState>Sending…</ng-template>
+                </button>
+
+                <div class="contact-card__status" *ngIf="sendSuccess() === true">
+                  <span class="contact-card__status-icon">✓</span>
+                  Thanks! I’ll reply shortly.
+                </div>
+                <div class="contact-card__status contact-card__status--error" *ngIf="sendSuccess() === false">
+                  <span class="contact-card__status-icon">!</span>
+                  Something went wrong. Please email me directly.
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <aside class="project-card project-card--compact contact-aside">
+            <div class="project-card__inner contact-aside__inner">
+              <h3 class="contact-aside__title">Prefer a direct note?</h3>
+              <p class="contact-aside__body">
+                Feel free to reach out the classic way or connect where your team already works.
+              </p>
+
+              <div class="contact-aside__actions">
+                <a class="btn px-5 py-2.5 text-sm" [href]="'mailto:' + data.email">Email {{ data.name.split(' ')[0] }}</a>
+                @if (data.links.linkedin) {
+                  <a class="btn btn-outline px-5 py-2.5 text-sm" [href]="data.links.linkedin" target="_blank" rel="noopener">Connect on LinkedIn</a>
+                }
+              </div>
+
+              <dl class="contact-aside__meta">
+                <div>
+                  <dt>Location</dt>
+                  <dd>{{ data.location }}</dd>
+                </div>
+                @if (data.languages.length) {
+                  <div>
+                    <dt>Languages</dt>
+                    <dd>{{ data.languages.join(', ') }}</dd>
+                  </div>
+                }
+              </dl>
+            </div>
+          </aside>
+        </div>
       </section>
     </main>
   </div>
