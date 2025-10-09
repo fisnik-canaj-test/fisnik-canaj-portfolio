@@ -163,6 +163,10 @@ body { @apply min-h-screen bg-white text-black transition-colors duration-300 ea
   box-shadow: 0 22px 44px rgba(2, 6, 19, 0.55);
 }
 
+.scroll-section {
+  scroll-margin-top: calc(var(--app-header-height, 104px) + 1.25rem);
+}
+
 .dark .nav-menu__link:focus-visible {
   outline-color: rgba(198, 210, 255, 0.55);
 }
@@ -915,4 +919,26 @@ body { @apply min-h-screen bg-white text-black transition-colors duration-300 ea
 
 .dark .contact-aside__meta dd {
   color: rgba(226, 235, 255, 0.86);
+}
+
+.dark .sidebar-link {
+  background: rgba(30, 64, 175, 0.4);
+  color: rgba(190, 242, 255, 0.95);
+}
+
+.dark .sidebar-link:hover,
+.dark .sidebar-link:focus-visible {
+  background: rgba(37, 99, 235, 0.55);
+  color: rgba(125, 211, 252, 1);
+}
+
+.dark .sidebar-link--ghost {
+  background: rgba(15, 23, 42, 0.6);
+  color: rgba(148, 163, 184, 0.85);
+}
+
+.dark .sidebar-link--ghost:hover,
+.dark .sidebar-link--ghost:focus-visible {
+  background: rgba(30, 41, 59, 0.75);
+  color: rgba(165, 180, 203, 0.95);
 }

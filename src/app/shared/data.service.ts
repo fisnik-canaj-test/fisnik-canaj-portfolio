@@ -8,8 +8,8 @@ export class DataService {
   profile = signal<any>(null);
 
   async load(){
-    if (!isPlatformBrowser(this.platformId)) return; // avoid SSR fetch
-    if (this.profile() !== null) return; // already loaded or in-flight
+    if (!isPlatformBrowser(this.platformId)) return;
+    if (this.profile() !== null) return;
     try {
       const base = document?.baseURI ?? window.location.origin ?? '/';
       const url = new URL('assets/data/profile.json', base).toString();

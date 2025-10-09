@@ -1,8 +1,10 @@
-import { Component, OnInit, OnDestroy, computed, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, OnInit, OnDestroy, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { DataService } from '../../shared/data.service';
+import { ScrollService } from '../../shared/scroll.service';
+import { filter, Subscription } from 'rxjs';
 
 interface ProfileLinks {
   github: string;
@@ -145,6 +147,14 @@ const TOP_SKILLS: SkillHighlight[] = [
   {
     title: 'Team Enablement',
     body: 'Code reviews, pairing, documentation, and CI pipelines that unblock cross-functional squads.'
+  },
+  {
+    title: 'Design Systems & Accessibility',
+    body: 'Accessible component libraries, Storybook-driven documentation, and UI audits that keep multi-brand experiences cohesive.'
+  },
+  {
+    title: 'Platform Reliability',
+    body: 'Release hygiene, observability wiring, and smoke-test suites that keep deployments predictable.'
   }
 ];
 
@@ -190,10 +200,13 @@ function normaliseEducation(entry: any): EducationItem {
   imports: [CommonModule, RouterLink, ReactiveFormsModule],
   templateUrl: './home.component.html'
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   private readonly dataService = inject(DataService);
   private readonly fb = inject(FormBuilder);
+  private readonly router = inject(Router);
+  private readonly scroll = inject(ScrollService);
   private sectionObserver: IntersectionObserver | null = null;
+  private routerEventsSub?: Subscription;
 
   private readonly rawProfile = computed(() => this.dataService.profile());
 
@@ -307,6 +320,14 @@ export class HomeComponent implements OnInit, OnDestroy {
         targets.forEach((t) => this.sectionObserver!.observe(t));
       }
     }
+
+    this.routerEventsSub = this.router.events
+      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+      .subscribe(() => this.handleFragmentScroll());
+  }
+
+  ngAfterViewInit(): void {
+    this.handleFragmentScroll();
   }
 
   async submitContact(): Promise<void> {
@@ -349,5 +370,33 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.sectionObserver.disconnect();
       this.sectionObserver = null;
     }
+
+    if (this.routerEventsSub) {
+      this.routerEventsSub.unsubscribe();
+      this.routerEventsSub = undefined;
+    }
+  }
+
+  onSectionNavClick(event: Event, section: NavSection): void {
+    if (!section.fragment) {
+      return;
+    }
+
+    event.preventDefault();
+    void this.router.navigate([''], {
+      fragment: section.fragment,
+      queryParamsHandling: 'preserve',
+    });
+  }
+
+  private handleFragmentScroll(): void {
+    const fragment = this.router.parseUrl(this.router.url).fragment;
+    if (!fragment) {
+      return;
+    }
+
+    requestAnimationFrame(() => {
+      this.scroll.scrollTo(fragment, 24);
+    });
   }
 }
