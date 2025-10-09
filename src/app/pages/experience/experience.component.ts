@@ -5,6 +5,21 @@ import { ChipCloudComponent } from '../../components/chip-cloud.component';
 import { ExperienceItem, ExperienceTimelineComponent } from '../../components/experience-timeline.component';
 import { DataService } from '../../shared/data.service';
 
+const FALLBACK_PROFILE_META = {
+  name: 'Fisnik Canaj',
+  role: 'Frontend Developer',
+  summary:
+    'Frontend engineer specialising in Angular migrations, high-traffic gaming platforms, and performance-first UI systems.',
+  location: 'Pristina, Kosovo',
+  email: 'canajfisnik@gmail.com',
+  links: {
+    github: 'https://github.com/fisnikcanaj1',
+    portfolio: 'https://snikcanaj1.github.io',
+    linkedin: 'https://www.linkedin.com/in/fisnik-canaj-angular-4b75a8157'
+  },
+  languages: ['English', 'Albanian']
+};
+
 const FALLBACK_TIMELINE: ExperienceItem[] = [
   {
     company: 'Ancient Gaming',
@@ -84,7 +99,7 @@ const FALLBACK_TIMELINE: ExperienceItem[] = [
 ];
 
 const FALLBACK_SKILLS = [
-  'Angular (2–18)',
+  'Angular (2–20)',
   'TypeScript',
   'RxJS',
   'NgRx',
@@ -97,46 +112,124 @@ const FALLBACK_SKILLS = [
   'Laravel'
 ];
 
+const EXPERIENCE_HIGHLIGHTS = [
+  {
+    title: 'Angular evolution',
+    body: 'Angular 16→20 migrations, SSR hydration, and performance tuning guided by Lighthouse & Core Web Vitals.'
+  },
+  {
+    title: 'Design systems',
+    body: 'Reusable component libraries, Storybook docs, and accessibility reviews that keep teams aligned.'
+  },
+  {
+    title: 'Data-driven UX',
+    body: 'Experimentation loops, analytics wiring, and conversion-minded UI for commerce and gaming platforms.'
+  }
+];
+
 @Component({
   selector: 'app-experience',
   standalone: true,
   imports: [CommonModule, ExperienceTimelineComponent, ChipCloudComponent, RouterLink],
   template: `
-    <section class="space-y-10">
-      <header class="space-y-3">
-        <p class="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-text-secondary">Work Experience</p>
-        <h1 class="text-3xl font-heading font-semibold text-slate-900 dark:text-text-primary">Experience timeline</h1>
-        <p class="max-w-3xl text-sm text-slate-600 dark:text-text-primary/80">
-          Highlights from agency and in-house roles—Angular SSR upgrades, admin platforms, and performance-focused UI delivery.
-        </p>
+    <div class="experience-page space-y-12">
+      <header class="project-card experience-hero">
+        <div class="project-card__inner experience-hero__inner">
+          <div class="experience-hero__copy">
+            <p class="experience-hero__eyebrow">Work Experience</p>
+            <h1 class="experience-hero__title">Experience timeline</h1>
+            <p class="experience-hero__summary">{{ meta().summary }}</p>
+          </div>
+          <div class="experience-hero__badges">
+            <span class="experience-hero__badge" *ngIf="meta().location">
+              <svg aria-hidden="true" viewBox="0 0 20 20"><path fill="currentColor" d="M10 2a6 6 0 0 0-6 6c0 3.59 5.13 9.29 5.35 9.53a.9.9 0 0 0 1.3 0C10.87 17.29 16 11.59 16 8a6 6 0 0 0-6-6Zm0 3a3 3 0 1 1-3 3 3 3 0 0 1 3-3Z"/></svg>
+              {{ meta().location }}
+            </span>
+            <span class="experience-hero__badge" *ngIf="meta().languages?.length">
+              <svg aria-hidden="true" viewBox="0 0 20 20"><path fill="currentColor" d="M10 2a8 8 0 1 0 8 8 8.01 8.01 0 0 0-8-8Zm0 14.5a6.5 6.5 0 0 1 0-13 6.5 6.5 0 0 1 0 13Z"/></svg>
+              {{ meta().languages.join(', ') }}
+            </span>
+            <span class="experience-hero__badge" *ngIf="yearsOfExperience() > 0">
+              <svg aria-hidden="true" viewBox="0 0 20 20"><path fill="currentColor" d="M3 5.5A2.5 2.5 0 0 1 5.5 3h9A2.5 2.5 0 0 1 17 5.5v9A2.5 2.5 0 0 1 14.5 17h-9A2.5 2.5 0 0 1 3 14.5Zm2-.5v4h4V5Zm6 0v4h4V5Zm4 6h-4v4h3.5a.5.5 0 0 0 .5-.5Zm-6 4v-4H5v3.5a.5.5 0 0 0 .5.5Z"/></svg>
+              {{ yearsOfExperience() }} years delivering
+            </span>
+          </div>
+          <div class="experience-hero__actions">
+            <a class="btn" routerLink="/projects">View selected work</a>
+            <a class="btn btn-outline" href="assets/resume/Fisnik_Canaj-Frontend-Developer.pdf" target="_blank" rel="noopener">Download CV</a>
+          </div>
+        </div>
       </header>
 
-      <app-experience-timeline [items]="timeline()" />
+      <div class="experience-layout grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(260px,320px)]">
+        <div class="space-y-8">
+          <app-experience-timeline [items]="timeline()" />
+        </div>
+        <aside class="experience-aside space-y-6">
+          <article class="project-card project-card--compact">
+            <div class="project-card__inner experience-aside__inner">
+              <h2 class="experience-aside__title">Capabilities in focus</h2>
+              <ul class="experience-aside__highlights">
+                <li *ngFor="let item of highlights()">
+                  <h3>{{ item.title }}</h3>
+                  <p>{{ item.body }}</p>
+                </li>
+              </ul>
+            </div>
+          </article>
 
-      <section class="space-y-3">
-        <h2 class="text-lg font-heading text-slate-900 dark:text-text-primary">Skills & tools in rotation</h2>
-        <app-chip-cloud [chips]="skills()" accent="Angular (2–18)" />
-      </section>
+          <article class="project-card project-card--compact">
+            <div class="project-card__inner experience-aside__inner">
+              <h2 class="experience-aside__title">Skills & tools</h2>
+              <app-chip-cloud [chips]="skills()" accent="Angular (2–20)" />
+            </div>
+          </article>
 
-      <section class="rounded-3xl border border-border/60 bg-white/70 p-6 shadow-soft dark:border-white/10 dark:bg-surface-card/80">
-        <h3 class="text-lg font-heading text-slate-900 dark:text-text-primary">What teams rely on me for</h3>
-        <ul class="mt-3 space-y-2 text-sm text-slate-600 dark:text-text-primary/80">
-          <li>Angular migrations and SSR performance tuning, from planning to post-release measurement.</li>
-          <li>Reusable component systems that keep design and engineering moving in lockstep.</li>
-          <li>CI/CD guardrails—Cypress smoke suites, analytics instrumentation, and documentation.</li>
-        </ul>
-      </section>
-
-      <div class="flex flex-wrap gap-3">
-        <a class="btn" routerLink="/projects">View project case studies</a>
-        <a class="btn btn-outline" href="/assets/resume/Fisnik_Canaj-Frontend-Developer.pdf" target="_blank" rel="noopener">Download full CV</a>
+          <article class="project-card project-card--compact">
+            <div class="project-card__inner experience-aside__inner experience-aside__inner--contact">
+              <h2 class="experience-aside__title">Collaborate</h2>
+              <p class="experience-aside__text">
+                Need help with an Angular migration, admin platform, or performance audit?
+              </p>
+              <div class="experience-aside__links">
+                <a class="sidebar-link" [href]="'mailto:' + meta().email">Email {{ meta().name.split(' ')[0] }}</a>
+                <a *ngIf="meta().links.linkedin" class="sidebar-link sidebar-link--ghost" [href]="meta().links.linkedin" target="_blank" rel="noopener">LinkedIn</a>
+                <a *ngIf="meta().links.github" class="sidebar-link sidebar-link--ghost" [href]="meta().links.github" target="_blank" rel="noopener">GitHub</a>
+              </div>
+            </div>
+          </article>
+        </aside>
       </div>
-    </section>
+    </div>
   `
 })
 export class ExperienceComponent implements OnInit {
   private readonly dataService = inject(DataService);
   private readonly profile = computed(() => this.dataService.profile());
+
+  readonly meta = computed(() => {
+    const current = this.profile();
+    if (!current) {
+      return FALLBACK_PROFILE_META;
+    }
+
+    return {
+      ...FALLBACK_PROFILE_META,
+      ...current,
+      links: {
+        ...FALLBACK_PROFILE_META.links,
+        ...(current.links ?? {})
+      },
+      languages: Array.isArray(current.languages) && current.languages.length
+        ? current.languages
+        : FALLBACK_PROFILE_META.languages,
+      summary: current.summary ?? FALLBACK_PROFILE_META.summary,
+      role: current.role ?? FALLBACK_PROFILE_META.role,
+      name: current.name ?? FALLBACK_PROFILE_META.name,
+      location: current.location ?? FALLBACK_PROFILE_META.location,
+      email: current.email ?? FALLBACK_PROFILE_META.email,
+    };
+  });
 
   readonly timeline = computed<ExperienceItem[]>(() => {
     const experience = this.profile()?.experience;
@@ -145,6 +238,24 @@ export class ExperienceComponent implements OnInit {
   });
 
   readonly skills = computed(() => this.profile()?.skills ?? FALLBACK_SKILLS);
+
+  readonly highlights = computed(() => EXPERIENCE_HIGHLIGHTS);
+
+  readonly yearsOfExperience = computed(() => {
+    const items = this.timeline();
+    const nowYear = new Date().getFullYear();
+    const earliest = items.reduce((min, item) => {
+      const match = item.period.match(/(\d{4})/);
+      if (!match) {
+        return min;
+      }
+      const year = Number.parseInt(match[1], 10);
+      return Number.isNaN(year) ? min : Math.min(min, year);
+    }, nowYear);
+
+    const years = nowYear - earliest + 1;
+    return years > 0 ? years : 0;
+  });
 
   async ngOnInit(): Promise<void> {
     await this.dataService.load();

@@ -14,7 +14,11 @@ export class DataService {
       const base = document?.baseURI ?? window.location.origin ?? '/';
       const url = new URL('assets/data/profile.json', base).toString();
       const res = await fetch(url, { cache: 'no-cache' });
-      if (!res.ok) throw new Error(String(res.status));
+      if (!res.ok) {
+        console.error('Failed to load profile.json', { status: res.status, statusText: res.statusText });
+        this.profile.set(null);
+        return;
+      }
       this.profile.set(await res.json());
     } catch (e) {
       console.error('Failed to load profile.json', e);
