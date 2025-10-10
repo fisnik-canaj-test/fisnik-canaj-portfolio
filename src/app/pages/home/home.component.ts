@@ -31,6 +31,7 @@ interface EducationItem {
   degree: string;
   period: string;
   location?: string;
+  url?: string;
 }
 
 interface ProfileSummary {
@@ -124,7 +125,8 @@ const FALLBACK_PROFILE: ProfileSummary = {
       school: 'University for Business and Technology (UBT)',
       degree: 'BSc, Computer Science and Engineering',
       period: '2014',
-      location: 'Pristina, Kosovo'
+      location: 'Pristina, Kosovo',
+      url: 'https://www.ubt-uni.net/en/home/'
     }
   ],
   skills: ['Angular', 'TypeScript', 'RxJS', 'NgRx', 'Tailwind CSS'],
@@ -190,7 +192,8 @@ function normaliseEducation(entry: any): EducationItem {
     school: entry?.school ?? 'University',
     degree: entry?.degree ?? 'Degree',
     period: entry?.period ?? '',
-    location: entry?.location || undefined
+    location: entry?.location || undefined,
+    url: entry?.url || undefined
   };
 }
 

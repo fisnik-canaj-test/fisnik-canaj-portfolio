@@ -4,54 +4,55 @@
 
 <div class="min-h-screen py-4 sm:py-6">
   <div class="mx-auto max-w-6xl  lg:grid lg:grid-cols-[minmax(240px,280px)_minmax(0,1fr)] lg:gap-16 xl:grid-cols-[minmax(260px,320px)_minmax(0,1fr)]">
-    <aside class="flex flex-col gap-6 border-b border-black/10 pb-10 dark:border-white/10 lg:sticky lg:top-24 lg:h-fit lg:border-none lg:pb-0">
-      <div>
-        <p class="text-xs uppercase tracking-[0.35em] text-brand-600 dark:text-brand-300">{{ data.role }}</p>
-        <h1 class="mt-4 text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl">
-          {{ data.name }}
-        </h1>
-        <p class="mt-4 text-base leading-relaxed text-gray-600 dark:text-gray-300">
-          {{ data.summary }}
-        </p>
-      </div>
-
-      <div class="flex flex-col gap-3">
-        @let currentSection = activeNavSection();
-        @let activeId = activeSection();
-
-        <div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
-          <span class="uppercase tracking-[0.35em]">Active section</span>
-          @if (currentSection.pageRoute) {
-            <a
-              class="link text-[11px] normal-case tracking-normal"
-              [routerLink]="currentSection.pageRoute"
-            >
-              Open {{ currentSection.label }}
-            </a>
-          }
+    <aside class="flex flex-col justify-between gap-6 max-h-[calc(100vh-160px)] border-b border-black/10 pb-10 dark:border-white/10 lg:sticky lg:top-24  lg:border-none lg:pb-0">
+      <div class="flex flex-col gap-6">
+        <div>
+          <p class="text-xs uppercase tracking-[0.35em] text-brand-600 dark:text-brand-300">{{ data.role }}</p>
+          <h1 class="mt-4 text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl">
+            {{ data.name }}
+          </h1>
+          <p class="mt-4 text-base leading-relaxed text-gray-600 dark:text-gray-300">
+            {{ data.summary }}
+          </p>
         </div>
 
-        <nav class="flex flex-col gap-2 text-xs font-bold text-gray-500 dark:text-gray-400">
-          @for (section of navSections; track section.id) {
-            <a
-              routerLink="/"
-              [fragment]="section.fragment"
-              (click)="onSectionNavClick($event, section)"
-              class="group inline-flex items-center gap-3 py-1 transition hover:text-black dark:hover:text-white uppercase"
-              [attr.aria-current]="activeId === section.id ? 'true' : null"
-              [ngClass]="activeId === section.id ? ['text-black', 'dark:text-white'] : []"
-            >
-              <span
-                class="h-px transition-all duration-200 group-hover:w-16 group-hover:bg-brand-500"
-                [ngClass]="activeId === section.id ? 'w-16 bg-brand-500' : 'w-8 bg-gray-300'"
-              ></span>
+        <div class="flex flex-col gap-3">
+          @let currentSection = activeNavSection();
+          @let activeId = activeSection();
 
-              <span>{{ section.label }}</span>
-            </a>
-          }
-        </nav>
+          <div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+            <span class="uppercase tracking-[0.35em]">Active section</span>
+            @if (currentSection.pageRoute) {
+              <a
+                class="link text-[11px] normal-case tracking-normal"
+                [routerLink]="currentSection.pageRoute"
+              >
+                Open {{ currentSection.label }}
+              </a>
+            }
+          </div>
+
+          <nav class="flex flex-col gap-2 text-xs font-bold text-gray-500 dark:text-gray-400">
+            @for (section of navSections; track section.id) {
+              <a
+                routerLink="/"
+                [fragment]="section.fragment"
+                (click)="onSectionNavClick($event, section)"
+                class="group inline-flex items-center gap-3 py-1 transition hover:text-black dark:hover:text-white uppercase"
+                [attr.aria-current]="activeId === section.id ? 'true' : null"
+                [ngClass]="activeId === section.id ? ['text-black', 'dark:text-white'] : []"
+              >
+                <span
+                  class="h-px transition-all duration-200 group-hover:w-16 group-hover:bg-brand-500"
+                  [ngClass]="activeId === section.id ? 'w-16 bg-brand-500' : 'w-8 bg-gray-300'"
+                ></span>
+
+                <span>{{ section.label }}</span>
+              </a>
+            }
+          </nav>
+        </div>
       </div>
-
       <div class="flex flex-wrap items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
         @let locationLink = locationMapLink();
         @if (locationLink) {
@@ -61,21 +62,15 @@
             target="_blank"
             rel="noopener"
           >
-            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4">
-              <path
-                fill="currentColor"
-                d="M12 2a7 7 0 0 0-7 7c0 5.25 6.12 12.16 6.38 12.44.35.36.89.36 1.24 0C12.88 21.16 19 14.25 19 9a7 7 0 0 0-7-7m0 3.5A3.5 3.5 0 1 1 8.5 9 3.5 3.5 0 0 1 12 5.5"
-              />
+            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4 pointer-events-none">
+              <use href="assets/icons/location.svg#icon-location" xlink:href="assets/icons/location.svg#icon-location"></use>
             </svg>
             <span class="sr-only">Based in {{ data.location }}</span>
           </a>
         } @else {
           <div class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-gray-500 dark:border-white/15 dark:text-gray-300" aria-hidden="true">
-            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4">
-              <path
-                fill="currentColor"
-                d="M12 2a7 7 0 0 0-7 7c0 5.25 6.12 12.16 6.38 12.44.35.36.89.36 1.24 0C12.88 21.16 19 14.25 19 9a7 7 0 0 0-7-7m0 3.5A3.5 3.5 0 1 1 8.5 9 3.5 3.5 0 0 1 12 5.5"
-              />
+            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4 pointer-events-none">
+              <use href="assets/icons/location.svg#icon-location" xlink:href="assets/icons/location.svg#icon-location"></use>
             </svg>
           </div>
         }
@@ -84,11 +79,8 @@
           class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-gray-500 transition hover:border-brand-500 hover:text-brand-600 dark:border-white/15 dark:text-gray-300 dark:hover:border-brand-300 dark:hover:text-brand-200"
           [href]="'mailto:' + data.email"
         >
-          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4">
-            <path
-              fill="currentColor"
-              d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2m0 2v.34l8 5.33 8-5.33V7Zm0 10h16V9.66l-7.48 4.99a1 1 0 0 1-1.04 0L4 9.66Z"
-            />
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4 pointer-events-none">
+            <use href="assets/icons/mail.svg#icon-mail" xlink:href="assets/icons/mail.svg#icon-mail"></use>
           </svg>
           <span class="sr-only">Email {{ data.email }}</span>
         </a>
@@ -100,11 +92,8 @@
             target="_blank"
             rel="noopener"
           >
-            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4">
-              <path
-                fill="currentColor"
-                d="M4.98 3.5a2.25 2.25 0 1 1 0 4.5 2.25 2.25 0 0 1 0-4.5M3 9h4v12H3zm6 0h3.82v1.71h.05c.53-1 1.82-2.06 3.75-2.06C20.11 8.65 21 11 21 14.37V21H17v-6c0-1.43-.03-3.27-2-3.27-2 0-2.31 1.56-2.31 3.16V21H9z"
-              />
+            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4 pointer-events-none">
+              <use href="assets/icons/linkedin.svg#icon-linkedin" xlink:href="assets/icons/linkedin.svg#icon-linkedin"></use>
             </svg>
             <span class="sr-only">LinkedIn profile</span>
           </a>
@@ -117,11 +106,8 @@
             target="_blank"
             rel="noopener"
           >
-            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4">
-              <path
-                fill="currentColor"
-                d="M12 2a10 10 0 0 0-3.16 19.48c.5.09.68-.22.68-.48v-1.69c-2.77.6-3.36-1.18-3.36-1.18a2.64 2.64 0 0 0-1.11-1.46c-.91-.62.07-.61.07-.61a2.09 2.09 0 0 1 1.52 1 2.12 2.12 0 0 0 2.89.83 2.12 2.12 0 0 1 .63-1.33c-2.22-.25-4.55-1.11-4.55-4.94A3.87 3.87 0 0 1 6.8 9.42 3.6 3.6 0 0 1 6.9 6.73s.84-.27 2.75 1a9.48 9.48 0 0 1 5 0c1.91-1.29 2.75-1 2.75-1a3.6 3.6 0 0 1 .1 2.69 3.87 3.87 0 0 1 1 2.68c0 3.84-2.33 4.68-4.56 4.93a2.37 2.37 0 0 1 .68 1.83v2.71c0 .26.18.58.69.48A10 10 0 0 0 12 2"
-              />
+            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4 pointer-events-none">
+              <use href="assets/icons/github.svg#icon-github" xlink:href="assets/icons/github.svg#icon-github"></use>
             </svg>
             <span class="sr-only">GitHub profile</span>
           </a>
@@ -134,11 +120,8 @@
             target="_blank"
             rel="noopener"
           >
-            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4">
-              <path
-                fill="currentColor"
-                d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2m6.92 6h-3.63a12.94 12.94 0 0 0-1.16-4.12A8 8 0 0 1 18.92 8M12 4.07a10.87 10.87 0 0 1 1.59 3.93h-3.18A10.87 10.87 0 0 1 12 4.07M4.26 14A7.93 7.93 0 0 1 4 12a7.93 7.93 0 0 1 .26-2h3.89a13.7 13.7 0 0 0-.15 2 13.7 13.7 0 0 0 .15 2Zm.82 2h3.63a12.94 12.94 0 0 0 1.16 4.12A8 8 0 0 1 5.08 16M8.71 10h6.58a11.83 11.83 0 0 1 .14 2 11.83 11.83 0 0 1-.14 2H8.71a11.83 11.83 0 0 1-.14-2 11.83 11.83 0 0 1 .14-2m4.7 10a10.87 10.87 0 0 1-1.59-3.93h3.18A10.87 10.87 0 0 1 13.41 20M16 20.05a12.94 12.94 0 0 0 1.16-4.12h3.63A8 8 0 0 1 16 20.05"
-              />
+            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4 pointer-events-none">
+              <use href="assets/icons/globe.svg#icon-globe" xlink:href="assets/icons/globe.svg#icon-globe"></use>
             </svg>
             <span class="sr-only">Portfolio</span>
           </a>
@@ -224,19 +207,49 @@
         </div>
 
         @if (data.education.length) {
-          <div class="mt-12 rounded-2xl border border-black/10 bg-white/60 p-6 dark:border-white/10 dark:bg-white/5">
-            <h3 class="text-sm font-semibold uppercase tracking-[0.3em] text-gray-500 dark:text-gray-400">Education</h3>
-            <ul class="mt-4 space-y-4 text-sm text-gray-600 dark:text-gray-300">
+          <div class="mt-12">
+            <div class="flex items-center gap-4">
+              <h3 class="text-xs font-semibold uppercase tracking-[0.55em] text-slate-500 dark:text-slate-300">Education</h3>
+              <span class="h-px flex-1 bg-slate-200/80 dark:bg-slate-700/60"></span>
+            </div>
+
+            <ul class="mt-6 space-y-5">
               @for (edu of data.education; track edu.school + edu.period) {
                 <li>
-                  <div class="font-medium text-gray-900 dark:text-gray-100">{{ edu.degree }}</div>
-                  <div>{{ edu.school }}</div>
-                  <div class="text-xs uppercase tracking-wide text-gray-400">
-                    {{ edu.period }}
-                    @if (edu.location) {
-                      <span> · {{ edu.location }}</span>
-                    }
-                  </div>
+                  <ng-template #educationCard>
+                    <div class="pointer-events-none absolute inset-0">
+                      <div class="absolute inset-0 rounded-[1.75rem] bg-gradient-to-br from-sky-200/20 via-transparent to-indigo-300/20 opacity-0 transition duration-500 ease-out group-hover:opacity-100 dark:from-sky-500/15 dark:to-indigo-400/15"></div>
+                      <div class="absolute -right-12 -top-24 h-48 w-48 rounded-full bg-sky-200/30 blur-3xl transition duration-500 group-hover:opacity-80 dark:bg-sky-500/25"></div>
+                    </div>
+                    <div class="relative flex flex-col gap-3 text-slate-600 dark:text-slate-200">
+                      <span class="text-[0.7rem] font-semibold uppercase tracking-[0.45em] text-slate-400 dark:text-slate-300">Education</span>
+                      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50">{{ edu.degree }}</h4>
+                      <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-200">{{ edu.school }}</p>
+                      <p class="text-[0.72rem] uppercase tracking-[0.32em] text-slate-400 dark:text-slate-400">
+                        {{ edu.period }}
+                        @if (edu.location) {
+                          <span> · {{ edu.location }}</span>
+                        }
+                      </p>
+                    </div>
+                    <span class="pointer-events-none absolute right-6 top-6 inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/70 text-slate-400 transition duration-300 group-hover:scale-105 group-hover:border-brand-400 group-hover:text-brand-500 dark:border-slate-700/70 dark:text-slate-500 dark:group-hover:border-brand-300 dark:group-hover:text-brand-200">
+                      <svg viewBox="0 0 20 20" aria-hidden="true" class="h-4 w-4">
+                        <path d="M7.5 4.5h8v8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M4.5 15.5 15.5 4.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </span>
+                  </ng-template>
+
+
+                    <a
+                      class="group relative block overflow-hidden rounded-[1.75rem] border border-slate-200/60 bg-gradient-to-br from-white/95 via-white/55 to-white/20 p-6 shadow-[0_40px_80px_-45px_rgba(15,23,42,0.65)] backdrop-blur-lg transition duration-300 hover:-translate-y-1 hover:border-brand-400/50 hover:shadow-[0_55px_110px_-55px_rgba(14,165,233,0.55)] dark:border-slate-800/70 dark:from-slate-900/90 dark:via-slate-900/70 dark:to-slate-900/40 dark:shadow-[0_45px_120px_-60px_rgba(8,47,73,0.85)]"
+                      [href]="edu.url"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      <ng-container *ngTemplateOutlet="educationCard"></ng-container>
+                    </a>
+
                 </li>
               }
             </ul>
@@ -302,80 +315,127 @@
         </p>
 
 
-        <div class="contact-wrapper">
+        <div class="mt-10 grid gap-6 md:gap-8">
 
           <form
-            class="contact-form"
+            class="flex flex-col gap-6 rounded-3xl border border-slate-200/60 bg-slate-50/80 p-7 shadow-[0_22px_44px_rgba(15,23,42,0.12)] backdrop-blur-sm transition-colors dark:border-slate-700/50 dark:bg-slate-900/80 md:p-9"
             [formGroup]="contactForm"
             (ngSubmit)="submitContact()"
             novalidate
           >
-            <div class="contact-form__grid">
-              <label class="contact-field" [class.contact-field--invalid]="controlInvalid('name')">
-                <span class="contact-field__label">Name *</span>
-                <input type="text" formControlName="name" class="contact-field__input" autocomplete="name" placeholder="Your name">
-                <span class="contact-field__error" *ngIf="controlInvalid('name')">
-                  @if (contactControls.name.hasError('required')) {
-                    Please share your name.
-                  } @else if (contactControls.name.hasError('maxlength')) {
-                    Name looks a bit long—mind shortening it?
-                  }
-                </span>
+            <div class="grid gap-4 sm:grid-cols-2 sm:gap-5">
+              <label class="flex flex-col gap-2">
+                <span class="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-300">Name *</span>
+                <input
+                  type="text"
+                  formControlName="name"
+                  class="w-full rounded-xl border border-indigo-500/20 bg-white/90 px-4 py-3 text-base text-slate-900 transition focus:outline-none focus:ring-4 placeholder:text-slate-400 dark:border-slate-700/60 dark:bg-slate-950/60 dark:text-slate-100 dark:placeholder:text-slate-500"
+                  [ngClass]="controlInvalid('name') ? 'border-rose-500 ring-2 ring-rose-200/70 focus:border-rose-500 focus:ring-rose-300/70 dark:border-rose-400 dark:focus:border-rose-400 dark:ring-rose-500/40 dark:focus:ring-rose-500/40' : 'focus:border-sky-500/60 focus:ring-sky-200/60 dark:focus:border-sky-400/70 dark:focus:ring-sky-500/30'"
+                  autocomplete="name"
+                  placeholder="Your name"
+                >
+                @if (controlInvalid('name')) {
+                  <span class="text-xs text-rose-700 dark:text-rose-300">
+                    @if (contactControls.name.hasError('required')) {
+                      Please share your name.
+                    } @else if (contactControls.name.hasError('maxlength')) {
+                      Name looks a bit long—mind shortening it?
+                    }
+                  </span>
+                }
+
               </label>
 
-              <label class="contact-field" [class.contact-field--invalid]="controlInvalid('email')">
-                <span class="contact-field__label">Email *</span>
-                <input type="email" formControlName="email" class="contact-field__input" autocomplete="email" placeholder="you@company.com">
-                <span class="contact-field__error" *ngIf="controlInvalid('email')">
-                  @if (contactControls.email.hasError('required')) {
-                    An email helps me follow up.
-                  } @else if (contactControls.email.hasError('email')) {
-                    Please use a valid email address.
-                  } @else if (contactControls.email.hasError('maxlength')) {
-                    Email looks a bit long—could you shorten it?
-                  }
-                </span>
+              <label class="flex flex-col gap-2">
+                <span class="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-300">Email *</span>
+                <input
+                  type="email"
+                  formControlName="email"
+                  class="w-full rounded-xl border border-indigo-500/20 bg-white/90 px-4 py-3 text-base text-slate-900 transition focus:outline-none focus:ring-4 placeholder:text-slate-400 dark:border-slate-700/60 dark:bg-slate-950/60 dark:text-slate-100 dark:placeholder:text-slate-500"
+                  [ngClass]="controlInvalid('email') ? 'border-rose-500 ring-2 ring-rose-200/70 focus:border-rose-500 focus:ring-rose-300/70 dark:border-rose-400 dark:focus:border-rose-400 dark:ring-rose-500/40 dark:focus:ring-rose-500/40' : 'focus:border-sky-500/60 focus:ring-sky-200/60 dark:focus:border-sky-400/70 dark:focus:ring-sky-500/30'"
+                  autocomplete="email"
+                  placeholder="you@company.com"
+                >
+                @if (controlInvalid('email')) {
+                  <span class="text-xs text-rose-700 dark:text-rose-300">
+                    @if (contactControls.email.hasError('required')) {
+                      An email helps me follow up.
+                    } @else if (contactControls.email.hasError('email')) {
+                      Please use a valid email address.
+                    } @else if (contactControls.email.hasError('maxlength')) {
+                      Email looks a bit long—could you shorten it?
+                    }
+                  </span>
+                }
               </label>
 
-              <label class="contact-field" [class.contact-field--invalid]="controlInvalid('company')">
-                <span class="contact-field__label">Company</span>
-                <input type="text" formControlName="company" class="contact-field__input" autocomplete="organization" placeholder="Organisation (optional)">
-                <span class="contact-field__error" *ngIf="controlInvalid('company')">
-                  @if (contactControls.company.hasError('maxlength')) {
-                    Could you shorten the company name?
-                  }
-                </span>
+              <label class="flex flex-col gap-2">
+                <span class="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-300">Company</span>
+                <input
+                  type="text"
+                  formControlName="company"
+                  class="w-full rounded-xl border border-indigo-500/20 bg-white/90 px-4 py-3 text-base text-slate-900 transition focus:outline-none focus:ring-4 placeholder:text-slate-400 dark:border-slate-700/60 dark:bg-slate-950/60 dark:text-slate-100 dark:placeholder:text-slate-500"
+                  [ngClass]="controlInvalid('company') ? 'border-rose-500 ring-2 ring-rose-200/70 focus:border-rose-500 focus:ring-rose-300/70 dark:border-rose-400 dark:focus:border-rose-400 dark:ring-rose-500/40 dark:focus:ring-rose-500/40' : 'focus:border-sky-500/60 focus:ring-sky-200/60 dark:focus:border-sky-400/70 dark:focus:ring-sky-500/30'"
+                  autocomplete="organization"
+                  placeholder="Organisation (optional)"
+                >
+                @if (controlInvalid('company')) {
+                  <span class="text-xs text-rose-700 dark:text-rose-300">
+                    @if (contactControls.company.hasError('maxlength')) {
+                      Could you shorten the company name?
+                    }
+                  </span>
+                }
+
               </label>
 
-              <label class="contact-field contact-field--wide" [class.contact-field--invalid]="controlInvalid('message')">
-                <span class="contact-field__label">Project details *</span>
-                <textarea formControlName="message" class="contact-field__textarea" rows="6" placeholder="Timelines, goals, links—anything that’s helpful."></textarea>
-                <span class="contact-field__error" *ngIf="controlInvalid('message')">
-                  @if (contactControls.message.hasError('required')) {
-                    A short summary helps me understand your needs.
-                  } @else if (contactControls.message.hasError('minlength')) {
-                    A few more details will help me respond accurately.
-                  } @else if (contactControls.message.hasError('maxlength')) {
-                    This message is quite long—could you trim it down a little?
-                  }
-                </span>
+              <label class="flex flex-col gap-2 sm:col-span-2">
+                <span class="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-300">Project details *</span>
+                <textarea
+                  formControlName="message"
+                  class="w-full resize-y rounded-xl border border-indigo-500/20 bg-white/90 px-4 py-3 text-base text-slate-900 transition focus:outline-none focus:ring-4 placeholder:text-slate-400 dark:border-slate-700/60 dark:bg-slate-950/60 dark:text-slate-100 dark:placeholder:text-slate-500"
+                  [ngClass]="controlInvalid('message') ? 'border-rose-500 ring-2 ring-rose-200/70 focus:border-rose-500 focus:ring-rose-300/70 dark:border-rose-400 dark:focus:border-rose-400 dark:ring-rose-500/40 dark:focus:ring-rose-500/40' : 'focus:border-sky-500/60 focus:ring-sky-200/60 dark:focus:border-sky-400/70 dark:focus:ring-sky-500/30'"
+                  rows="6"
+                  placeholder="Timelines, goals, links—anything that’s helpful."
+                ></textarea>
+                @if (controlInvalid('message')) {
+                  <span class="text-xs text-rose-700 dark:text-rose-300">
+                    @if (contactControls.message.hasError('required')) {
+                      A short summary helps me understand your needs.
+                    } @else if (contactControls.message.hasError('minlength')) {
+                      A few more details will help me respond accurately.
+                    } @else if (contactControls.message.hasError('maxlength')) {
+                      This message is quite long—could you trim it down a little?
+                    }
+                  </span>
+                }
               </label>
             </div>
 
-            <div class="contact-form__actions">
-              <button class="contact-submit" type="submit" [disabled]="isSending()">
-                <span *ngIf="!isSending(); else sendingState">Send message</span>
-                <ng-template #sendingState>Sending…</ng-template>
+            <div class="flex flex-wrap items-center gap-4">
+              <button
+                class="inline-flex items-center justify-center rounded-full bg-gradient-to-tr from-sky-200 to-indigo-200 px-6 py-3 text-base font-semibold tracking-[0.04em] text-slate-900 shadow transition hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300 disabled:pointer-events-none disabled:cursor-progress disabled:opacity-60 disabled:shadow-none dark:text-slate-900"
+                type="submit"
+                [disabled]="isSending()"
+              >
+                @if (!isSending()) {
+                  <span>Send message</span>
+                } @else {
+                  <span>Sending…</span>
+                }
               </button>
 
-              <div class="contact-card__status" *ngIf="sendSuccess() === true">
-                <span class="contact-card__status-icon">✓</span>
-                Thanks! I’ll reply shortly.
-              </div>
-              <div class="contact-card__status contact-card__status--error" *ngIf="sendSuccess() === false">
-                <span class="contact-card__status-icon">!</span>
-                Something went wrong. Please email me directly.
-              </div>
+              @if (sendSuccess() === true) {
+                <div class="inline-flex items-center gap-2 text-sm font-medium text-emerald-600 dark:text-emerald-400">
+                  <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 text-sm font-semibold text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-300">✓</span>
+                  Thanks! I’ll reply shortly.
+                </div>
+              } @else if (sendSuccess() === false) {
+                <div class="inline-flex items-center gap-2 text-sm font-medium text-rose-600 dark:text-rose-400">
+                  <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-rose-100 text-sm font-semibold text-rose-600 dark:bg-rose-500/20 dark:text-rose-300">!</span>
+                  Something went wrong. Please email me directly.
+                </div>
+              }
             </div>
           </form>
         </div>
