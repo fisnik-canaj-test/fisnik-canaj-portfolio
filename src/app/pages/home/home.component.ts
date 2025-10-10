@@ -162,7 +162,7 @@ const NAV_SECTIONS: NavSection[] = [
   { id: 'about', label: 'About', fragment: 'about' },
   { id: 'experience', label: 'Experience', fragment: 'experience', pageRoute: '/experience' },
   { id: 'projects', label: 'Projects', fragment: 'projects', pageRoute: '/projects' },
-  { id: 'contact', label: 'Contact', fragment: 'contact', pageRoute: '/contact' },
+  { id: 'contact', label: 'Contact', fragment: 'contact' },
 ];
 
 function normaliseProject(project: any): ProjectSummary {
@@ -255,8 +255,21 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   readonly navSections = NAV_SECTIONS;
 
-  readonly featuredProjects = computed<ProjectSummary[]>(() => this.profile().projects.slice(0, 4));
-  readonly additionalProjects = computed<ProjectSummary[]>(() => this.profile().projects.slice(4));
+  readonly featuredProjects = computed<ProjectSummary[]>(() => {
+    const projects = this.profile().projects ?? [];
+    const priorityNames = new Set(['CSGORoll', 'Hypedrop', 'Celonis', 'Volvo Cars', 'Avodaq']);
+
+    const priorityProjects = projects.filter((project) => priorityNames.has(project.name));
+    const fallbackProjects = projects.filter((project) => !priorityNames.has(project.name));
+
+    return priorityProjects.concat(fallbackProjects).slice(0, 5);
+  });
+
+  readonly additionalProjects = computed<ProjectSummary[]>(() => {
+    const projects = this.profile().projects ?? [];
+    const featuredNames = new Set(this.featuredProjects().map((project) => project.name));
+    return projects.filter((project) => !featuredNames.has(project.name));
+  });
 
   readonly locationMapLink = computed<string | null>(() => {
     const location = this.profile().location?.trim();

@@ -149,10 +149,6 @@ const EXPERIENCE_HIGHLIGHTS = [
               <svg aria-hidden="true" viewBox="0 0 20 20"><path fill="currentColor" d="M10 2a8 8 0 1 0 8 8 8.01 8.01 0 0 0-8-8Zm0 14.5a6.5 6.5 0 0 1 0-13 6.5 6.5 0 0 1 0 13Z"/></svg>
               {{ meta().languages.join(', ') }}
             </span>
-            <span class="experience-hero__badge" *ngIf="yearsOfExperience() > 0">
-              <svg aria-hidden="true" viewBox="0 0 20 20"><path fill="currentColor" d="M3 5.5A2.5 2.5 0 0 1 5.5 3h9A2.5 2.5 0 0 1 17 5.5v9A2.5 2.5 0 0 1 14.5 17h-9A2.5 2.5 0 0 1 3 14.5Zm2-.5v4h4V5Zm6 0v4h4V5Zm4 6h-4v4h3.5a.5.5 0 0 0 .5-.5Zm-6 4v-4H5v3.5a.5.5 0 0 0 .5.5Z"/></svg>
-              {{ yearsOfExperience() }} years delivering
-            </span>
           </div>
           <div class="experience-hero__actions">
             <a class="btn" routerLink="/projects">View selected work</a>
@@ -185,19 +181,6 @@ const EXPERIENCE_HIGHLIGHTS = [
             </div>
           </article>
 
-          <article class="project-card project-card--compact">
-            <div class="project-card__inner experience-aside__inner experience-aside__inner--contact">
-              <h2 class="experience-aside__title">Collaborate</h2>
-              <p class="experience-aside__text">
-                Need help with an Angular migration, admin platform, or performance audit?
-              </p>
-              <div class="experience-aside__links">
-                <a class="sidebar-link" [href]="'mailto:' + meta().email">Email {{ meta().name.split(' ')[0] }}</a>
-                <a *ngIf="meta().links.linkedin" class="sidebar-link sidebar-link--ghost" [href]="meta().links.linkedin" target="_blank" rel="noopener">LinkedIn</a>
-                <a *ngIf="meta().links.github" class="sidebar-link sidebar-link--ghost" [href]="meta().links.github" target="_blank" rel="noopener">GitHub</a>
-              </div>
-            </div>
-          </article>
         </aside>
       </div>
     </div>
