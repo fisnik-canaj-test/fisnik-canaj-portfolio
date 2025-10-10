@@ -408,6 +408,11 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       return;
     }
 
+    const knownSection = this.navSections.some((section) => section.id === fragment);
+    if (knownSection) {
+      this.activeSection.set(fragment);
+    }
+
     requestAnimationFrame(() => {
       this.scroll.scrollTo(fragment, 24);
     });
