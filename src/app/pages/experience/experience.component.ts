@@ -1,116 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ChipCloudComponent } from '../../components/chip-cloud.component';
 import { ExperienceItem, ExperienceTimelineComponent } from '../../components/experience-timeline.component';
 import { DataService } from '../../shared/data.service';
-
-const FALLBACK_PROFILE_META = {
-  name: 'Fisnik Canaj',
-  role: 'Frontend Developer',
-  summary:
-    'Frontend engineer specialising in Angular migrations, high-traffic gaming platforms, and performance-first UI systems.',
-  location: 'Pristina, Kosovo',
-  email: 'canajfisnik@gmail.com',
-  links: {
-    github: 'https://github.com/fisnikcanaj1',
-    portfolio: 'https://snikcanaj1.github.io',
-    linkedin: 'https://www.linkedin.com/in/fisnik-canaj-angular-4b75a8157'
-  },
-  languages: ['English', 'Albanian']
-};
-
-const FALLBACK_TIMELINE: ExperienceItem[] = [
-  {
-    company: 'Ancient Gaming',
-    title: 'Frontend Developer',
-    period: 'Nov 2023 – Present',
-    bullets: [
-      'CSGORoll – Angular 16/17 betting features with GraphQL/Apollo, NgRx, and RxJS.',
-      'Created favourites and stability improvements for high-traffic journeys.',
-      'Partnered with design to refine UI/UX across the wagering experience.',
-      'Hypedrop – Admin auth and account flows built with Qwik, GraphQL, Builder.io, and Tailwind.',
-      'Implemented login, password reset, and account management pages.'
-    ]
-  },
-  {
-    company: 'Solution25',
-    title: 'Frontend/Angular Developer',
-    period: 'Jun 2022 – Oct 2023',
-    bullets: [
-      'Extended Volvo online car purchase modules for Switzerland & Liechtenstein.',
-      'Added features to Cisco Health Care and coordinated with partner teams.',
-      'Raised quality by introducing Cypress smoke suites and optimising Service Plan workloads.'
-    ]
-  },
-  {
-    company: 'UNE',
-    title: 'Frontend Developer',
-    period: 'Nov 2021 – May 2022',
-    bullets: [
-      'Shipped UX and responsiveness refinements across marketing surfaces.',
-      'Developed reusable Vue.js components with Sass, Webpack, and Laravel backends.'
-    ]
-  },
-  {
-    company: 'ATIS',
-    title: 'Frontend Developer',
-    period: 'Feb 2020 – Oct 2021',
-    bullets: [
-      'Delivered an Angular booking SPA with lazy loading and modular routing.',
-      'Built complex reservation forms for E-Dea integrated with RESTful APIs.',
-      'Identified automation opportunities to streamline operations.'
-    ]
-  },
-  {
-    company: 'Celonis',
-    title: 'Frontend UI Developer',
-    period: 'Aug 2018 – Oct 2020',
-    bullets: [
-      'Crafted UI components, filtering interfaces, and chart visualisations for process mining.',
-      'Improved usability using Angular, Sass, and vanilla JavaScript.'
-    ]
-  },
-  {
-    company: 'Open Data Kosovo (ODK)',
-    title: 'Frontend Developer',
-    period: 'Jun 2018 – Sep 2018',
-    bullets: [
-      'Completed internship delivery with Bootstrap and PHP to improve civic data access.'
-    ]
-  },
-  {
-    company: 'NEO DESIGN',
-    title: 'User Interface Developer',
-    period: 'Feb 2017 – Aug 2017',
-    bullets: [
-      'Enhanced UI handoff and execution using JavaScript, jQuery, Bootstrap, HTML, and CSS.'
-    ]
-  },
-  {
-    company: 'Freelance',
-    title: 'Frontend Developer',
-    period: 'Jan 2014 – Jan 2017',
-    bullets: [
-      'Self-taught through React, Vue, Angular, and Python projects.',
-      'Delivered client portfolios while strengthening algorithm and data-structure foundations.'
-    ]
-  }
-];
-
-const FALLBACK_SKILLS = [
-  'Angular (2–20)',
-  'TypeScript',
-  'RxJS',
-  'NgRx',
-  'Tailwind CSS',
-  'GraphQL',
-  'Qwik',
-  'Builder.io',
-  'Cypress',
-  'Vue.js',
-  'Laravel'
-];
 
 const EXPERIENCE_HIGHLIGHTS = [
   {
@@ -131,6 +24,7 @@ const EXPERIENCE_HIGHLIGHTS = [
   selector: 'app-experience',
   standalone: true,
   imports: [CommonModule, ExperienceTimelineComponent, ChipCloudComponent, RouterLink],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="experience-page space-y-12">
       <header class="project-card experience-hero">
@@ -177,7 +71,7 @@ const EXPERIENCE_HIGHLIGHTS = [
           <article class="project-card project-card--compact">
             <div class="project-card__inner experience-aside__inner">
               <h2 class="experience-aside__title">Skills & tools</h2>
-              <app-chip-cloud [chips]="skills()" accent="Angular (2–20)" />
+              <app-chip-cloud [chips]="skills()" [accent]="primarySkill()" />
             </div>
           </article>
 
@@ -188,57 +82,32 @@ const EXPERIENCE_HIGHLIGHTS = [
 })
 export class ExperienceComponent implements OnInit {
   private readonly dataService = inject(DataService);
-  private readonly profile = computed(() => this.dataService.profile());
+  readonly profile = this.dataService.profile;
 
   readonly meta = computed(() => {
     const current = this.profile();
-    if (!current) {
-      return FALLBACK_PROFILE_META;
-    }
-
     return {
-      ...FALLBACK_PROFILE_META,
-      ...current,
-      links: {
-        ...FALLBACK_PROFILE_META.links,
-        ...(current.links ?? {})
-      },
-      languages: Array.isArray(current.languages) && current.languages.length
-        ? current.languages
-        : FALLBACK_PROFILE_META.languages,
-      summary: current.summary ?? FALLBACK_PROFILE_META.summary,
-      role: current.role ?? FALLBACK_PROFILE_META.role,
-      name: current.name ?? FALLBACK_PROFILE_META.name,
-      location: current.location ?? FALLBACK_PROFILE_META.location,
-      email: current.email ?? FALLBACK_PROFILE_META.email,
+      name: current.name,
+      role: current.role,
+      summary: current.summary,
+      location: current.location,
+      email: current.email,
+      links: current.links,
+      languages: current.languages,
     };
   });
 
-  readonly timeline = computed<ExperienceItem[]>(() => {
-    const experience = this.profile()?.experience;
-    if (Array.isArray(experience) && experience.length) return experience;
-    return FALLBACK_TIMELINE;
-  });
+  readonly timeline = computed<ExperienceItem[]>(() => this.profile().experience);
 
-  readonly skills = computed(() => this.profile()?.skills ?? FALLBACK_SKILLS);
+  readonly skills = computed(() => this.profile().skills);
+
+  readonly primarySkill = computed(() => {
+    const skills = this.skills();
+    const angularMatch = skills.find((skill) => /angular/i.test(skill));
+    return angularMatch ?? skills[0] ?? 'Angular';
+  });
 
   readonly highlights = computed(() => EXPERIENCE_HIGHLIGHTS);
-
-  readonly yearsOfExperience = computed(() => {
-    const items = this.timeline();
-    const nowYear = new Date().getFullYear();
-    const earliest = items.reduce((min, item) => {
-      const match = item.period.match(/(\d{4})/);
-      if (!match) {
-        return min;
-      }
-      const year = Number.parseInt(match[1], 10);
-      return Number.isNaN(year) ? min : Math.min(min, year);
-    }, nowYear);
-
-    const years = nowYear - earliest + 1;
-    return years > 0 ? years : 0;
-  });
 
   async ngOnInit(): Promise<void> {
     await this.dataService.load();

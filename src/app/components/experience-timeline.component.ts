@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 export interface ExperienceItem {
   company: string;
@@ -12,6 +12,7 @@ export interface ExperienceItem {
   selector: 'app-experience-timeline',
   standalone: true,
   imports: [CommonModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <ol class="experience-timeline">
       <li *ngFor="let item of items" class="experience-timeline__item">

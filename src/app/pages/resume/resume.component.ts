@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataService } from '../../shared/data.service';
 
@@ -6,6 +6,7 @@ import { DataService } from '../../shared/data.service';
   standalone: true,
   selector: 'app-resume',
   imports: [CommonModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section class="grid gap-6">
       <article class="card">
@@ -26,11 +27,11 @@ import { DataService } from '../../shared/data.service';
             </div>
             <div class="flex flex-wrap gap-2">
               <dt class="font-medium text-gray-900 dark:text-gray-100">LinkedIn:</dt>
-              <dd><a class="link" [href]="profile().links?.linkedin" target="_blank" rel="noopener">{{ profile().links?.linkedin }}</a></dd>
+              <dd><a class="link" [href]="profile().links.linkedin" target="_blank" rel="noopener">{{ profile().links.linkedin }}</a></dd>
             </div>
             <div class="flex flex-wrap gap-2">
               <dt class="font-medium text-gray-900 dark:text-gray-100">GitHub:</dt>
-              <dd><a class="link" [href]="profile().links?.github" target="_blank" rel="noopener">{{ profile().links?.github }}</a></dd>
+              <dd><a class="link" [href]="profile().links.github" target="_blank" rel="noopener">{{ profile().links.github }}</a></dd>
             </div>
           </dl>
         </div>
@@ -90,41 +91,8 @@ import { DataService } from '../../shared/data.service';
   `
 })
 export class ResumeComponent implements OnInit {
-  private ds = inject(DataService);
-  p = computed(() => this.ds.profile());
-  private readonly fallback = {
-    skills: [
-      'Angular (2–18)', 'TypeScript', 'RxJS', 'NgRx', 'Tailwind CSS',
-      'GraphQL', 'Node.js', 'Express.js', 'Cypress', 'Builder.io'
-    ],
-    email: 'canajfisnik@gmail.com',
-    links: {
-      linkedin: 'https://www.linkedin.com/in/fisnik-canaj-angular-4b75a8157',
-      github: 'https://github.com/fisnikcanaj1'
-    },
-    experience: [
-      {
-        title: 'Frontend Developer',
-        company: 'Ancient Gaming',
-        period: 'Nov 2023 – Present',
-        bullets: [
-          'CSGORoll – Angular 16/17 betting features using GraphQL/Apollo and NgRx.',
-          'Built favourites and reliability improvements for high-traffic flows.',
-          'Hypedrop – Admin login, password reset, and account experiences with Qwik and Tailwind.'
-        ]
-      }
-    ],
-    education: [
-      {
-        degree: 'BSc, Computer Science and Engineering',
-        school: 'University for Business and Technology (UBT)',
-        location: 'Pristina, Kosovo',
-        period: '2014'
-      }
-    ],
-    languages: ['English', 'Albanian']
-  };
-  profile = computed(() => ({ ...this.fallback, ...(this.p() ?? {}) }));
+  private readonly dataService = inject(DataService);
+  readonly profile = this.dataService.profile;
   protected readonly cvUrl = 'assets/resume/Fisnik_Canaj__CV_.pdf';
-  async ngOnInit(){ await this.ds.load(); }
+  async ngOnInit(){ await this.dataService.load(); }
 }
