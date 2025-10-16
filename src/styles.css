@@ -164,7 +164,7 @@ body { @apply min-h-screen bg-white text-black transition-colors duration-300 ea
 }
 
 .scroll-section {
-  scroll-margin-top: calc(var(--app-header-height, 104px) + 1.25rem);
+  scroll-margin-top: calc(var(104px) + 1.25rem);
 }
 
 .dark .nav-menu__link:focus-visible {
