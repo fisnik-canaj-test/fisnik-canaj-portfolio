@@ -1,15 +1,18 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, DestroyRef, OnInit, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { DataService } from '../../shared/data.service';
 import { ScrollService } from '../../shared/scroll.service';
 import { filter } from 'rxjs';
 import { IntersectionObserverService } from '../../shared/intersection-observer.service';
 import { NAV_SECTIONS, NavSection } from '../../shared/nav-sections';
 import { ProjectSummary } from '../../shared/profile.model';
-import { ProjectCardComponent } from '../../components/project-card.component';
-import { ContactFormComponent } from '../../components/contact-form.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { HomeSidebarComponent } from './components/home-sidebar.component';
+import { HomeAboutSectionComponent } from './components/home-about-section.component';
+import { HomeExperienceSectionComponent } from './components/home-experience-section.component';
+import { HomeProjectsSectionComponent } from './components/home-projects-section.component';
+import { HomeContactSectionComponent } from './components/home-contact-section.component';
 
 interface SkillHighlight {
   title: string;
@@ -46,7 +49,14 @@ const TOP_SKILLS: SkillHighlight[] = [
 @Component({
   standalone: true,
   selector: 'app-home',
-  imports: [CommonModule, RouterLink, ProjectCardComponent, ContactFormComponent],
+  imports: [
+    CommonModule,
+    HomeSidebarComponent,
+    HomeAboutSectionComponent,
+    HomeExperienceSectionComponent,
+    HomeProjectsSectionComponent,
+    HomeContactSectionComponent
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './home.component.html'
 })
@@ -84,8 +94,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     if (!location) return null;
     return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`;
   });
+  readonly experiencePreview = computed(() => (this.profile().experience ?? []).slice(0, 3));
 
-  // Active section signal for nav highlighting
   readonly activeSection = signal<string>('about');
   readonly activeNavSection = computed<NavSection>(() => {
     const current = this.activeSection();
@@ -106,18 +116,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.setupSectionObserver();
     this.handleFragmentScroll();
-  }
-
-  onSectionNavClick(event: Event, section: NavSection): void {
-    if (!section.fragment) {
-      return;
-    }
-
-    event.preventDefault();
-    void this.router.navigate([''], {
-      fragment: section.fragment,
-      queryParamsHandling: 'preserve',
-    });
   }
 
   private setupSectionObserver(): void {

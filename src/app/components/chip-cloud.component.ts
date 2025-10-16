@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-chip-cloud',
@@ -8,11 +8,13 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="flex flex-wrap gap-2">
-      <span *ngFor="let chip of chips" class="chip" [class.chip--active]="accent === chip">{{ chip }}</span>
+      @for (chip of chips(); track chip) {
+        <span class="chip" [class.chip--active]="accent() === chip">{{ chip }}</span>
+      }
     </div>
   `
 })
 export class ChipCloudComponent {
-  @Input() chips: string[] = [];
-  @Input() accent?: string;
+  readonly chips = input<string[]>([]);
+  readonly accent = input<string | undefined>(undefined);
 }

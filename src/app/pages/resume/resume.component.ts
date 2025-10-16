@@ -9,6 +9,7 @@ import { DataService } from '../../shared/data.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section class="grid gap-6">
+      @let prof = profile();
       <article class="card">
         <div class="card-body">
           <h2 class="text-2xl font-bold">Curriculum Vitae</h2>
@@ -23,58 +24,66 @@ import { DataService } from '../../shared/data.service';
           <dl class="mt-6 grid gap-2 text-sm text-gray-600 dark:text-gray-300">
             <div class="flex flex-wrap gap-2">
               <dt class="font-medium text-gray-900 dark:text-gray-100">Email:</dt>
-              <dd><a class="link" [href]="'mailto:' + profile().email">{{ profile().email }}</a></dd>
+              <dd><a class="link" [href]="'mailto:' + prof.email">{{ prof.email }}</a></dd>
             </div>
             <div class="flex flex-wrap gap-2">
               <dt class="font-medium text-gray-900 dark:text-gray-100">LinkedIn:</dt>
-              <dd><a class="link" [href]="profile().links.linkedin" target="_blank" rel="noopener">{{ profile().links.linkedin }}</a></dd>
+              <dd><a class="link" [href]="prof.links.linkedin" target="_blank" rel="noopener">{{ prof.links.linkedin }}</a></dd>
             </div>
             <div class="flex flex-wrap gap-2">
               <dt class="font-medium text-gray-900 dark:text-gray-100">GitHub:</dt>
-              <dd><a class="link" [href]="profile().links.github" target="_blank" rel="noopener">{{ profile().links.github }}</a></dd>
+              <dd><a class="link" [href]="prof.links.github" target="_blank" rel="noopener">{{ prof.links.github }}</a></dd>
             </div>
           </dl>
         </div>
       </article>
 
-      <article class="card" *ngIf="profile() as prof">
+      <article class="card">
         <div class="card-body">
           <h3 class="text-xl font-semibold">Skills</h3>
           <div class="mt-3 flex flex-wrap gap-2">
-            <span class="tag" *ngFor="let s of prof.skills">{{ s }}</span>
+            @for (skill of prof.skills; track skill) {
+              <span class="tag">{{ skill }}</span>
+            }
           </div>
         </div>
       </article>
 
-      <article class="card" *ngIf="profile() as prof2">
+      <article class="card">
         <div class="card-body">
           <h3 class="text-xl font-semibold">Experience</h3>
           <ol class="mt-4 relative border-s border-black/10 dark:border-white/10">
-            <li *ngFor="let item of prof2.experience" class="mb-6 ms-6">
-              <span class="absolute -start-3 flex h-6 w-6 items-center justify-center rounded-full bg-brand-500 text-white">•</span>
-              <div class="flex flex-wrap items-baseline gap-x-2">
-                <div class="font-medium">{{ item.title }}</div>
-                <div class="text-gray-500">— {{ item.company }}</div>
-                <time class="ms-auto text-xs text-gray-500">{{ item.period }}</time>
-              </div>
-              <ul class="mt-2 list-disc ps-4 text-sm text-gray-700 dark:text-gray-300">
-                <li *ngFor="let b of item.bullets">{{ b }}</li>
-              </ul>
-            </li>
+            @for (item of prof.experience; track item.company + item.period) {
+              <li class="mb-6 ms-6">
+                <span class="absolute -start-3 flex h-6 w-6 items-center justify-center rounded-full bg-brand-500 text-white">•</span>
+                <div class="flex flex-wrap items-baseline gap-x-2">
+                  <div class="font-medium">{{ item.title }}</div>
+                  <div class="text-gray-500">— {{ item.company }}</div>
+                  <time class="ms-auto text-xs text-gray-500">{{ item.period }}</time>
+                </div>
+                <ul class="mt-2 list-disc ps-4 text-sm text-gray-700 dark:text-gray-300">
+                  @for (bullet of item.bullets; track bullet) {
+                    <li>{{ bullet }}</li>
+                  }
+                </ul>
+              </li>
+            }
           </ol>
         </div>
       </article>
 
-      <div class="grid md:grid-cols-2 gap-6" *ngIf="profile() as prof3">
+      <div class="grid md:grid-cols-2 gap-6">
         <article class="card">
           <div class="card-body">
             <h3 class="text-xl font-semibold">Education</h3>
             <ul class="mt-3 space-y-3">
-              <li *ngFor="let e of prof3.education">
-                <div class="font-medium">{{ e.degree }}</div>
-                <div class="text-sm text-gray-600 dark:text-gray-300">{{ e.school }} — {{ e.location }}</div>
-                <div class="text-xs text-gray-500">{{ e.period }}</div>
-              </li>
+              @for (edu of prof.education; track edu.school + edu.period) {
+                <li>
+                  <div class="font-medium">{{ edu.degree }}</div>
+                  <div class="text-sm text-gray-600 dark:text-gray-300">{{ edu.school }} — {{ edu.location }}</div>
+                  <div class="text-xs text-gray-500">{{ edu.period }}</div>
+                </li>
+              }
             </ul>
           </div>
         </article>
@@ -82,7 +91,9 @@ import { DataService } from '../../shared/data.service';
           <div class="card-body">
             <h3 class="text-xl font-semibold">Languages</h3>
             <div class="mt-3 flex flex-wrap gap-2">
-              <span class="tag" *ngFor="let l of prof3.languages">{{ l }}</span>
+              @for (language of prof.languages; track language) {
+                <span class="tag">{{ language }}</span>
+              }
             </div>
           </div>
         </article>

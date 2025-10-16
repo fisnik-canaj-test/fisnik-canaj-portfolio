@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output, inject, input, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 export interface ContactFormPayload {
@@ -32,14 +32,15 @@ export interface ContactFormPayload {
             autocomplete="name"
             placeholder="Your name"
           >
-          <span *ngIf="controlInvalid('name')" class="text-xs text-rose-700 dark:text-rose-300">
-            <ng-container *ngIf="controls.name.hasError('required'); else nameTooLong">
-              Please share your name.
-            </ng-container>
-            <ng-template #nameTooLong>
-              Name looks a bit long—mind shortening it?
-            </ng-template>
-          </span>
+          @if (controlInvalid('name')) {
+            <span class="text-xs text-rose-700 dark:text-rose-300">
+              @if (controls.name.hasError('required')) {
+                Please share your name.
+              } @else {
+                Name looks a bit long—mind shortening it?
+              }
+            </span>
+          }
         </label>
 
         <label class="flex flex-col gap-2">
@@ -52,19 +53,17 @@ export interface ContactFormPayload {
             autocomplete="email"
             placeholder="you@company.com"
           >
-          <span *ngIf="controlInvalid('email')" class="text-xs text-rose-700 dark:text-rose-300">
-            <ng-container *ngIf="controls.email.hasError('required'); else emailDetail">
-              An email helps me follow up.
-            </ng-container>
-            <ng-template #emailDetail>
-              <ng-container *ngIf="controls.email.hasError('email'); else emailLength">
+          @if (controlInvalid('email')) {
+            <span class="text-xs text-rose-700 dark:text-rose-300">
+              @if (controls.email.hasError('required')) {
+                An email helps me follow up.
+              } @else if (controls.email.hasError('email')) {
                 Please use a valid email address.
-              </ng-container>
-              <ng-template #emailLength>
+              } @else {
                 Email looks a bit long—could you shorten it?
-              </ng-template>
-            </ng-template>
-          </span>
+              }
+            </span>
+          }
         </label>
 
         <label class="flex flex-col gap-2">
@@ -77,9 +76,11 @@ export interface ContactFormPayload {
             autocomplete="organization"
             placeholder="Organisation (optional)"
           >
-          <span *ngIf="controlInvalid('company')" class="text-xs text-rose-700 dark:text-rose-300">
-            Could you shorten the company name?
-          </span>
+          @if (controlInvalid('company')) {
+            <span class="text-xs text-rose-700 dark:text-rose-300">
+              Could you shorten the company name?
+            </span>
+          }
         </label>
 
         <label class="flex flex-col gap-2 sm:col-span-2">
@@ -91,19 +92,17 @@ export interface ContactFormPayload {
             rows="6"
             placeholder="Timelines, goals, links—anything that’s helpful."
           ></textarea>
-          <span *ngIf="controlInvalid('message')" class="text-xs text-rose-700 dark:text-rose-300">
-            <ng-container *ngIf="controls.message.hasError('required'); else messageRange">
-              A short summary helps me understand your needs.
-            </ng-container>
-            <ng-template #messageRange>
-              <ng-container *ngIf="controls.message.hasError('minlength'); else messageLong">
+          @if (controlInvalid('message')) {
+            <span class="text-xs text-rose-700 dark:text-rose-300">
+              @if (controls.message.hasError('required')) {
+                A short summary helps me understand your needs.
+              } @else if (controls.message.hasError('minlength')) {
                 A few more details will help me respond accurately.
-              </ng-container>
-              <ng-template #messageLong>
+              } @else {
                 This message is quite long—could you trim it down a little?
-              </ng-template>
-            </ng-template>
-          </span>
+              }
+            </span>
+          }
         </label>
       </div>
 
@@ -113,18 +112,28 @@ export interface ContactFormPayload {
           type="submit"
           [disabled]="isSending()"
         >
-          {{ isSending() ? pendingLabel : submitLabel }}
+          @if (isSending()) {
+            {{ pendingLabel() }}
+          } @else {
+            {{ submitLabel() }}
+          }
         </button>
         <div class="flex flex-col gap-1 text-xs">
-          <span *ngIf="submitAttempted() && form.invalid" class="text-rose-600 dark:text-rose-300">
-            Please fill in the required fields.
-          </span>
-          <span *ngIf="sendSuccess() === true" class="text-brand-600 dark:text-brand-300">
-            {{ successCopy }}
-          </span>
-          <span *ngIf="sendSuccess() === false" class="text-rose-600 dark:text-rose-300">
-            {{ errorCopy }}
-          </span>
+          @if (submitAttempted() && form.invalid) {
+            <span class="text-rose-600 dark:text-rose-300">
+              Please fill in the required fields.
+            </span>
+          }
+          @if (sendSuccess() === true) {
+            <span class="text-brand-600 dark:text-brand-300">
+              {{ successCopy() }}
+            </span>
+          }
+          @if (sendSuccess() === false) {
+            <span class="text-rose-600 dark:text-rose-300">
+              {{ errorCopy() }}
+            </span>
+          }
         </div>
       </div>
     </form>
@@ -133,12 +142,12 @@ export interface ContactFormPayload {
 export class ContactFormComponent {
   private readonly fb = inject(FormBuilder);
 
-  @Input() submitLabel = 'Send message';
-  @Input() pendingLabel = 'Sending…';
-  @Input() successCopy = 'Thanks! I’ll follow up shortly.';
-  @Input() errorCopy = 'Something went wrong. Please try again shortly.';
-  @Input() submitHandler?: (payload: ContactFormPayload) => Promise<void>;
-  @Input() simulateDelay = 1200;
+  readonly submitLabel = input('Send message');
+  readonly pendingLabel = input('Sending…');
+  readonly successCopy = input('Thanks! I’ll follow up shortly.');
+  readonly errorCopy = input('Something went wrong. Please try again shortly.');
+  readonly submitHandler = input<(payload: ContactFormPayload) => Promise<void>>();
+  readonly simulateDelay = input(1200);
 
   @Output() submitted = new EventEmitter<ContactFormPayload>();
 
@@ -177,10 +186,11 @@ export class ContactFormComponent {
     const payload = this.form.getRawValue();
 
     try {
-      if (this.submitHandler) {
-        await this.submitHandler(payload);
+      const handler = this.submitHandler();
+      if (handler) {
+        await handler(payload);
       } else {
-        await new Promise((resolve) => setTimeout(resolve, this.simulateDelay));
+        await new Promise((resolve) => setTimeout(resolve, this.simulateDelay()));
       }
       this.sendSuccess.set(true);
       this.submitted.emit(payload);

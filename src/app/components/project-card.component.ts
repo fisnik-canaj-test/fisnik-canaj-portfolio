@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 export interface ProjectCard {
   name: string;
@@ -17,15 +17,18 @@ export interface ProjectCard {
   template: `
     <article class="project-card">
       <div class="project-card__inner">
-        <figure *ngIf="project.thumb" class="project-card__thumb">
-          <img [src]="project.thumb" [alt]="project.name" />
-        </figure>
+        @let card = project();
+        @if (card.thumb) {
+          <figure class="project-card__thumb">
+            <img [src]="card.thumb" [alt]="card.name" />
+          </figure>
+        }
         <div class="project-card__header">
-          <h3 class="project-card__title">{{ project.name }}</h3>
-          <ng-container *ngIf="project.link && project.link !== '#'; else comingSoon">
+          <h3 class="project-card__title">{{ card.name }}</h3>
+          @if (card.link && card.link !== '#') {
             <a
               class="project-card__link project-card__link--labelled"
-              [href]="project.link"
+              [href]="card.link"
               target="_blank"
               rel="noopener"
             >
@@ -35,19 +38,20 @@ export interface ProjectCard {
                 <path d="M4.5 15.5 15.5 4.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </a>
-          </ng-container>
-          <ng-template #comingSoon>
+          } @else {
             <span class="text-xs text-gray-500 dark:text-gray-400">Coming soon</span>
-          </ng-template>
+          }
         </div>
-        <p class="project-card__desc">{{ project.desc }}</p>
+        <p class="project-card__desc">{{ card.desc }}</p>
         <div class="project-card__tags">
-          <span *ngFor="let tag of project.tags" class="project-card__tag">{{ tag }}</span>
+          @for (tag of card.tags; track tag) {
+            <span class="project-card__tag">{{ tag }}</span>
+          }
         </div>
       </div>
     </article>
   `
 })
 export class ProjectCardComponent {
-  @Input({ required: true }) project!: ProjectCard;
+  readonly project = input.required<ProjectCard>();
 }

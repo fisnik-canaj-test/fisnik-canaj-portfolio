@@ -35,14 +35,18 @@ const EXPERIENCE_HIGHLIGHTS = [
             <p class="experience-hero__summary">{{ meta().summary }}</p>
           </div>
           <div class="experience-hero__badges">
-            <span class="experience-hero__badge" *ngIf="meta().location">
-              <svg aria-hidden="true" viewBox="0 0 20 20"><path fill="currentColor" d="M10 2a6 6 0 0 0-6 6c0 3.59 5.13 9.29 5.35 9.53a.9.9 0 0 0 1.3 0C10.87 17.29 16 11.59 16 8a6 6 0 0 0-6-6Zm0 3a3 3 0 1 1-3 3 3 3 0 0 1 3-3Z"/></svg>
-              {{ meta().location }}
-            </span>
-            <span class="experience-hero__badge" *ngIf="meta().languages?.length">
-              <svg aria-hidden="true" viewBox="0 0 20 20"><path fill="currentColor" d="M10 2a8 8 0 1 0 8 8 8.01 8.01 0 0 0-8-8Zm0 14.5a6.5 6.5 0 0 1 0-13 6.5 6.5 0 0 1 0 13Z"/></svg>
-              {{ meta().languages.join(', ') }}
-            </span>
+            @if (meta().location) {
+              <span class="experience-hero__badge">
+                <svg aria-hidden="true" viewBox="0 0 20 20"><path fill="currentColor" d="M10 2a6 6 0 0 0-6 6c0 3.59 5.13 9.29 5.35 9.53a.9.9 0 0 0 1.3 0C10.87 17.29 16 11.59 16 8a6 6 0 0 0-6-6Zm0 3a3 3 0 1 1-3 3 3 3 0 0 1 3-3Z"/></svg>
+                {{ meta().location }}
+              </span>
+            }
+            @if (meta().languages.length) {
+              <span class="experience-hero__badge">
+                <svg aria-hidden="true" viewBox="0 0 20 20"><path fill="currentColor" d="M10 2a8 8 0 1 0 8 8 8.01 8.01 0 0 0-8-8Zm0 14.5a6.5 6.5 0 0 1 0-13 6.5 6.5 0 0 1 0 13Z"/></svg>
+                {{ meta().languages.join(', ') }}
+              </span>
+            }
           </div>
           <div class="experience-hero__actions">
             <a class="btn" routerLink="/projects">View selected work</a>
@@ -60,10 +64,12 @@ const EXPERIENCE_HIGHLIGHTS = [
             <div class="project-card__inner experience-aside__inner">
               <h2 class="experience-aside__title">Capabilities in focus</h2>
               <ul class="experience-aside__highlights">
-                <li *ngFor="let item of highlights()">
-                  <h3>{{ item.title }}</h3>
-                  <p>{{ item.body }}</p>
-                </li>
+                @for (item of highlights(); track item.title) {
+                  <li>
+                    <h3>{{ item.title }}</h3>
+                    <p>{{ item.body }}</p>
+                  </li>
+                }
               </ul>
             </div>
           </article>

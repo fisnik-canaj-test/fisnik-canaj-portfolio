@@ -26,21 +26,20 @@ import { ProjectCardComponent } from '../../components/project-card.component';
         (filterChange)="setTag($event)"
       />
 
-      <ng-container *ngIf="!loading(); else loadingState">
-        <ng-container *ngIf="filtered() as projects">
-          <div *ngIf="projects.length; else emptyState" class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            <app-project-card *ngFor="let proj of projects" [project]="proj" />
+      @if (!loading()) {
+        @let projects = filtered();
+        @if (projects.length) {
+          <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            @for (proj of projects; track proj.name) {
+              <app-project-card [project]="proj" />
+            }
           </div>
-        </ng-container>
-      </ng-container>
-
-      <ng-template #emptyState>
-        <p class="text-sm text-gray-500 dark:text-gray-400">No projects match this filter just yet.</p>
-      </ng-template>
-
-      <ng-template #loadingState>
+        } @else {
+          <p class="text-sm text-gray-500 dark:text-gray-400">No projects match this filter just yet.</p>
+        }
+      } @else {
         <p class="text-sm text-gray-500 dark:text-gray-400">Loading projects…</p>
-      </ng-template>
+      }
     </section>
   `
 })
