@@ -14,8 +14,8 @@ import { ProjectCardComponent } from '../../components/project-card.component';
     <section class="space-y-8">
       <header class="space-y-2">
         <p class="text-xs uppercase tracking-[0.3em] text-brand-500 dark:text-brand-300">Projects</p>
-        <h1 class="text-3xl font-bold text-slate-900 dark:text-text-primary">Selected collaborations</h1>
-        <p class="text-sm text-gray-500 dark:text-gray-400">
+        <h1 class="text-3xl font-bold text-slate-900 dark:text-text-primary dark:border-white/15 dark:text-gray-300">Selected collaborations</h1>
+        <p class="text-sm text-gray-500 dark:text-gray-400 pb-8">
           Filter by capability to explore client work and product experiments.
         </p>
       </header>

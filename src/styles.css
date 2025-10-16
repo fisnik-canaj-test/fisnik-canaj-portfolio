@@ -599,11 +599,11 @@ body { @apply min-h-screen bg-white text-black transition-colors duration-300 ea
 }
 
 .experience-timeline::before {
-  content: '';
+  content: "";
   position: absolute;
-  top: 0.4rem;
+  top: 2.4rem;
   bottom: 0.4rem;
-  left: 0.5rem;
+  left: 1rem;
   width: 2px;
   border-radius: 999px;
   background: linear-gradient(180deg, rgba(59, 130, 246, 0.35), rgba(147, 51, 234, 0.25));
