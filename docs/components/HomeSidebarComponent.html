@@ -1,0 +1,937 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>tempname documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">tempname documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  HomeSidebarComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/pages/home/components/home-sidebar.component.ts</code>
+</p>
+
+
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+            <tr>
+                <td class="col-md-3">changeDetection</td>
+                <td class="col-md-9"><code>ChangeDetectionStrategy.OnPush</code></td>
+            </tr>
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">host</td>
+                <td class="col-md-9"><code>{<br>}</code></td>
+            </tr>
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-home-sidebar</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                            <code>RouterLink</code>
+                </td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">template</td>
+                <td class="col-md-9"><pre class="line-numbers"><code class="language-html">@let data &#x3D; profile();
+@let activeId &#x3D; activeSectionId();
+@let currentSection &#x3D; activeNavSection();
+
+&lt;aside class&#x3D;&quot;flex flex-col justify-between gap-6 h-full max-h-[calc(100vh-160px)] border-b border-black/10 pb-10 dark:border-white/10 lg:sticky lg:top-24  lg:border-none lg:pb-0&quot;&gt;
+
+  &lt;div class&#x3D;&quot;flex flex-col gap-6&quot;&gt;
+    &lt;div&gt;
+      &lt;p class&#x3D;&quot;text-xs uppercase tracking-[0.35em] text-brand-600 dark:text-brand-300&quot;&gt;{{ data.role }}&lt;/p&gt;
+      &lt;h1 class&#x3D;&quot;mt-4 text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl&quot;&gt;
+        {{ data.name }}
+      &lt;/h1&gt;
+      &lt;p class&#x3D;&quot;mt-4 text-base leading-relaxed text-gray-600 dark:text-gray-300&quot;&gt;
+        {{ data.summary }}
+      &lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;flex flex-col gap-3&quot;&gt;
+      &lt;div class&#x3D;&quot;flex items-center justify-between text-xs text-gray-500 dark:text-gray-400&quot;&gt;
+        &lt;span class&#x3D;&quot;uppercase tracking-[0.35em]&quot;&gt;Active section&lt;/span&gt;
+        @if (currentSection.pageRoute) {
+          &lt;a
+            class&#x3D;&quot;link text-[11px] normal-case tracking-normal&quot;
+            [routerLink]&#x3D;&quot;currentSection.pageRoute&quot;
+          &gt;
+            Open {{ currentSection.label }}
+          &lt;/a&gt;
+        }
+      &lt;/div&gt;
+
+      &lt;nav class&#x3D;&quot;flex flex-col gap-2 text-xs font-bold text-gray-500 dark:text-gray-400&quot;&gt;
+        @for (section of navSections(); track section.id) {
+          &lt;a
+            routerLink&#x3D;&quot;/&quot;
+            [fragment]&#x3D;&quot;section.fragment&quot;
+            (click)&#x3D;&quot;navigateToSection($event, section)&quot;
+            class&#x3D;&quot;group inline-flex items-center gap-3 py-1 transition hover:text-black dark:hover:text-white uppercase&quot;
+            [attr.aria-current]&#x3D;&quot;activeId &#x3D;&#x3D;&#x3D; section.id ? &#x27;true&#x27; : null&quot;
+            [ngClass]&#x3D;&quot;activeId &#x3D;&#x3D;&#x3D; section.id ? [&#x27;text-black&#x27;, &#x27;dark:text-white&#x27;] : []&quot;
+          &gt;
+            &lt;span
+              class&#x3D;&quot;h-px transition-all duration-200 group-hover:w-16 group-hover:bg-brand-500&quot;
+              [ngClass]&#x3D;&quot;activeId &#x3D;&#x3D;&#x3D; section.id ? &#x27;w-16 bg-brand-500&#x27; : &#x27;w-8 bg-gray-300&#x27;&quot;
+            &gt;&lt;/span&gt;
+
+            &lt;span&gt;{{ section.label }}&lt;/span&gt;
+          &lt;/a&gt;
+        }
+      &lt;/nav&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class&#x3D;&quot;flex flex-wrap items-center gap-3 text-sm text-gray-500 dark:text-gray-400&quot;&gt;
+    @let locationLinkValue &#x3D; locationLink();
+    @if (locationLinkValue) {
+      &lt;a
+        class&#x3D;&quot;inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-gray-500 transition hover:border-brand-500 hover:text-brand-600 dark:border-white/15 dark:text-gray-300 dark:hover:border-brand-300 dark:hover:text-brand-200&quot;
+        [href]&#x3D;&quot;locationLinkValue&quot;
+        target&#x3D;&quot;_blank&quot;
+        rel&#x3D;&quot;noopener&quot;
+      &gt;
+        &lt;svg aria-hidden&#x3D;&quot;true&quot; viewBox&#x3D;&quot;0 0 24 24&quot; class&#x3D;&quot;h-4 w-4 pointer-events-none&quot;&gt;
+          &lt;use href&#x3D;&quot;assets/icons/location.svg#icon-location&quot; xlink:href&#x3D;&quot;assets/icons/location.svg#icon-location&quot;&gt;&lt;/use&gt;
+        &lt;/svg&gt;
+        &lt;span class&#x3D;&quot;sr-only&quot;&gt;Based in {{ data.location }}&lt;/span&gt;
+      &lt;/a&gt;
+    } @else {
+      &lt;div class&#x3D;&quot;inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-gray-500 dark:border-white/15 dark:text-gray-300&quot; aria-hidden&#x3D;&quot;true&quot;&gt;
+        &lt;svg aria-hidden&#x3D;&quot;true&quot; viewBox&#x3D;&quot;0 0 24 24&quot; class&#x3D;&quot;h-4 w-4 pointer-events-none&quot;&gt;
+          &lt;use href&#x3D;&quot;assets/icons/location.svg#icon-location&quot; xlink:href&#x3D;&quot;assets/icons/location.svg#icon-location&quot;&gt;&lt;/use&gt;
+        &lt;/svg&gt;
+      &lt;/div&gt;
+    }
+
+    &lt;a
+      class&#x3D;&quot;inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-gray-500 transition hover:border-brand-500 hover:text-brand-600 dark:border-white/15 dark:text-gray-300 dark:hover:border-brand-300 dark:hover:text-brand-200&quot;
+      [href]&#x3D;&quot;&#x27;mailto:&#x27; + data.email&quot;
+    &gt;
+      &lt;svg aria-hidden&#x3D;&quot;true&quot; viewBox&#x3D;&quot;0 0 24 24&quot; class&#x3D;&quot;h-4 w-4 pointer-events-none&quot;&gt;
+        &lt;use href&#x3D;&quot;assets/icons/mail.svg#icon-mail&quot; xlink:href&#x3D;&quot;assets/icons/mail.svg#icon-mail&quot;&gt;&lt;/use&gt;
+      &lt;/svg&gt;
+      &lt;span class&#x3D;&quot;sr-only&quot;&gt;Email {{ data.email }}&lt;/span&gt;
+    &lt;/a&gt;
+
+    @if (data.links.linkedin) {
+      &lt;a
+        class&#x3D;&quot;inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-gray-500 transition hover:border-brand-500 hover:text-brand-600 dark:border-white/15 dark:text-gray-300 dark:hover:border-brand-300 dark:hover:text-brand-200&quot;
+        [href]&#x3D;&quot;data.links.linkedin&quot;
+        target&#x3D;&quot;_blank&quot;
+        rel&#x3D;&quot;noopener&quot;
+      &gt;
+        &lt;svg aria-hidden&#x3D;&quot;true&quot; viewBox&#x3D;&quot;0 0 24 24&quot; class&#x3D;&quot;h-4 w-4 pointer-events-none&quot;&gt;
+          &lt;use href&#x3D;&quot;assets/icons/linkedin.svg#icon-linkedin&quot; xlink:href&#x3D;&quot;assets/icons/linkedin.svg#icon-linkedin&quot;&gt;&lt;/use&gt;
+        &lt;/svg&gt;
+        &lt;span class&#x3D;&quot;sr-only&quot;&gt;LinkedIn profile&lt;/span&gt;
+      &lt;/a&gt;
+    }
+
+    @if (data.links.github) {
+      &lt;a
+        class&#x3D;&quot;inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-gray-500 transition hover:border-brand-500 hover:text-brand-600 dark:border-white/15 dark:text-gray-300 dark:hover:border-brand-300 dark:hover:text-brand-200&quot;
+        [href]&#x3D;&quot;data.links.github&quot;
+        target&#x3D;&quot;_blank&quot;
+        rel&#x3D;&quot;noopener&quot;
+      &gt;
+        &lt;svg aria-hidden&#x3D;&quot;true&quot; viewBox&#x3D;&quot;0 0 24 24&quot; class&#x3D;&quot;h-4 w-4 pointer-events-none&quot;&gt;
+          &lt;use href&#x3D;&quot;assets/icons/github.svg#icon-github&quot; xlink:href&#x3D;&quot;assets/icons/github.svg#icon-github&quot;&gt;&lt;/use&gt;
+        &lt;/svg&gt;
+        &lt;span class&#x3D;&quot;sr-only&quot;&gt;GitHub profile&lt;/span&gt;
+      &lt;/a&gt;
+    }
+
+    @if (data.links.portfolio) {
+      &lt;a
+        class&#x3D;&quot;inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-gray-500 transition hover:border-brand-500 hover:text-brand-600 dark:border-white/15 dark:text-gray-300 dark:hover:border-brand-300 dark:hover:text-brand-200&quot;
+        [href]&#x3D;&quot;data.links.portfolio&quot;
+        target&#x3D;&quot;_blank&quot;
+        rel&#x3D;&quot;noopener&quot;
+      &gt;
+        &lt;svg aria-hidden&#x3D;&quot;true&quot; viewBox&#x3D;&quot;0 0 24 24&quot; class&#x3D;&quot;h-4 w-4 pointer-events-none&quot;&gt;
+          &lt;use href&#x3D;&quot;assets/icons/globe.svg#icon-globe&quot; xlink:href&#x3D;&quot;assets/icons/globe.svg#icon-globe&quot;&gt;&lt;/use&gt;
+        &lt;/svg&gt;
+        &lt;span class&#x3D;&quot;sr-only&quot;&gt;Portfolio&lt;/span&gt;
+      &lt;/a&gt;
+    }
+  &lt;/div&gt;
+&lt;/aside&gt;
+</code></pre></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#router" >router</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#navigateToSection" >navigateToSection</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#activeNavSection" >activeNavSection</a>
+                            </li>
+                            <li>
+                                <a href="#activeSectionId" >activeSectionId</a>
+                            </li>
+                            <li>
+                                <a href="#locationLink" >locationLink</a>
+                            </li>
+                            <li>
+                                <a href="#navSections" >navSections</a>
+                            </li>
+                            <li>
+                                <a href="#profile" >profile</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+    <section data-compodoc="block-inputs">
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="activeNavSection"></a>
+                        <b>activeNavSection</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/NavSection.html" target="_self" >NavSection</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Required : </i>&nbsp;<b>true</b>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="151" class="link-to-prism">src/app/pages/home/components/home-sidebar.component.ts:151</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="activeSectionId"></a>
+                        <b>activeSectionId</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;about&#x27;</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="150" class="link-to-prism">src/app/pages/home/components/home-sidebar.component.ts:150</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="locationLink"></a>
+                        <b>locationLink</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="152" class="link-to-prism">src/app/pages/home/components/home-sidebar.component.ts:152</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="navSections"></a>
+                        <b>navSections</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/NavSection.html" target="_self" >NavSection[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="149" class="link-to-prism">src/app/pages/home/components/home-sidebar.component.ts:149</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="profile"></a>
+                        <b>profile</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Profile.html" target="_self" >Profile</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Required : </i>&nbsp;<b>true</b>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="148" class="link-to-prism">src/app/pages/home/components/home-sidebar.component.ts:148</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="navigateToSection"></a>
+                    <span class="name">
+                        <span ><b>navigateToSection</b></span>
+                        <a href="#navigateToSection"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>navigateToSection(event: Event, section: <a href="../interfaces/NavSection.html" target="_self">NavSection</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="154"
+                                    class="link-to-prism">src/app/pages/home/components/home-sidebar.component.ts:154</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                        <code>Event</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>section</td>
+                                            <td>
+                                                            <code><a href="../interfaces/NavSection.html" target="_self" >NavSection</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="router"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>router</b></span>
+                        <a href="#router"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(Router)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="146" class="link-to-prism">src/app/pages/home/components/home-sidebar.component.ts:146</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { CommonModule } from &#x27;@angular/common&#x27;;
+import { ChangeDetectionStrategy, Component, inject, input } from &#x27;@angular/core&#x27;;
+import { Router, RouterLink } from &#x27;@angular/router&#x27;;
+import { Profile } from &#x27;../../../shared/profile.model&#x27;;
+import { NavSection } from &#x27;../../../shared/nav-sections&#x27;;
+
+@Component({
+  selector: &#x27;app-home-sidebar&#x27;,
+  standalone: true,
+  imports: [CommonModule, RouterLink],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    class: &#x27;block&#x27;
+  },
+  template: &#x60;
+    @let data &#x3D; profile();
+    @let activeId &#x3D; activeSectionId();
+    @let currentSection &#x3D; activeNavSection();
+
+    &lt;aside class&#x3D;&quot;flex flex-col justify-between gap-6 h-full max-h-[calc(100vh-160px)] border-b border-black/10 pb-10 dark:border-white/10 lg:sticky lg:top-24  lg:border-none lg:pb-0&quot;&gt;
+
+      &lt;div class&#x3D;&quot;flex flex-col gap-6&quot;&gt;
+        &lt;div&gt;
+          &lt;p class&#x3D;&quot;text-xs uppercase tracking-[0.35em] text-brand-600 dark:text-brand-300&quot;&gt;{{ data.role }}&lt;/p&gt;
+          &lt;h1 class&#x3D;&quot;mt-4 text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl&quot;&gt;
+            {{ data.name }}
+          &lt;/h1&gt;
+          &lt;p class&#x3D;&quot;mt-4 text-base leading-relaxed text-gray-600 dark:text-gray-300&quot;&gt;
+            {{ data.summary }}
+          &lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;flex flex-col gap-3&quot;&gt;
+          &lt;div class&#x3D;&quot;flex items-center justify-between text-xs text-gray-500 dark:text-gray-400&quot;&gt;
+            &lt;span class&#x3D;&quot;uppercase tracking-[0.35em]&quot;&gt;Active section&lt;/span&gt;
+            @if (currentSection.pageRoute) {
+              &lt;a
+                class&#x3D;&quot;link text-[11px] normal-case tracking-normal&quot;
+                [routerLink]&#x3D;&quot;currentSection.pageRoute&quot;
+              &gt;
+                Open {{ currentSection.label }}
+              &lt;/a&gt;
+            }
+          &lt;/div&gt;
+
+          &lt;nav class&#x3D;&quot;flex flex-col gap-2 text-xs font-bold text-gray-500 dark:text-gray-400&quot;&gt;
+            @for (section of navSections(); track section.id) {
+              &lt;a
+                routerLink&#x3D;&quot;/&quot;
+                [fragment]&#x3D;&quot;section.fragment&quot;
+                (click)&#x3D;&quot;navigateToSection($event, section)&quot;
+                class&#x3D;&quot;group inline-flex items-center gap-3 py-1 transition hover:text-black dark:hover:text-white uppercase&quot;
+                [attr.aria-current]&#x3D;&quot;activeId &#x3D;&#x3D;&#x3D; section.id ? &#x27;true&#x27; : null&quot;
+                [ngClass]&#x3D;&quot;activeId &#x3D;&#x3D;&#x3D; section.id ? [&#x27;text-black&#x27;, &#x27;dark:text-white&#x27;] : []&quot;
+              &gt;
+                &lt;span
+                  class&#x3D;&quot;h-px transition-all duration-200 group-hover:w-16 group-hover:bg-brand-500&quot;
+                  [ngClass]&#x3D;&quot;activeId &#x3D;&#x3D;&#x3D; section.id ? &#x27;w-16 bg-brand-500&#x27; : &#x27;w-8 bg-gray-300&#x27;&quot;
+                &gt;&lt;/span&gt;
+
+                &lt;span&gt;{{ section.label }}&lt;/span&gt;
+              &lt;/a&gt;
+            }
+          &lt;/nav&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;flex flex-wrap items-center gap-3 text-sm text-gray-500 dark:text-gray-400&quot;&gt;
+        @let locationLinkValue &#x3D; locationLink();
+        @if (locationLinkValue) {
+          &lt;a
+            class&#x3D;&quot;inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-gray-500 transition hover:border-brand-500 hover:text-brand-600 dark:border-white/15 dark:text-gray-300 dark:hover:border-brand-300 dark:hover:text-brand-200&quot;
+            [href]&#x3D;&quot;locationLinkValue&quot;
+            target&#x3D;&quot;_blank&quot;
+            rel&#x3D;&quot;noopener&quot;
+          &gt;
+            &lt;svg aria-hidden&#x3D;&quot;true&quot; viewBox&#x3D;&quot;0 0 24 24&quot; class&#x3D;&quot;h-4 w-4 pointer-events-none&quot;&gt;
+              &lt;use href&#x3D;&quot;assets/icons/location.svg#icon-location&quot; xlink:href&#x3D;&quot;assets/icons/location.svg#icon-location&quot;&gt;&lt;/use&gt;
+            &lt;/svg&gt;
+            &lt;span class&#x3D;&quot;sr-only&quot;&gt;Based in {{ data.location }}&lt;/span&gt;
+          &lt;/a&gt;
+        } @else {
+          &lt;div class&#x3D;&quot;inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-gray-500 dark:border-white/15 dark:text-gray-300&quot; aria-hidden&#x3D;&quot;true&quot;&gt;
+            &lt;svg aria-hidden&#x3D;&quot;true&quot; viewBox&#x3D;&quot;0 0 24 24&quot; class&#x3D;&quot;h-4 w-4 pointer-events-none&quot;&gt;
+              &lt;use href&#x3D;&quot;assets/icons/location.svg#icon-location&quot; xlink:href&#x3D;&quot;assets/icons/location.svg#icon-location&quot;&gt;&lt;/use&gt;
+            &lt;/svg&gt;
+          &lt;/div&gt;
+        }
+
+        &lt;a
+          class&#x3D;&quot;inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-gray-500 transition hover:border-brand-500 hover:text-brand-600 dark:border-white/15 dark:text-gray-300 dark:hover:border-brand-300 dark:hover:text-brand-200&quot;
+          [href]&#x3D;&quot;&#x27;mailto:&#x27; + data.email&quot;
+        &gt;
+          &lt;svg aria-hidden&#x3D;&quot;true&quot; viewBox&#x3D;&quot;0 0 24 24&quot; class&#x3D;&quot;h-4 w-4 pointer-events-none&quot;&gt;
+            &lt;use href&#x3D;&quot;assets/icons/mail.svg#icon-mail&quot; xlink:href&#x3D;&quot;assets/icons/mail.svg#icon-mail&quot;&gt;&lt;/use&gt;
+          &lt;/svg&gt;
+          &lt;span class&#x3D;&quot;sr-only&quot;&gt;Email {{ data.email }}&lt;/span&gt;
+        &lt;/a&gt;
+
+        @if (data.links.linkedin) {
+          &lt;a
+            class&#x3D;&quot;inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-gray-500 transition hover:border-brand-500 hover:text-brand-600 dark:border-white/15 dark:text-gray-300 dark:hover:border-brand-300 dark:hover:text-brand-200&quot;
+            [href]&#x3D;&quot;data.links.linkedin&quot;
+            target&#x3D;&quot;_blank&quot;
+            rel&#x3D;&quot;noopener&quot;
+          &gt;
+            &lt;svg aria-hidden&#x3D;&quot;true&quot; viewBox&#x3D;&quot;0 0 24 24&quot; class&#x3D;&quot;h-4 w-4 pointer-events-none&quot;&gt;
+              &lt;use href&#x3D;&quot;assets/icons/linkedin.svg#icon-linkedin&quot; xlink:href&#x3D;&quot;assets/icons/linkedin.svg#icon-linkedin&quot;&gt;&lt;/use&gt;
+            &lt;/svg&gt;
+            &lt;span class&#x3D;&quot;sr-only&quot;&gt;LinkedIn profile&lt;/span&gt;
+          &lt;/a&gt;
+        }
+
+        @if (data.links.github) {
+          &lt;a
+            class&#x3D;&quot;inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-gray-500 transition hover:border-brand-500 hover:text-brand-600 dark:border-white/15 dark:text-gray-300 dark:hover:border-brand-300 dark:hover:text-brand-200&quot;
+            [href]&#x3D;&quot;data.links.github&quot;
+            target&#x3D;&quot;_blank&quot;
+            rel&#x3D;&quot;noopener&quot;
+          &gt;
+            &lt;svg aria-hidden&#x3D;&quot;true&quot; viewBox&#x3D;&quot;0 0 24 24&quot; class&#x3D;&quot;h-4 w-4 pointer-events-none&quot;&gt;
+              &lt;use href&#x3D;&quot;assets/icons/github.svg#icon-github&quot; xlink:href&#x3D;&quot;assets/icons/github.svg#icon-github&quot;&gt;&lt;/use&gt;
+            &lt;/svg&gt;
+            &lt;span class&#x3D;&quot;sr-only&quot;&gt;GitHub profile&lt;/span&gt;
+          &lt;/a&gt;
+        }
+
+        @if (data.links.portfolio) {
+          &lt;a
+            class&#x3D;&quot;inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-gray-500 transition hover:border-brand-500 hover:text-brand-600 dark:border-white/15 dark:text-gray-300 dark:hover:border-brand-300 dark:hover:text-brand-200&quot;
+            [href]&#x3D;&quot;data.links.portfolio&quot;
+            target&#x3D;&quot;_blank&quot;
+            rel&#x3D;&quot;noopener&quot;
+          &gt;
+            &lt;svg aria-hidden&#x3D;&quot;true&quot; viewBox&#x3D;&quot;0 0 24 24&quot; class&#x3D;&quot;h-4 w-4 pointer-events-none&quot;&gt;
+              &lt;use href&#x3D;&quot;assets/icons/globe.svg#icon-globe&quot; xlink:href&#x3D;&quot;assets/icons/globe.svg#icon-globe&quot;&gt;&lt;/use&gt;
+            &lt;/svg&gt;
+            &lt;span class&#x3D;&quot;sr-only&quot;&gt;Portfolio&lt;/span&gt;
+          &lt;/a&gt;
+        }
+      &lt;/div&gt;
+    &lt;/aside&gt;
+  &#x60;
+})
+export class HomeSidebarComponent {
+  private readonly router &#x3D; inject(Router);
+
+  readonly profile &#x3D; input.required&lt;Profile&gt;();
+  readonly navSections &#x3D; input&lt;NavSection[]&gt;([]);
+  readonly activeSectionId &#x3D; input(&#x27;about&#x27;);
+  readonly activeNavSection &#x3D; input.required&lt;NavSection&gt;();
+  readonly locationLink &#x3D; input&lt;string | null&gt;(null);
+
+  navigateToSection(event: Event, section: NavSection): void {
+    event.preventDefault();
+    void this.router.navigate([&#x27;&#x27;], {
+      fragment: section.fragment,
+      queryParamsHandling: &#x27;preserve&#x27;
+    });
+  }
+}
+</code></pre>
+    </div>
+
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div>@let data = profile();@let activeId = activeSectionId();@let currentSection = activeNavSection();<aside class="flex flex-col justify-between gap-6 h-full max-h-[calc(100vh-160px)] border-b border-black/10 pb-10 dark:border-white/10 lg:sticky lg:top-24  lg:border-none lg:pb-0">  <div class="flex flex-col gap-6">    <div>      <p class="text-xs uppercase tracking-[0.35em] text-brand-600 dark:text-brand-300">{{ data.role }}</p>      <h1 class="mt-4 text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl">        {{ data.name }}      </h1>      <p class="mt-4 text-base leading-relaxed text-gray-600 dark:text-gray-300">        {{ data.summary }}      </p>    </div>    <div class="flex flex-col gap-3">      <div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">        <span class="uppercase tracking-[0.35em]">Active section</span>        @if (currentSection.pageRoute) {          <a            class="link text-[11px] normal-case tracking-normal"            [routerLink]="currentSection.pageRoute"          >            Open {{ currentSection.label }}          </a>        }      </div>      <nav class="flex flex-col gap-2 text-xs font-bold text-gray-500 dark:text-gray-400">        @for (section of navSections(); track section.id) {          <a            routerLink="/"            [fragment]="section.fragment"            (click)="navigateToSection($event, section)"            class="group inline-flex items-center gap-3 py-1 transition hover:text-black dark:hover:text-white uppercase"            [attr.aria-current]="activeId === section.id ? \'true\' : null"            [ngClass]="activeId === section.id ? [\'text-black\', \'dark:text-white\'] : []"          >            <span              class="h-px transition-all duration-200 group-hover:w-16 group-hover:bg-brand-500"              [ngClass]="activeId === section.id ? \'w-16 bg-brand-500\' : \'w-8 bg-gray-300\'"            ></span>            <span>{{ section.label }}</span>          </a>        }      </nav>    </div>  </div>  <div class="flex flex-wrap items-center gap-3 text-sm text-gray-500 dark:text-gray-400">    @let locationLinkValue = locationLink();    @if (locationLinkValue) {      <a        class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-gray-500 transition hover:border-brand-500 hover:text-brand-600 dark:border-white/15 dark:text-gray-300 dark:hover:border-brand-300 dark:hover:text-brand-200"        [href]="locationLinkValue"        target="_blank"        rel="noopener"      >        <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4 pointer-events-none">          <use href="assets/icons/location.svg#icon-location" xlink:href="assets/icons/location.svg#icon-location"></use>        </svg>        <span class="sr-only">Based in {{ data.location }}</span>      </a>    } @else {      <div class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-gray-500 dark:border-white/15 dark:text-gray-300" aria-hidden="true">        <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4 pointer-events-none">          <use href="assets/icons/location.svg#icon-location" xlink:href="assets/icons/location.svg#icon-location"></use>        </svg>      </div>    }    <a      class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-gray-500 transition hover:border-brand-500 hover:text-brand-600 dark:border-white/15 dark:text-gray-300 dark:hover:border-brand-300 dark:hover:text-brand-200"      [href]="\'mailto:\' + data.email"    >      <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4 pointer-events-none">        <use href="assets/icons/mail.svg#icon-mail" xlink:href="assets/icons/mail.svg#icon-mail"></use>      </svg>      <span class="sr-only">Email {{ data.email }}</span>    </a>    @if (data.links.linkedin) {      <a        class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-gray-500 transition hover:border-brand-500 hover:text-brand-600 dark:border-white/15 dark:text-gray-300 dark:hover:border-brand-300 dark:hover:text-brand-200"        [href]="data.links.linkedin"        target="_blank"        rel="noopener"      >        <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4 pointer-events-none">          <use href="assets/icons/linkedin.svg#icon-linkedin" xlink:href="assets/icons/linkedin.svg#icon-linkedin"></use>        </svg>        <span class="sr-only">LinkedIn profile</span>      </a>    }    @if (data.links.github) {      <a        class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-gray-500 transition hover:border-brand-500 hover:text-brand-600 dark:border-white/15 dark:text-gray-300 dark:hover:border-brand-300 dark:hover:text-brand-200"        [href]="data.links.github"        target="_blank"        rel="noopener"      >        <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4 pointer-events-none">          <use href="assets/icons/github.svg#icon-github" xlink:href="assets/icons/github.svg#icon-github"></use>        </svg>        <span class="sr-only">GitHub profile</span>      </a>    }    @if (data.links.portfolio) {      <a        class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-gray-500 transition hover:border-brand-500 hover:text-brand-600 dark:border-white/15 dark:text-gray-300 dark:hover:border-brand-300 dark:hover:text-brand-200"        [href]="data.links.portfolio"        target="_blank"        rel="noopener"      >        <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4 pointer-events-none">          <use href="assets/icons/globe.svg#icon-globe" xlink:href="assets/icons/globe.svg#icon-globe"></use>        </svg>        <span class="sr-only">Portfolio</span>      </a>    }  </div></aside></div>'
+    var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'ChipCloudComponent', 'selector': 'app-chip-cloud'},{'name': 'ContactFormComponent', 'selector': 'app-contact-form'},{'name': 'ExperienceComponent', 'selector': 'app-experience'},{'name': 'ExperienceTimelineComponent', 'selector': 'app-experience-timeline'},{'name': 'HomeAboutSectionComponent', 'selector': 'app-home-about-section'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'HomeContactSectionComponent', 'selector': 'app-home-contact-section'},{'name': 'HomeExperienceSectionComponent', 'selector': 'app-home-experience-section'},{'name': 'HomeProjectsSectionComponent', 'selector': 'app-home-projects-section'},{'name': 'HomeSidebarComponent', 'selector': 'app-home-sidebar'},{'name': 'LinkButtonComponent', 'selector': 'app-link-button, link-button'},{'name': 'ProjectCardComponent', 'selector': 'app-project-card'},{'name': 'ProjectsComponent', 'selector': 'app-projects'},{'name': 'ProjectsFilterComponent', 'selector': 'app-projects-filter'},{'name': 'ResumeComponent', 'selector': 'app-resume'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'HomeSidebarComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'HomeSidebarComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

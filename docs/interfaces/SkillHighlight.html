@@ -1,0 +1,503 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>tempname documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">tempname documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Interfaces</li>
+  <li class="breadcrumb-item"
+  >
+  SkillHighlight</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/pages/home/home.component.ts</code>
+        </p>
+
+
+
+
+        <section data-compodoc="block-index">
+            <h3 id="index">Index</h3>
+            <table class="table table-sm table-bordered index-table">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Properties</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                        <a href="#body" 
+>
+                                            body
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#title" 
+>
+                                            title
+                                        </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+
+            <section data-compodoc="block-properties">
+                <h3 id="inputs">Properties</h3>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="body"></a>
+                                        <span class="name "><b>body</b>
+                                            <a href="#body">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>body:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="title"></a>
+                                        <span class="name "><b>title</b>
+                                            <a href="#title">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>title:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+            </section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { AfterViewInit, ChangeDetectionStrategy, Component, DestroyRef, OnInit, computed, inject, signal } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { NavigationEnd, Router } from &#x27;@angular/router&#x27;;
+import { DataService } from &#x27;../../shared/data.service&#x27;;
+import { ScrollService } from &#x27;../../shared/scroll.service&#x27;;
+import { filter } from &#x27;rxjs&#x27;;
+import { IntersectionObserverService } from &#x27;../../shared/intersection-observer.service&#x27;;
+import { NAV_SECTIONS, NavSection } from &#x27;../../shared/nav-sections&#x27;;
+import { ProjectSummary } from &#x27;../../shared/profile.model&#x27;;
+import { takeUntilDestroyed } from &#x27;@angular/core/rxjs-interop&#x27;;
+import { HomeSidebarComponent } from &#x27;./components/home-sidebar.component&#x27;;
+import { HomeAboutSectionComponent } from &#x27;./components/home-about-section.component&#x27;;
+import { HomeExperienceSectionComponent } from &#x27;./components/home-experience-section.component&#x27;;
+import { HomeProjectsSectionComponent } from &#x27;./components/home-projects-section.component&#x27;;
+import { HomeContactSectionComponent } from &#x27;./components/home-contact-section.component&#x27;;
+
+interface SkillHighlight {
+  title: string;
+  body: string;
+}
+
+const TOP_SKILLS: SkillHighlight[] &#x3D; [
+  {
+    title: &#x27;Frontend Architecture&#x27;,
+    body: &#x27;Standalone Angular, NX mono-repos, Signal &amp; NgRx state patterns, design systems that scale.&#x27;
+  },
+  {
+    title: &#x27;Performance Engineering&#x27;,
+    body: &#x27;Hydration control, deferrable views, bundle analytics, Core Web Vitals-driven regressions.&#x27;
+  },
+  {
+    title: &#x27;Product Impact&#x27;,
+    body: &#x27;Conversion-minded UX: favourites, auth, checkout flows and A/B experimentation.&#x27;
+  },
+  {
+    title: &#x27;Team Enablement&#x27;,
+    body: &#x27;Code reviews, pairing, documentation, and CI pipelines that unblock cross-functional squads.&#x27;
+  },
+  {
+    title: &#x27;Design Systems &amp; Accessibility&#x27;,
+    body: &#x27;Accessible component libraries, Storybook-driven documentation, and UI audits that keep multi-brand experiences cohesive.&#x27;
+  },
+  {
+    title: &#x27;Platform Reliability&#x27;,
+    body: &#x27;Release hygiene, observability wiring, and smoke-test suites that keep deployments predictable.&#x27;
+  }
+];
+
+@Component({
+  standalone: true,
+  selector: &#x27;app-home&#x27;,
+  imports: [
+    CommonModule,
+    HomeSidebarComponent,
+    HomeAboutSectionComponent,
+    HomeExperienceSectionComponent,
+    HomeProjectsSectionComponent,
+    HomeContactSectionComponent
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  templateUrl: &#x27;./home.component.html&#x27;
+})
+export class HomeComponent implements OnInit, AfterViewInit {
+  private readonly dataService &#x3D; inject(DataService);
+  private readonly router &#x3D; inject(Router);
+  private readonly scroll &#x3D; inject(ScrollService);
+  private readonly intersectionObserver &#x3D; inject(IntersectionObserverService);
+  private readonly destroyRef &#x3D; inject(DestroyRef);
+
+  readonly profile &#x3D; this.dataService.profile;
+
+  readonly topSkills &#x3D; TOP_SKILLS;
+
+  readonly navSections &#x3D; NAV_SECTIONS;
+
+  readonly featuredProjects &#x3D; computed&lt;ProjectSummary[]&gt;(() &#x3D;&gt; {
+    const projects &#x3D; this.profile().projects ?? [];
+    const priorityNames &#x3D; new Set([&#x27;CSGORoll&#x27;, &#x27;Hypedrop&#x27;, &#x27;Celonis&#x27;, &#x27;Volvo Cars&#x27;, &#x27;Avodaq&#x27;]);
+
+    const priorityProjects &#x3D; projects.filter((project) &#x3D;&gt; priorityNames.has(project.name));
+    const fallbackProjects &#x3D; projects.filter((project) &#x3D;&gt; !priorityNames.has(project.name));
+
+    return priorityProjects.concat(fallbackProjects).slice(0, 5);
+  });
+
+  readonly additionalProjects &#x3D; computed&lt;ProjectSummary[]&gt;(() &#x3D;&gt; {
+    const projects &#x3D; this.profile().projects ?? [];
+    const featuredNames &#x3D; new Set(this.featuredProjects().map((project) &#x3D;&gt; project.name));
+    return projects.filter((project) &#x3D;&gt; !featuredNames.has(project.name));
+  });
+
+  readonly locationMapLink &#x3D; computed&lt;string | null&gt;(() &#x3D;&gt; {
+    const location &#x3D; this.profile().location?.trim();
+    if (!location) return null;
+    return &#x60;https://www.google.com/maps/search/?api&#x3D;1&amp;query&#x3D;${encodeURIComponent(location)}&#x60;;
+  });
+  readonly experiencePreview &#x3D; computed(() &#x3D;&gt; (this.profile().experience ?? []).slice(0, 3));
+
+  readonly activeSection &#x3D; signal&lt;string&gt;(&#x27;about&#x27;);
+  readonly activeNavSection &#x3D; computed&lt;NavSection&gt;(() &#x3D;&gt; {
+    const current &#x3D; this.activeSection();
+    return this.navSections.find((section) &#x3D;&gt; section.id &#x3D;&#x3D;&#x3D; current) ?? this.navSections[0]!;
+  });
+
+  ngOnInit(): void {
+    void this.dataService.load();
+
+    this.router.events
+      .pipe(
+        filter((event): event is NavigationEnd &#x3D;&gt; event instanceof NavigationEnd),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe(() &#x3D;&gt; this.handleFragmentScroll());
+  }
+
+  ngAfterViewInit(): void {
+    this.setupSectionObserver();
+    this.handleFragmentScroll();
+  }
+
+  private setupSectionObserver(): void {
+    if (typeof window &#x3D;&#x3D;&#x3D; &#x27;undefined&#x27; || typeof document &#x3D;&#x3D;&#x3D; &#x27;undefined&#x27;) {
+      return;
+    }
+
+    const targets &#x3D; this.navSections
+      .map((section) &#x3D;&gt; document.getElementById(section.id))
+      .filter((el): el is HTMLElement &#x3D;&gt; !!el);
+
+    if (!targets.length) {
+      return;
+    }
+
+    this.intersectionObserver
+      .observeElements(targets, {
+        root: null,
+        rootMargin: &#x27;-35% 0px -55% 0px&#x27;,
+        threshold: [0, 0.25, 0.5, 0.75, 1],
+      })
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((entries) &#x3D;&gt; {
+        const visible &#x3D; entries
+          .filter((entry) &#x3D;&gt; entry.isIntersecting)
+          .sort((a, b) &#x3D;&gt; (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0));
+        const top &#x3D; visible[0];
+        if (top?.target?.id) {
+          this.activeSection.set(top.target.id);
+        }
+      });
+  }
+
+  private handleFragmentScroll(): void {
+    const fragment &#x3D; this.router.parseUrl(this.router.url).fragment;
+    if (!fragment) {
+      return;
+    }
+
+    const knownSection &#x3D; this.navSections.some((section) &#x3D;&gt; section.id &#x3D;&#x3D;&#x3D; fragment);
+    if (knownSection) {
+      this.activeSection.set(fragment);
+    }
+
+    requestAnimationFrame(() &#x3D;&gt; {
+      this.scroll.scrollTo(fragment, 24);
+    });
+  }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'SkillHighlight.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
