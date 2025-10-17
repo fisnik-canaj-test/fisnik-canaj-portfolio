@@ -1,1 +1,0 @@
-var ROUTES_INDEX = {"name":"<root>","kind":"module","children":[{"name":"experience","kind":"route-path","filename":"src/app/app.routes.ts"},{"name":"projects","kind":"route-path","filename":"src/app/app.routes.ts"},{"name":"resume","kind":"route-path","filename":"src/app/app.routes.ts"},{"name":"**","kind":"route-path","filename":"src/app/app.routes.ts"}]}

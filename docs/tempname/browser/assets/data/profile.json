@@ -1,0 +1,202 @@
+{
+  "name": "Fisnik Canaj",
+  "role": "Frontend Developer",
+  "location": "Pristina, Kosovo",
+  "phone": "+383 45 420 928",
+  "email": "canajfisnik@gmail.com",
+  "links": {
+    "github": "https://github.com/fisnikcanaj1",
+    "portfolio": "https://fisnikcanaj1.github.io/Portfolio-Website/",
+    "linkedin": "https://www.linkedin.com/in/fisnik-canaj-angular-4b75a8157"
+  },
+  "summary": "Frontend developer with 8+ years in Angular and modern web for gaming, commerce, and enterprise. Led Solution25’s Angular squad for Volvo’s four-month release while shipping high-impact features for CSGORoll, Hypedrop, and Celonis.",
+  "about": "Most recently I’ve focused on high-traffic gaming platforms at Ancient Gaming, rebuilding key flows for CSGORoll in Angular and launching Hypedrop’s admin journeys with Qwik, GraphQL, and Builder.io. At Solution25 I led a distributed squad to extend Volvo’s online car sales experience and stabilise Service Plan with systematic testing and upgrades. I enjoy tackling complex UI programmes—whether producing process-mining interfaces at Celonis, running Gazeta Demos as a WordPress news portal, or prototyping StadHubs in React Native to explore community sport scheduling.",
+  "avatar": "assets/my-face.jpg",
+  "interests": ["Football", "Time with friends"],
+  "languages": ["English", "Albanian"],
+  "skills": [
+    "JavaScript", "TypeScript", "Angular (2–20)", "Qwik", "React.js", "Vue.js", "jQuery",
+    "HTML5", "CSS3", "Sass", "Tailwind CSS",
+    "RxJS", "NgRx", "Webpack", "NX Monorepo",
+    "GraphQL", "Apollo Client", "Node.js", "Express.js",
+    "Cypress", "Builder.io",
+    "Responsive Design", "Performance Optimisation", "Cross‑Browser Compatibility"
+  ],
+  "experience": [
+    {
+      "company": "Ancient Gaming",
+      "title": "Frontend Developer",
+      "period": "Nov 2023 – Present",
+      "bullets": [
+        "Working across Angular 20, GraphQL, Apollo Client/Studio, NgRx, and RxJS to keep high-traffic wagering flows reliable.",
+        "Led CSGORoll’s migration from Angular 16 to 18, clearing the path for the Angular 20 rollout and stabilising build tooling.",
+        "Built real-time favourites, wishlist, and probability tooling that boosts engagement while maintaining performance budgets.",
+        "Partnered with design and analytics to iterate on UI polish and experiment tracking across desktop and mobile.",
+        "Hypedrop – Delivered admin authentication, multi-step account journeys, data-rich dashboard pages, and reusable UI components with filters for management tables in Qwik, GraphQL, Builder.io, and Tailwind CSS."
+      ]
+    },
+    {
+      "company": "Solution25",
+      "title": "Frontend/Angular Developer",
+      "period": "Jun 2022 – Oct 2023",
+      "bullets": [
+        "Led Volvo’s online car sales squad for a four-month release window, mentoring interns and shipping regional flows on Angular + NX.",
+        "Cartouche Club – implemented Nuxt SSR on Shopware for SEO gains, refreshed styling, and launched faceted search and coupon deep-link journeys.",
+        "Service Plan – added paginated data tables backed by Node.js, MongoDB, and Mongoose, generated partner-specific PDF reports, and expanded dashboards with new pages and plugins."
+      ]
+    },
+    {
+      "company": "UNE",
+      "title": "Frontend Developer",
+      "period": "Nov 2021 – May 2022",
+      "bullets": [
+        "Shipped UX improvements and mobile optimisations across marketing pages.",
+        "Built reusable Vue.js components with Sass, Webpack, and Laravel integrations."
+      ]
+    },
+    {
+      "company": "ATIS",
+      "title": "Frontend Developer",
+      "period": "Feb 2020 – Oct 2021",
+      "bullets": [
+        "Delivered an Angular booking application with lazy loading and modular routing.",
+        "Built complex reservation forms for E-Dea and integrated with backend APIs.",
+        "Crafted SPA patterns that balanced performance and maintainability."
+      ]
+    },
+    {
+      "company": "Celonis",
+      "title": "Frontend UI Developer",
+      "period": "Aug 2018 – Oct 2020",
+      "bullets": [
+        "Built UI components, filtering interfaces, and chart visualisations for the process mining platform.",
+        "Worked across Angular, Sass, and vanilla JavaScript to improve usability."
+      ]
+    },
+    {
+      "company": "Open Data Kosovo (ODK)",
+      "title": "Frontend Developer",
+      "period": "Jun 2018 – Sep 2018",
+      "bullets": [
+        "Completed an internship project using HTML, CSS/Bootstrap, and PHP to improve civic data access."
+      ]
+    },
+    {
+      "company": "NEO DESIGN",
+      "title": "UI Developer",
+      "period": "Feb 2017 – Aug 2017",
+      "bullets": [
+        "Enhanced UI design execution with JavaScript, jQuery, Bootstrap, HTML, and CSS."
+      ]
+    },
+    {
+      "company": "Freelance",
+      "title": "Frontend Developer",
+      "period": "Jan 2014 – Jan 2017",
+      "bullets": [
+        "Self-taught through React, Vue, Angular, and Python projects, focusing on clean front-end builds.",
+        "Delivered portfolios for clients while sharpening algorithm and data-structure fundamentals."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "school": "University for Business and Technology (UBT)",
+      "location": "Pristina, Kosovo",
+      "degree": "BSc, Computer Science and Engineering",
+      "period": "2014"
+    }
+  ],
+  "projects": [
+    {
+      "name": "CSGORoll",
+      "tags": ["Angular", "GraphQL", "Gaming"],
+      "desc": "Migrated Angular 16→18 on the path to 20, overhauled high-volume betting forms, and delivered real-time favourites, wishlist, and probability tooling using Angular, NgRx, RxJS, and GraphQL/Apollo Studio.",
+      "link": "https://csgoroll.com"
+    },
+    {
+      "name": "Hypedrop",
+      "tags": ["Qwik", "Angular", "GraphQL", "Builder.io", "Tailwind"],
+      "desc": "Built the admin dashboard foundation—modernising login/logout, implementing password reset, and shipping new pages, modals, and reusable UI widgets such as date-time pickers across Qwik + Angular 16–20 with GraphQL, Builder.io, and Tailwind CSS.",
+      "link": "https://hypedrop.com"
+    },
+    {
+      "name": "Cartouche Club",
+      "tags": ["Vue.js", "Nuxt", "Shopware", "UI"],
+      "desc": "Enabled Nuxt SSR across the storefront for SEO, refreshed styling with Flowbite UI, implemented product search filters, and added deep-linkable coupon flows via Shopware APIs.",
+      "link": "https://cartoucheclub.com"
+    },
+    {
+      "name": "Service Plan",
+      "tags": ["Angular", "Node.js"],
+      "desc": "Extended dashboards with paginated data tables, Node.js + MongoDB reports, and partner-specific PDF exports backed by Mongoose.",
+      "link": "https://www.solution25.com"
+    },
+    {
+      "name": "Avodaq",
+      "tags": ["Django", "Tailwind", "Cypress"],
+      "desc": "Delivered data tables with advanced filtering for the platform, built atop Python/Django with Tailwind styling, and added Cypress end-to-end coverage during the Solution25 engagement.",
+      "link": "https://www.avodaq.com"
+    },
+    {
+      "name": "Hoook",
+      "tags": ["Vue.js", "Vuex", "E-commerce"],
+      "desc": "Built the Hoook storefront in Vue.js with Vuex state management, crafting responsive product flows and launch content.",
+      "link": "https://hoook.ch/"
+    },
+    {
+      "name": "StadHubs",
+      "tags": ["React Native", "Charts", "MUI"],
+      "desc": "Prototyped a community sports app with dashboard analytics, interactive charts, and polished login/register flows using React Native and MUI components.",
+      "link": "https://stathubs.com"
+    },
+    {
+      "name": "Gadgetlend",
+      "tags": ["Angular", "i18n"],
+      "desc": "Refreshed UI and shipped multilingual support across the app.",
+      "link": "https://gadgetlend.de"
+    },
+    {
+      "name": "Gazeta Demos",
+      "tags": ["WordPress", "News"],
+      "desc": "Launched news portal with custom WordPress deployment.",
+      "link": "https://gazetademos.com"
+    },
+    {
+      "name": "UNE Site Builder",
+      "tags": ["Laravel", "JavaScript", "Vue.js"],
+      "desc": "Enhanced UNE’s site builder by adding new forms, improving editor UX, and wiring Vue.js components into the Laravel backend during the agency engagement.",
+      "link": "https://www.une.ch/"
+    },
+    {
+      "name": "Mark-ing",
+      "tags": ["WordPress", "Brand"],
+      "desc": "Early-career WordPress build with custom CSS theming for the Mark-ing marketing site.",
+      "link": "http://mark-ing.com"
+    },
+    {
+      "name": "Portfolio Website",
+      "tags": ["HTML", "CSS", "jQuery"],
+      "desc": "Legacy personal portfolio built with handcrafted HTML/CSS and jQuery animations, showcasing several early-career mini projects.",
+      "link": "https://fisnikcanaj1.github.io/Portfolio-Website/"
+    },
+    {
+      "name": "Celonis",
+      "tags": ["Angular", "Enterprise", "UI"],
+      "desc": "Built and modernised Angular 8 UI components for Celonis’ process-mining platform and marketing site, contributing roughly 60% of the component library before the redesign.",
+      "link": "https://www.celonis.com"
+    },
+    {
+      "name": "Volvo Cars",
+      "tags": ["Angular", "Commerce"],
+      "desc": "Led the Angular squad through a four-month release window, launching regional online car sales journeys with NX-driven tooling.",
+      "link": "https://www.volvocars.com"
+    },
+    {
+      "name": "E-Dea",
+      "tags": ["Angular", "Transport"],
+      "desc": "Complex reservation forms and tables for route management UI.",
+      "link": "https://www.e-dea.com"
+    }
+  ]
+}
