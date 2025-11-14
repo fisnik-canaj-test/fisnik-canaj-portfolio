@@ -12,7 +12,7 @@ import { DataService } from './shared/data.service';
   styleUrl: './app.css'
 })
 export class App implements OnInit, OnDestroy {
-  protected readonly title = signal('tempname');
+  protected readonly title = signal('Fisnik Canaj | Portfolio');
   private removePointerListeners: (() => void) | null = null;
 
   constructor(
