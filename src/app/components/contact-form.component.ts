@@ -147,6 +147,7 @@ export class ContactFormComponent {
   readonly successCopy = input('Thanks! I’ll follow up shortly.');
   readonly errorCopy = input('Something went wrong. Please try again shortly.');
   readonly submitHandler = input<(payload: ContactFormPayload) => Promise<void>>();
+  readonly formspreeEndpoint = input<string | null>(null);
   readonly simulateDelay = input(1200);
 
   @Output() submitted = new EventEmitter<ContactFormPayload>();
@@ -190,7 +191,7 @@ export class ContactFormComponent {
       if (handler) {
         await handler(payload);
       } else {
-        await new Promise((resolve) => setTimeout(resolve, this.simulateDelay()));
+        await this.submitToFormspree(payload);
       }
       this.sendSuccess.set(true);
       this.submitted.emit(payload);
@@ -208,6 +209,52 @@ export class ContactFormComponent {
       this.sendSuccess.set(false);
     } finally {
       this.isSending.set(false);
+    }
+  }
+
+  private async submitToFormspree(payload: ContactFormPayload): Promise<void> {
+    const endpoint = this.formspreeEndpoint();
+
+    if (!endpoint) {
+      await new Promise((resolve) => setTimeout(resolve, this.simulateDelay()));
+      return;
+    }
+
+    const fetchFn = globalThis.fetch;
+
+    if (!fetchFn) {
+      throw new Error('Fetch API not available in this environment.');
+    }
+
+    const response = await fetchFn(endpoint, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: payload.name,
+        email: payload.email,
+        company: payload.company,
+        message: payload.message,
+        _subject: `New portfolio inquiry from ${payload.name}`,
+      }),
+    });
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        throw new Error(
+          'Formspree endpoint returned 404. Make sure you created a form at formspree.io and are using the URL shaped like https://formspree.io/f/yourFormId.'
+        );
+      }
+
+      let details = '';
+      try {
+        details = await response.text();
+      } catch {
+        details = '';
+      }
+      throw new Error(`Formspree submission failed (${response.status}) ${details}`);
     }
   }
 }

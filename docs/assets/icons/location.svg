@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+  <symbol id="icon-location" viewBox="0 0 24 24">
+    <path
+      fill="currentColor"
+      d="M12 2a7 7 0 0 0-7 7c0 5.25 6.12 12.16 6.38 12.44.35.36.89.36 1.24 0C12.88 21.16 19 14.25 19 9a7 7 0 0 0-7-7m0 3.5A3.5 3.5 0 1 1 8.5 9 3.5 3.5 0 0 1 12 5.5"
+    />
+  </symbol>
+</svg>
